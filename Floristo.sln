@@ -1,0 +1,59 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{983B211C-7B15-414D-9B8E-2A39C16080A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Application", "src\Floristo.Application\Floristo.Application.csproj", "{12DFFED8-A11D-486D-AD42-CCFE5A0B239F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Api", "src\Floristo.Api\Floristo.Api.csproj", "{DF801D5F-AD08-47EB-8B83-5EC92CD2D7D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{2D511576-1755-4455-8C73-CBAD1A60622C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Shared", "src\Floristo.Shared\Floristo.Shared.csproj", "{47D99027-2D86-4268-8A8B-EE92193DEAE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.SharedAbstractions", "src\Floristo.SharedAbstractions\Floristo.SharedAbstractions.csproj", "{D75B9153-9FE0-4521-9E54-4960D6FD86AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Domain", "src\Floristo.Domain\Floristo.Domain.csproj", "{712609B7-9100-491A-8226-99233016B060}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Infrastructure", "src\Floristo.Infrastructure\Floristo.Infrastructure.csproj", "{F31C57E6-BB54-448F-8CDB-5E4B5FAB4CD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12DFFED8-A11D-486D-AD42-CCFE5A0B239F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12DFFED8-A11D-486D-AD42-CCFE5A0B239F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12DFFED8-A11D-486D-AD42-CCFE5A0B239F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12DFFED8-A11D-486D-AD42-CCFE5A0B239F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF801D5F-AD08-47EB-8B83-5EC92CD2D7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF801D5F-AD08-47EB-8B83-5EC92CD2D7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF801D5F-AD08-47EB-8B83-5EC92CD2D7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF801D5F-AD08-47EB-8B83-5EC92CD2D7D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D99027-2D86-4268-8A8B-EE92193DEAE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D99027-2D86-4268-8A8B-EE92193DEAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D99027-2D86-4268-8A8B-EE92193DEAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D99027-2D86-4268-8A8B-EE92193DEAE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D75B9153-9FE0-4521-9E54-4960D6FD86AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D75B9153-9FE0-4521-9E54-4960D6FD86AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D75B9153-9FE0-4521-9E54-4960D6FD86AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D75B9153-9FE0-4521-9E54-4960D6FD86AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{712609B7-9100-491A-8226-99233016B060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{712609B7-9100-491A-8226-99233016B060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{712609B7-9100-491A-8226-99233016B060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{712609B7-9100-491A-8226-99233016B060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F31C57E6-BB54-448F-8CDB-5E4B5FAB4CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F31C57E6-BB54-448F-8CDB-5E4B5FAB4CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F31C57E6-BB54-448F-8CDB-5E4B5FAB4CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F31C57E6-BB54-448F-8CDB-5E4B5FAB4CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{12DFFED8-A11D-486D-AD42-CCFE5A0B239F} = {983B211C-7B15-414D-9B8E-2A39C16080A2}
+		{DF801D5F-AD08-47EB-8B83-5EC92CD2D7D2} = {983B211C-7B15-414D-9B8E-2A39C16080A2}
+		{2D511576-1755-4455-8C73-CBAD1A60622C} = {983B211C-7B15-414D-9B8E-2A39C16080A2}
+		{47D99027-2D86-4268-8A8B-EE92193DEAE9} = {2D511576-1755-4455-8C73-CBAD1A60622C}
+		{D75B9153-9FE0-4521-9E54-4960D6FD86AE} = {2D511576-1755-4455-8C73-CBAD1A60622C}
+		{712609B7-9100-491A-8226-99233016B060} = {983B211C-7B15-414D-9B8E-2A39C16080A2}
+		{F31C57E6-BB54-448F-8CDB-5E4B5FAB4CD5} = {983B211C-7B15-414D-9B8E-2A39C16080A2}
+	EndGlobalSection
+EndGlobal
