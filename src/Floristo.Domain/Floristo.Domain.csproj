@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Floristo.SharedAbstractions\Floristo.SharedAbstractions.csproj" />
+    </ItemGroup>
+
 </Project>

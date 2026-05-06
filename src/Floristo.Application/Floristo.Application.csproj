@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Floristo.Domain\Floristo.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
