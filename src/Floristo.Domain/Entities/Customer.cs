@@ -1,9 +1,10 @@
+using Floristo.Domain.Events;
 using Floristo.Domain.ValueObjects;
 using Floristo.SharedAbstractions.Domain;
 
 namespace Floristo.Domain.Entities;
 
-public class Customer
+public class Customer : AggregateRoot<CustomerId>
 {
     public CustomerId Id { get; private set; }
 
@@ -12,7 +13,7 @@ public class Customer
     private CustomerEmail _email;
     private DateTime _createdAt;
 
-    internal Customer(Guid id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email, DateTime createdAt)
+    internal Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email, DateTime createdAt)
     {
         Id = id;
         _firstName = firstName;
@@ -24,15 +25,18 @@ public class Customer
     public void ChangeFirstName(CustomerFirstName firstName)
     {
         _firstName = firstName;
+        AddEvent(new CustomerFirstNameChanged(this, firstName));
     }
 
     public void ChangeLastName(CustomerLastName lastName)
     {
         _lastName = lastName;
+        AddEvent(new CustomerLastNameChanged(this, lastName));
     }
 
     public void ChangeEmail(CustomerEmail email)
     {
         _email = email;
+        AddEvent(new CustomerEmailChanged(this, email));
     }
 }

@@ -2,7 +2,7 @@ using Floristo.Domain.Exceptions;
 
 namespace Floristo.Domain.ValueObjects;
 
-public class CustomerId
+public record CustomerId
 {
     public Guid Value { get; }
     
