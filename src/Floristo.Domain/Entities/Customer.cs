@@ -1,10 +1,11 @@
 using Floristo.Domain.ValueObjects;
+using Floristo.SharedAbstractions.Domain;
 
 namespace Floristo.Domain.Entities;
 
 public class Customer
 {
-    public Guid Id { get; private set; }
+    public CustomerId Id { get; private set; }
 
     private CustomerFirstName _firstName;
     private CustomerLastName _lastName;
