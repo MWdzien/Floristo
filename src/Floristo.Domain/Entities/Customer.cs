@@ -6,14 +6,12 @@ namespace Floristo.Domain.Entities;
 
 public class Customer : AggregateRoot<CustomerId>
 {
-    public CustomerId Id { get; private set; }
-
     private CustomerFirstName _firstName;
     private CustomerLastName _lastName;
     private CustomerEmail _email;
-    private DateTime _createdAt;
+    private CustomerCreatedAt _createdAt;
 
-    internal Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email, DateTime createdAt)
+    internal Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email, CustomerCreatedAt createdAt)
     {
         Id = id;
         _firstName = firstName;
@@ -25,18 +23,18 @@ public class Customer : AggregateRoot<CustomerId>
     public void ChangeFirstName(CustomerFirstName firstName)
     {
         _firstName = firstName;
-        AddEvent(new CustomerFirstNameChanged(this, firstName));
+        AddEvent(new CustomerFirstNameChanged(this.Id, firstName));
     }
 
     public void ChangeLastName(CustomerLastName lastName)
     {
         _lastName = lastName;
-        AddEvent(new CustomerLastNameChanged(this, lastName));
+        AddEvent(new CustomerLastNameChanged(this.Id, lastName));
     }
 
     public void ChangeEmail(CustomerEmail email)
     {
         _email = email;
-        AddEvent(new CustomerEmailChanged(this, email));
+        AddEvent(new CustomerEmailChanged(this.Id, email));
     }
 }

@@ -11,7 +11,7 @@ public abstract class AggregateRoot<T>
 
     protected void AddEvent(IDomainEvent domainEvent)
     {
-        if (!_events.Any() && !_versionIncremented)
+        if (!_versionIncremented)
         {
             Version++;
             _versionIncremented = true;
