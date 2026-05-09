@@ -1,4 +1,6 @@
 using Floristo.Domain.Events;
+using Floristo.Domain.Exceptions;
+using Floristo.Domain.Exceptions.Customer;
 using Floristo.Domain.ValueObjects;
 using Floristo.SharedAbstractions.Domain;
 
@@ -10,6 +12,7 @@ public class Customer : AggregateRoot<CustomerId>
     private CustomerLastName _lastName;
     private CustomerEmail _email;
     private CustomerCreatedAt _createdAt;
+    private CustomerDeactivatedAt? _deactivatedAt;
 
     internal Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email)
     {
@@ -35,19 +38,46 @@ public class Customer : AggregateRoot<CustomerId>
 
     public void ChangeFirstName(CustomerFirstName firstName)
     {
+        EnsureActive();
+        
         _firstName = firstName;
         AddEvent(new CustomerFirstNameChangedEvent(this.Id, firstName));
     }
 
     public void ChangeLastName(CustomerLastName lastName)
     {
+        EnsureActive();
+        
         _lastName = lastName;
         AddEvent(new CustomerLastNameChangedEvent(this.Id, lastName));
     }
 
     public void ChangeEmail(CustomerEmail email)
     {
+        EnsureActive();
+
+        if (_email == email)
+        {
+            throw new CustomerEmailAlreadyInUseException();
+        }
+        
         _email = email;
         AddEvent(new CustomerEmailChangedEvent(this.Id, email));
+    }
+
+    public void EnsureActive()
+    {
+        if (_deactivatedAt != null)
+        {
+            throw new CustomerNotActiveException();
+        }
+    }
+
+    public void Deactivate()
+    {
+        if (_deactivatedAt != null)
+        {
+            throw new CustomerAlreadyDeactivatedException();
+        }
     }
 }
