@@ -3,7 +3,7 @@ using Floristo.Domain.ValueObjects;
 
 namespace Floristo.Domain.Factories;
 
-public class CustomerFactory : ICustomerFactory
+public sealed class CustomerFactory : ICustomerFactory
 {
     public Customer Create(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email)
         => new(id, firstName, lastName, email);

@@ -5,10 +5,10 @@ namespace Floristo.Domain.Repositories;
 
 public interface ICustomerRepository
 {
-    Task<Customer> GetCustomerAsync(CustomerId id);
-    Task AddCustomerAsync(Customer customer);
-    Task UpdateCustomerAsync(Customer customer);
-    Task DeleteCustomerAsync(Customer customer);
+    Task<Customer?> GetAsync(CustomerId id);
+    Task AddAsync(Customer customer);
+    Task UpdateAsync(Customer customer);
+    Task DeleteAsync(Customer customer);
     
     
 }
