@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Floristo.Domain\Floristo.Domain.csproj" />
+      <ProjectReference Include="..\Floristo.Shared\Floristo.Shared.csproj" />
     </ItemGroup>
 
 </Project>
