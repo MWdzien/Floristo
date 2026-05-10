@@ -21,6 +21,10 @@ public class Customer : AggregateRoot<CustomerId>
         AddEvent(new CustomerCreatedEvent(Id, firstName, lastName, email));
     }
 
+    public Customer()
+    {
+    }
+
     internal Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email,
         CustomerCreatedAt createdAt)
     {
