@@ -21,7 +21,7 @@ public class Customer : AggregateRoot<CustomerId>
         AddEvent(new CustomerCreatedEvent(Id, firstName, lastName, email));
     }
 
-    public Customer()
+    private Customer()
     {
     }
 
