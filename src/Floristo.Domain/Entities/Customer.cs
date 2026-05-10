@@ -69,7 +69,7 @@ public class Customer : AggregateRoot<CustomerId>
         AddEvent(new CustomerEmailChangedEvent(this.Id, email));
     }
 
-    public void EnsureActive()
+    private void EnsureActive()
     {
         if (_deactivatedAt != null)
         {
@@ -83,5 +83,8 @@ public class Customer : AggregateRoot<CustomerId>
         {
             throw new CustomerAlreadyDeactivatedException();
         }
+        
+        _deactivatedAt = new(DateTime.UtcNow);
+        AddEvent(new CustomerDeactivatedEvent(this.Id, _deactivatedAt));
     }
 }
