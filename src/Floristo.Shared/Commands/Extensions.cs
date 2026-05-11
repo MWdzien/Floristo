@@ -1,9 +1,8 @@
 using System.Reflection;
-using Floristo.Shared.Commands;
 using Floristo.SharedAbstractions.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Floristo.Shared;
+namespace Floristo.Shared.Commands;
 
 public static class Extensions
 {
