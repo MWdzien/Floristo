@@ -8,7 +8,7 @@ internal sealed class WriteDbContext : DbContext
 {
     public DbSet<Customer> Customers { get; set; }
 
-    public WriteDbContext(DbContextOptions options) : base(options)
+    public WriteDbContext(DbContextOptions<WriteDbContext> options) : base(options)
     {
     }
 
