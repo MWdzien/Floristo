@@ -1,5 +1,7 @@
 using Floristo.Infrastructure.EF;
+using Floristo.Infrastructure.Logging;
 using Floristo.Shared.Queries;
+using Floristo.SharedAbstractions.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +14,7 @@ public static class Extensions
         services.AddPostgres(configuration);
         
         services.AddQueries();
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>));
         
         return services;
     }
