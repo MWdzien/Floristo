@@ -17,7 +17,7 @@ public class Customer : AggregateRoot<CustomerId>
     {
         SetState(id, firstName, lastName, email);
         _createdAt = DateTime.UtcNow;
-        AddEvent(new CustomerCreatedEvent(Id, firstName, lastName, email));
+        AddEvent(new CustomerCreatedEvent(Id, firstName, lastName, email, _createdAt));
     }
 
     private Customer()
@@ -84,6 +84,6 @@ public class Customer : AggregateRoot<CustomerId>
         }
         
         _deactivatedAt = new(DateTime.UtcNow);
-        AddEvent(new CustomerDeactivatedEvent(this.Id, _deactivatedAt));
+        AddEvent(new CustomerDeactivatedEvent(this.Id, _deactivatedAt!));
     }
 }

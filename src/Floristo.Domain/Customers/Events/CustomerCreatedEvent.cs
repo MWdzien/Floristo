@@ -3,4 +3,4 @@ using Floristo.SharedAbstractions.Domain;
 
 namespace Floristo.Domain.Customers.Events;
 
-public record CustomerCreatedEvent(CustomerId CustomerId, CustomerFirstName FirstName, CustomerLastName LastName, CustomerEmail Email) : IDomainEvent;
+public record CustomerCreatedEvent(CustomerId CustomerId, CustomerFirstName FirstName, CustomerLastName LastName, CustomerEmail Email, CustomerCreatedAt CreatedAt) : IDomainEvent;
