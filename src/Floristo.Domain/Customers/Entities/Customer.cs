@@ -25,10 +25,11 @@ public class Customer : AggregateRoot<CustomerId>
     }
 
     internal Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email,
-        CustomerCreatedAt createdAt)
+        CustomerCreatedAt createdAt, CustomerDeactivatedAt? deactivatedAt)
     {
         SetState(id, firstName, lastName, email);
         _createdAt = createdAt;
+        _deactivatedAt = deactivatedAt;
     }
 
     private void SetState(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email)
