@@ -21,6 +21,6 @@ public record CustomerLastName
         Value = value;
     }
     
-    public static implicit operator string(CustomerLastName firstName) => firstName.Value; 
-    public static implicit operator CustomerLastName(string firstName) => new(firstName); 
+    public static implicit operator string(CustomerLastName lastName) => lastName.Value; 
+    public static implicit operator CustomerLastName(string lastName) => new(lastName); 
 }

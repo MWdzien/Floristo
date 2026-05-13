@@ -1,5 +1,4 @@
 using Floristo.Domain.Customers.Factories;
-using Floristo.Shared;
 using Floristo.Shared.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,12 +10,6 @@ public static class Extensions
     {
         services.AddCommands();
         services.AddSingleton<ICustomerFactory, CustomerFactory>();
-        
-        //auto register policies
-        // services.Scan(b => b.FromAssemblies(typeof(XyzPolicy).Assembly)
-        //     .AddClasses(classes => classes.AssignableTo<XyzPolicy>())
-        //     .AsImplementedInterfaces()
-        //     .WithScopedLifetime());
         
         return services;
     }

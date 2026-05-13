@@ -1,13 +1,12 @@
+using Floristo.Domain.Customers.Entities;
 using Floristo.Domain.Customers.ValueObjects;
 
 namespace Floristo.Domain.Customers.Repositories;
 
 public interface ICustomerRepository
 {
-    Task<Entities.Customer?> GetAsync(CustomerId id);
-    Task AddAsync(Entities.Customer customer);
-    Task UpdateAsync(Entities.Customer customer);
-    Task DeleteAsync(Entities.Customer customer);
-    
-    
+    Task<Customer?> GetAsync(CustomerId id);
+    Task AddAsync(Customer customer);
+    Task UpdateAsync(Customer customer);
+    Task DeleteAsync(Customer customer);
 }

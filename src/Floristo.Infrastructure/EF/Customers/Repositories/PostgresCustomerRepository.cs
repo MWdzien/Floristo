@@ -17,22 +17,22 @@ internal sealed class PostgresCustomerRepository : ICustomerRepository
         _dbContext = dbContext;
     }
 
-    public Task<Domain.Customers.Entities.Customer?> GetAsync(CustomerId id)
+    public Task<Customer?> GetAsync(CustomerId id)
         => _customers.SingleOrDefaultAsync(c => c.Id == id);
 
-    public async Task AddAsync(Domain.Customers.Entities.Customer customer)
+    public async Task AddAsync(Customer customer)
     {
         await _customers.AddAsync(customer);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Domain.Customers.Entities.Customer customer)
+    public async Task UpdateAsync(Customer customer)
     {
         _customers.Update(customer);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Domain.Customers.Entities.Customer customer)
+    public async Task DeleteAsync(Customer customer)
     {
         _customers.Remove(customer);
         await _dbContext.SaveChangesAsync();

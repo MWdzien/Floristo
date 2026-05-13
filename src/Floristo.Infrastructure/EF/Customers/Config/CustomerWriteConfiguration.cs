@@ -1,3 +1,4 @@
+using Floristo.Domain.Customers.Entities;
 using Floristo.Domain.Customers.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -5,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Floristo.Infrastructure.EF.Customers.Config;
 
-internal sealed class CustomerWriteConfiguration : IEntityTypeConfiguration<Domain.Customers.Entities.Customer>
+internal sealed class CustomerWriteConfiguration : IEntityTypeConfiguration<Customer>
 {
-    public void Configure(EntityTypeBuilder<Domain.Customers.Entities.Customer> builder)
+    public void Configure(EntityTypeBuilder<Customer> builder)
     {
         builder.ToTable("customer");
         builder.HasKey(x => x.Id);
