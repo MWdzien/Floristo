@@ -1,8 +1,7 @@
-using Floristo.Domain.Entities;
-using Floristo.Domain.Events;
-using Floristo.Domain.Exceptions;
-using Floristo.Domain.Exceptions.Customer;
-using Floristo.Domain.Factories;
+using Floristo.Domain.Customers.Entities;
+using Floristo.Domain.Customers.Events;
+using Floristo.Domain.Customers.Exceptions;
+using Floristo.Domain.Customers.Factories;
 using Shouldly;
 using Xunit;
 

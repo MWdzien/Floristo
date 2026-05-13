@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Floristo.Shared\Floristo.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Customers\" />
+    </ItemGroup>
+
 </Project>

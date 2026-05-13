@@ -1,9 +1,9 @@
-using Floristo.Application.Services;
-using Floristo.Domain.Repositories;
+using Floristo.Application.Customers.Services;
+using Floristo.Domain.Customers.Repositories;
 using Floristo.Infrastructure.EF.Contexts;
+using Floristo.Infrastructure.EF.Customers.Repositories;
+using Floristo.Infrastructure.EF.Customers.Services;
 using Floristo.Infrastructure.EF.Options;
-using Floristo.Infrastructure.EF.Repositories;
-using Floristo.Infrastructure.EF.Services;
 using Floristo.Shared.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

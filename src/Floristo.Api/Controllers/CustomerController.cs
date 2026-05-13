@@ -1,6 +1,6 @@
-using Floristo.Application.Commands;
-using Floristo.Application.DTOs;
-using Floristo.Application.Queries;
+using Floristo.Application.Customers.Commands;
+using Floristo.Application.Customers.DTOs;
+using Floristo.Application.Customers.Queries;
 using Floristo.SharedAbstractions.Commands;
 using Floristo.SharedAbstractions.Queries;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-using Floristo.Domain.Factories;
+using Floristo.Domain.Customers.Factories;
 using Floristo.Shared;
 using Floristo.Shared.Commands;
 using Microsoft.Extensions.DependencyInjection;

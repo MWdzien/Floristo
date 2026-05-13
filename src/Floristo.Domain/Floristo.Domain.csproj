@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Floristo.SharedAbstractions\Floristo.SharedAbstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Customers\" />
+    </ItemGroup>
+
 </Project>

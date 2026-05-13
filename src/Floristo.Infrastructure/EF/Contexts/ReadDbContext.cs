@@ -1,5 +1,5 @@
-using Floristo.Infrastructure.EF.Config;
-using Floristo.Infrastructure.EF.Models;
+using Floristo.Infrastructure.EF.Customers.Config;
+using Floristo.Infrastructure.EF.Customers.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Floristo.Infrastructure.EF.Contexts;

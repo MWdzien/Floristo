@@ -1,10 +1,10 @@
-using Floristo.Application.Commands;
-using Floristo.Application.Commands.Handlers;
-using Floristo.Application.Exceptions;
-using Floristo.Application.Services;
-using Floristo.Domain.Entities;
-using Floristo.Domain.Factories;
-using Floristo.Domain.Repositories;
+using Floristo.Application.Customers.Commands;
+using Floristo.Application.Customers.Commands.Handlers;
+using Floristo.Application.Customers.Exceptions;
+using Floristo.Application.Customers.Services;
+using Floristo.Domain.Customers.Entities;
+using Floristo.Domain.Customers.Factories;
+using Floristo.Domain.Customers.Repositories;
 using Floristo.SharedAbstractions.Commands;
 using NSubstitute;
 using Shouldly;
