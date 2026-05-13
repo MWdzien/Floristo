@@ -9,6 +9,6 @@ public sealed class CustomerFactory : ICustomerFactory
         => new(id, firstName, lastName, email);
 
     public Customer Restore(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email,
-        CustomerCreatedAt createdAt)
-        => new(id, firstName, lastName, email, createdAt);
+        CustomerCreatedAt createdAt, CustomerDeactivatedAt? deactivatedAt)
+        => new(id, firstName, lastName, email, createdAt, deactivatedAt);
 }
