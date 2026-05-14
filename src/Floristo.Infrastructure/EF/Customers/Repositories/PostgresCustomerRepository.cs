@@ -31,10 +31,4 @@ internal sealed class PostgresCustomerRepository : ICustomerRepository
         _customers.Update(customer);
         await _dbContext.SaveChangesAsync();
     }
-
-    public async Task DeleteAsync(Customer customer)
-    {
-        _customers.Remove(customer);
-        await _dbContext.SaveChangesAsync();
-    }
 }
