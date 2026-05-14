@@ -6,7 +6,7 @@ namespace Floristo.Domain.Categories.Repositories;
 public interface ICategoryRepository
 {
     Task<Category?> GetAsync(CategoryId id);
-    Task AddSync(Category category);
-    Task UpdateSync(Category category);
+    Task AddAsync(Category category);
+    Task UpdateAsync(Category category);
     Task DeleteAsync(Category category);
 }
