@@ -28,6 +28,7 @@ public class Category : AggregateRoot<CategoryId>
     {
         SetState(id, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
         _createdAt = DateTime.UtcNow;
+        _deactivatedAt = DateTime.UtcNow;
         AddEvent(new CategoryCreatedEvent(id, name, description, slug, sortOrder, imageUrl, seoTitle, 
             seoDescription, _createdAt));
     }
