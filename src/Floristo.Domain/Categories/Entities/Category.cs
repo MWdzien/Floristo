@@ -1,4 +1,5 @@
 using Floristo.Domain.Categories.Events;
+using Floristo.Domain.Categories.Exceptions;
 using Floristo.Domain.Categories.ValueObjects;
 using Floristo.SharedAbstractions.Domain;
 
@@ -52,5 +53,70 @@ public class Category : AggregateRoot<CategoryId>
         _imageUrl = imageUrl;
         _seoTitle = seoTitle;
         _seoDescription = seoDescription;
+    }
+
+    public void ChangeName(CategoryName name)
+    {
+        _name = name;
+        AddEvent(new CategoryNameChangedEvent(Id, name));
+    }
+
+    public void ChangeDescription(CategoryDescription? description)
+    {
+        _description = description;
+        AddEvent(new CategoryDescriptionChangedEvent(Id, description));
+    }
+    
+    public void ChangeSlug(CategorySlug slug)
+    {
+        _slug = slug;
+        AddEvent(new CategorySlugChangedEvent(Id, slug));
+    }
+    
+    public void ChangeSortOrder(CategorySortOrder sortOrder)
+    {
+        _sortOrder = sortOrder;
+        AddEvent(new CategorySortOrderChangedEvent(Id, sortOrder));
+    }
+    
+    public void ChangeImageUrl(CategoryImageUrl? imageUrl)
+    {
+        _imageUrl = imageUrl;
+        AddEvent(new CategoryImageUrlChangedEvent(Id, imageUrl));
+    }
+    
+    public void ChangeSeoTitle(CategorySeoTitle? seoTitle)
+    {
+        _seoTitle = seoTitle;
+        AddEvent(new CategorySeoTitleChangedEvent(Id, seoTitle));
+    }
+    
+    public void ChangeSeoDescription(CategorySeoDescription? seoDescription)
+    {
+        _seoDescription = seoDescription;
+        AddEvent(new CategorySeoDescriptionChangedEvent(Id, seoDescription));
+    }
+    
+    public void Deactivate()
+    {
+        if (_deactivatedAt != null)
+        {
+            throw new CategoryAlreadyDeactivatedException();
+        }
+        
+        var deactivatedAt = DateTime.UtcNow;
+        _deactivatedAt = deactivatedAt;
+        AddEvent(new CategoryDeactivatedEvent(Id, deactivatedAt));
+    }
+
+    public void Activate()
+    {
+        if (_deactivatedAt == null)
+        {
+            throw new CategoryAlreadyActiveException();
+        }
+
+        _deactivatedAt = null;
+        AddEvent(new CategoryActivatedEvent(Id));
     }
 }
