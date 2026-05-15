@@ -62,10 +62,16 @@ public class Category : AggregateRoot<CategoryId>
         AddEvent(new CategoryNameChangedEvent(Id, name));
     }
 
-    public void ChangeDescription(CategoryDescription? description)
+    public void ChangeDescription(CategoryDescription description)
     {
         _description = description;
         AddEvent(new CategoryDescriptionChangedEvent(Id, description));
+    }
+
+    public void DeleteDescription()
+    {
+        _description = null;
+        AddEvent(new CategoryDescriptionChangedEvent(Id, _description));
     }
     
     public void ChangeSlug(CategorySlug slug)
@@ -80,22 +86,40 @@ public class Category : AggregateRoot<CategoryId>
         AddEvent(new CategorySortOrderChangedEvent(Id, sortOrder));
     }
     
-    public void ChangeImageUrl(CategoryImageUrl? imageUrl)
+    public void ChangeImageUrl(CategoryImageUrl imageUrl)
     {
         _imageUrl = imageUrl;
         AddEvent(new CategoryImageUrlChangedEvent(Id, imageUrl));
     }
+
+    public void DeleteImageUrl()
+    {
+        _imageUrl = null;
+        AddEvent(new CategoryImageUrlChangedEvent(Id, _imageUrl));
+    }
     
-    public void ChangeSeoTitle(CategorySeoTitle? seoTitle)
+    public void ChangeSeoTitle(CategorySeoTitle seoTitle)
     {
         _seoTitle = seoTitle;
         AddEvent(new CategorySeoTitleChangedEvent(Id, seoTitle));
     }
+
+    public void DeleteSeoTitle()
+    {
+        _seoTitle = null;
+        AddEvent(new CategorySeoTitleChangedEvent(Id, _seoTitle));
+    }
     
-    public void ChangeSeoDescription(CategorySeoDescription? seoDescription)
+    public void ChangeSeoDescription(CategorySeoDescription seoDescription)
     {
         _seoDescription = seoDescription;
         AddEvent(new CategorySeoDescriptionChangedEvent(Id, seoDescription));
+    }
+
+    public void DeleteSeoDescription()
+    {
+        _seoDescription = null;
+        AddEvent(new CategorySeoDescriptionChangedEvent(Id, _seoDescription));
     }
     
     public void Deactivate()
@@ -119,5 +143,15 @@ public class Category : AggregateRoot<CategoryId>
 
         _deactivatedAt = null;
         AddEvent(new CategoryActivatedEvent(Id));
+    }
+
+    public void Delete()
+    {
+        if (_deactivatedAt == null)
+        {
+            throw new CannotDeleteActiveCategoryException();
+        }
+        
+        AddEvent(new CategoryDeletedEvent(Id));
     }
 }
