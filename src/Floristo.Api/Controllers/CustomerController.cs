@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Floristo.Api.Controllers;
 
+[Route("api/customers")]
 public class CustomerController : BaseController
 {
     public CustomerController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher) 
