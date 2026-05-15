@@ -22,15 +22,15 @@ public class Category : AggregateRoot<CategoryId>
     {
     }
 
-    internal Category(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug, 
-        CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle, 
-        CategorySeoDescription? seoDescription)
+    internal Category(CategoryId id, CategoryName name, CategorySlug slug, CategorySortOrder sortOrder)
     {
-        SetState(id, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
+        Id = id;
+        _name = name;
+        _slug = slug;
+        _sortOrder = sortOrder;
         _createdAt = DateTime.UtcNow;
         _deactivatedAt = DateTime.UtcNow;
-        AddEvent(new CategoryCreatedEvent(id, name, description, slug, sortOrder, imageUrl, seoTitle, 
-            seoDescription, _createdAt));
+        AddEvent(new CategoryCreatedEvent(id, name, slug, sortOrder, _createdAt, _deactivatedAt));
     }
     
     internal Category(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug, 

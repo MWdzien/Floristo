@@ -3,6 +3,5 @@ using Floristo.SharedAbstractions.Domain;
 
 namespace Floristo.Domain.Categories.Events;
 
-public record CategoryCreatedEvent(CategoryId Id, CategoryName Name, CategoryDescription? Description,
-    CategorySlug Slug, CategorySortOrder SortOrder, CategoryImageUrl? ImageUrl, CategorySeoTitle? SeoTitle,
-    CategorySeoDescription? SeoDescription, CategoryCreatedAt CreatedAt) : IDomainEvent;
+public record CategoryCreatedEvent(CategoryId Id, CategoryName Name, CategorySlug Slug, CategorySortOrder SortOrder, 
+    CategoryCreatedAt CreatedAt, CategoryDeactivatedAt DeactivatedAt) : IDomainEvent;

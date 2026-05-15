@@ -5,10 +5,9 @@ namespace Floristo.Domain.Categories.Factories;
 
 public sealed class CategoryFactory : ICategoryFactory
 {
-    public Category Create(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug,
-        CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle,
-        CategorySeoDescription? seoDescription)
-            => new(id, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
+    public Category Create(CategoryId id, CategoryName name, CategorySlug slug,
+        CategorySortOrder sortOrder)
+            => new(id, name, slug, sortOrder);
 
     public Category Restore(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug,
         CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle,
