@@ -1,5 +1,9 @@
+using Floristo.Application.Categories.Services;
 using Floristo.Application.Customers.Services;
+using Floristo.Domain.Categories.Repositories;
 using Floristo.Domain.Customers.Repositories;
+using Floristo.Infrastructure.EF.Categories.Repositories;
+using Floristo.Infrastructure.EF.Categories.Services;
 using Floristo.Infrastructure.EF.Contexts;
 using Floristo.Infrastructure.EF.Customers.Repositories;
 using Floristo.Infrastructure.EF.Customers.Services;
@@ -17,6 +21,8 @@ internal static class Extensions
     {
         services.AddScoped<ICustomerRepository, PostgresCustomerRepository>();
         services.AddScoped<ICustomerReadService, PostgresCustomerReadService>();
+        services.AddScoped<ICategoryRepository, PostgresCategoryRepository>();
+        services.AddScoped<ICategoryReadService, PostgresCategoryReadService>();
         
         var options = configuration.GetOptions<PostgresOptions>("Postgres");
         services.AddDbContext<ReadDbContext>(ctx => ctx.UseNpgsql(options.ConnectionString));

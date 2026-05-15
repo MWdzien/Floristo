@@ -1,0 +1,19 @@
+using Floristo.Application.Categories.Services;
+using Floristo.Infrastructure.EF.Categories.Models;
+using Floristo.Infrastructure.EF.Contexts;
+using Microsoft.EntityFrameworkCore;
+
+namespace Floristo.Infrastructure.EF.Categories.Services;
+
+internal sealed class PostgresCategoryReadService : ICategoryReadService
+{
+    private readonly DbSet<CategoryReadModel> _categories;
+
+    public PostgresCategoryReadService(ReadDbContext dbContext)
+    {
+        _categories = dbContext.Categories;
+    }
+
+    public Task<bool> ExistsBySlugAsync(string slug)
+        => _categories.AnyAsync(c => c.Slug == slug);
+}
