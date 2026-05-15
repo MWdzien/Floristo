@@ -2,4 +2,8 @@ using Floristo.SharedAbstractions.Exceptions;
 
 namespace Floristo.Application.Categories.Exceptions;
 
-public class CategorySlugNotUniqueException(string slug) : FloristoException($"category with slug {slug} already exists");
+public class CategorySlugNotUniqueException(string slug)
+    : FloristoException($"category with slug {slug} already exists")
+{
+    public override int StatusCode => 409;
+}
