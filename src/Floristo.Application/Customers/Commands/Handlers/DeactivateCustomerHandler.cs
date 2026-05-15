@@ -4,7 +4,7 @@ using Floristo.SharedAbstractions.Commands;
 
 namespace Floristo.Application.Customers.Commands.Handlers;
 
-public class DeactivateCustomerHandler : ICommandHandler<DeactivateCustomer>
+internal sealed class DeactivateCustomerHandler : ICommandHandler<DeactivateCustomer>
 {
     private readonly ICustomerRepository _customerRepository;
 

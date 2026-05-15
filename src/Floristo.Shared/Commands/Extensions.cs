@@ -12,7 +12,7 @@ public static class Extensions
         
         services.AddSingleton<ICommandDispatcher, InMemoryCommandDispatcher>();
         services.Scan(scan => scan.FromAssemblies(assembly)
-            .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<>)))
+            .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<>)), publicOnly: false)
             .AsImplementedInterfaces()
             .WithScopedLifetime());
         

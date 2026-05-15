@@ -12,7 +12,7 @@ public static class Extensions
         
         services.AddSingleton<IQueryDispatcher, InMemoryQueryDispatcher>();
         services.Scan(scan => scan.FromAssemblies(assembly)
-            .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)))
+            .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)), publicOnly: false)
             .AsImplementedInterfaces()
             .WithScopedLifetime());
         

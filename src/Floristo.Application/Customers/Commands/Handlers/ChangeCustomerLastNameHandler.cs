@@ -4,7 +4,7 @@ using Floristo.SharedAbstractions.Commands;
 
 namespace Floristo.Application.Customers.Commands.Handlers;
 
-public class ChangeCustomerLastNameHandler : ICommandHandler<ChangeCustomerLastName>
+internal sealed class ChangeCustomerLastNameHandler : ICommandHandler<ChangeCustomerLastName>
 {
     private readonly ICustomerRepository _customerRepository;
 

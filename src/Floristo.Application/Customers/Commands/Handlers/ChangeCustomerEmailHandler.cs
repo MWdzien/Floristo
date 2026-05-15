@@ -5,7 +5,7 @@ using Floristo.SharedAbstractions.Commands;
 
 namespace Floristo.Application.Customers.Commands.Handlers;
 
-public class ChangeCustomerEmailHandler : ICommandHandler<ChangeCustomerEmail>
+internal sealed class ChangeCustomerEmailHandler : ICommandHandler<ChangeCustomerEmail>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly ICustomerReadService _customerReadService;

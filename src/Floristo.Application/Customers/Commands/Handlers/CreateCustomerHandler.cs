@@ -6,7 +6,7 @@ using Floristo.SharedAbstractions.Commands;
 
 namespace Floristo.Application.Customers.Commands.Handlers;
 
-public class CreateCustomerHandler : ICommandHandler<CreateCustomer>
+internal sealed class CreateCustomerHandler : ICommandHandler<CreateCustomer>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly ICustomerFactory _customerFactory;
