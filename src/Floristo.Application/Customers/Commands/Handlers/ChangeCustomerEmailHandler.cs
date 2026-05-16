@@ -25,7 +25,7 @@ internal sealed class ChangeCustomerEmailHandler : ICommandHandler<ChangeCustome
             throw new CustomerNotFoundException(command.Id);
         }
 
-        if (await _customerReadService.ExistsByEmailAsync(command.Email))
+        if (await _customerReadService.ExistsByEmailAsync(command.Email, command.Id))
         {
             throw new CustomerEmailNotUniqueException(command.Email);
         }

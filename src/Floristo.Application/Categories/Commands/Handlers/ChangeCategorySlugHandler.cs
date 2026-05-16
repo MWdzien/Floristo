@@ -25,7 +25,7 @@ internal sealed class ChangeCategorySlugHandler : ICommandHandler<ChangeCategory
             throw new CategoryNotFoundException(command.Id);
         }
 
-        if (await _categoryReadService.ExistsBySlugAsync(command.Slug))
+        if (await _categoryReadService.ExistsBySlugAsync(command.Slug, command.Id))
         {
             throw new CategorySlugNotUniqueException(command.Slug);
         }
