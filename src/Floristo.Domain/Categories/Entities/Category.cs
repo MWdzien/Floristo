@@ -76,6 +76,11 @@ public class Category : AggregateRoot<CategoryId>
     
     public void ChangeSlug(CategorySlug slug)
     {
+        if (_slug == slug)
+        {
+            throw new CategorySlugAlreadyInUseException();
+        }
+        
         _slug = slug;
         AddEvent(new CategorySlugChangedEvent(Id, slug));
     }
