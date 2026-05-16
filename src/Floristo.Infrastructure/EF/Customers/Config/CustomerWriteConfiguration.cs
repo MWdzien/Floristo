@@ -63,5 +63,7 @@ internal sealed class CustomerWriteConfiguration : IEntityTypeConfiguration<Cust
             .HasConversion(customerDeactivatedAtConverter)
             .HasColumnName("deactivated_at")
             .IsRequired(false);
+        
+        builder.HasIndex("_email").IsUnique();
     }
 }

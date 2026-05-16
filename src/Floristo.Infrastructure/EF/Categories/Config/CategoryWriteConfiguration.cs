@@ -99,5 +99,7 @@ internal sealed class CategoryWriteConfiguration : IEntityTypeConfiguration<Cate
             .HasConversion(categoryDeactivatedAtConverter)
             .HasColumnName("deactivated_at")
             .IsRequired(false);
+        
+        builder.HasIndex("_slug").IsUnique();
     }
 }
