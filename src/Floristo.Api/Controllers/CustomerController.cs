@@ -16,49 +16,49 @@ public class CustomerController : BaseController
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<CustomerDto>> Get([FromRoute] GetCustomer query)
+    public async Task<ActionResult<CustomerDto>> GetCustomer([FromRoute] GetCustomer query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return OkOrNotFound(result);
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CustomerDto>>> Get([FromQuery] GetCustomers query)
+    public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomers([FromQuery] GetCustomers query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return OkOrNotFound(result);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CreateCustomer command)
+    public async Task<IActionResult> PostCustomer([FromBody] CreateCustomer command)
     {
         await CommandDispatcher.DispatchAsync(command);
-        return CreatedAtAction(nameof(Get), new { id = command.Id }, null);
+        return CreatedAtAction(nameof(GetCustomer), new { id = command.Id }, null);
     }
     
     [HttpPut("{id:guid}/first-name")]
-    public async Task<IActionResult> Put([FromBody] ChangeCustomerFirstName command)
+    public async Task<IActionResult> PutFirstName([FromBody] ChangeCustomerFirstName command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpPut("{id:guid}/last-name")]
-    public async Task<IActionResult> Put([FromBody] ChangeCustomerLastName command)
+    public async Task<IActionResult> PutLastName([FromBody] ChangeCustomerLastName command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpPut("{id:guid}/email")]
-    public async Task<IActionResult> Put([FromBody] ChangeCustomerEmail command)
+    public async Task<IActionResult> PutEmail([FromBody] ChangeCustomerEmail command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete([FromRoute] DeactivateCustomer command)
+    public async Task<IActionResult> DeleteCustomer([FromRoute] DeactivateCustomer command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();

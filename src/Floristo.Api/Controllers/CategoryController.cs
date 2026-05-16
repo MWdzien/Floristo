@@ -16,98 +16,98 @@ public class CategoryController : BaseController
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<CategoryDto>> Get([FromRoute] GetCategory query)
+    public async Task<ActionResult<CategoryDto>> GetCategory([FromRoute] GetCategory query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return OkOrNotFound(result);
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryDto>>> Get([FromQuery] GetCategories query)
+    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories([FromQuery] GetCategories query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return OkOrNotFound(result);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CreateCategory command)
+    public async Task<IActionResult> PostCategory([FromBody] CreateCategory command)
     {
         await CommandDispatcher.DispatchAsync(command);
-        return CreatedAtAction(nameof(Get), new { id = command.Id }, null);
+        return CreatedAtAction(nameof(GetCategory), new { id = command.Id }, null);
     }
 
     [HttpPut("{id:guid}/name")]
-    public async Task<IActionResult> Put([FromBody] ChangeCategoryName command)
+    public async Task<IActionResult> PutName([FromBody] ChangeCategoryName command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpPut("{id:guid}/slug")]
-    public async Task<IActionResult> Put([FromBody] ChangeCategorySlug command)
+    public async Task<IActionResult> PutSlug([FromBody] ChangeCategorySlug command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpPut("{id:guid}/sort-order")]
-    public async Task<IActionResult> Put([FromBody] ChangeCategorySortOrder command)
+    public async Task<IActionResult> PutSortOrder([FromBody] ChangeCategorySortOrder command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpPut("{id:guid}/details")]
-    public async Task<IActionResult> Put([FromBody] UpdateCategoryDetails command)
+    public async Task<IActionResult> PutDetails([FromBody] UpdateCategoryDetails command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpPut("{id:guid}/activate")]
-    public async Task<IActionResult> Put([FromRoute] ActivateCategory command)
+    public async Task<IActionResult> PutActivate([FromRoute] ActivateCategory command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpPut("{id:guid}/deactivate")]
-    public async Task<IActionResult> Put([FromRoute] DeactivateCategory command)
+    public async Task<IActionResult> PutDeactivate([FromRoute] DeactivateCategory command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpDelete("{id:guid}/description")]
-    public async Task<IActionResult> Delete([FromRoute] DeleteCategoryDescription command)
+    public async Task<IActionResult> DeleteDescription([FromRoute] DeleteCategoryDescription command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpDelete("{id:guid}/image-url")]
-    public async Task<IActionResult> Delete([FromRoute] DeleteCategoryImageUrl command)
+    public async Task<IActionResult> DeleteImageUrl([FromRoute] DeleteCategoryImageUrl command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpDelete("{id:guid}/seo-title")]
-    public async Task<IActionResult> Delete([FromRoute] DeleteCategorySeoTitle command)
+    public async Task<IActionResult> DeleteSeoTitle([FromRoute] DeleteCategorySeoTitle command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpDelete("{id:guid}/seo-description")]
-    public async Task<IActionResult> Delete([FromRoute] DeleteCategorySeoDescription command)
+    public async Task<IActionResult> DeleteSeoDescription([FromRoute] DeleteCategorySeoDescription command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete([FromRoute] DeleteCategory command)
+    public async Task<IActionResult> DeleteCategory([FromRoute] DeleteCategory command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
