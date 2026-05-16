@@ -32,7 +32,7 @@ public class ChangeCustomerEmailHandlerTests
         var command = new ChangeCustomerEmail(Guid.NewGuid(), "john.doe@mock.com");
         var customer = new CustomerFactory().Create(command.Id, "John", "Doe", "old@mock.com");
         _repository.GetAsync(command.Id).Returns(customer);
-        _readService.ExistsByEmailAsync(command.Email).Returns(true);
+        _readService.ExistsByEmailAsync(command.Email, command.Id).Returns(true);
         
         
         var exception = await Record.ExceptionAsync(async () => await Act(command));

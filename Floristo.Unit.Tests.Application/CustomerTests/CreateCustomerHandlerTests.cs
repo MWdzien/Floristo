@@ -18,7 +18,7 @@ public class CreateCustomerHandlerTests
         => _commandHandler.HandleAsync(command);
 
     [Fact]
-    public async Task HandleAsync_Throws_CustomerAlreadyExistsException_When_Customer_With_Same_Email_Exists()
+    public async Task HandleAsync_Throws_CustomerEmailNotUniqueException_When_Customer_With_Same_Email_Exists()
     {
         var command = GetCreateCustomer();
         _readService.ExistsByEmailAsync(command.Email).Returns(true);
