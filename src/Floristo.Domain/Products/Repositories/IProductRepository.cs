@@ -6,7 +6,7 @@ namespace Floristo.Domain.Products.Repositories;
 public interface IProductRepository
 {
     Task<Product?> GetAsync(ProductId id);
-    Task AddAsync(Product category);
-    Task UpdateAsync(Product category);
-    Task DeleteAsync(Product category);
+    Task AddAsync(Product product);
+    Task UpdateAsync(Product product);
+    Task DeleteAsync(Product product);
 }
