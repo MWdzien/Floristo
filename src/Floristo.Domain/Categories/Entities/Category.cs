@@ -16,7 +16,7 @@ public class Category : AggregateRoot<CategoryId>
     private CategorySeoDescription? _seoDescription;
     
     private CategoryCreatedAt _createdAt;
-    private CategoryDeactivatedAt? _deactivatedAt;
+    private CategoryUnpublishedAt? _unpublishedAt;
 
     private Category()
     {
@@ -29,17 +29,17 @@ public class Category : AggregateRoot<CategoryId>
         _slug = slug;
         _sortOrder = sortOrder;
         _createdAt = DateTime.UtcNow;
-        _deactivatedAt = DateTime.UtcNow;
-        AddEvent(new CategoryCreatedEvent(id, name, slug, sortOrder, _createdAt, _deactivatedAt));
+        _unpublishedAt = DateTime.UtcNow;
+        AddEvent(new CategoryCreatedEvent(id, name, slug, sortOrder, _createdAt, _unpublishedAt));
     }
     
     internal Category(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug, 
         CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle, CategorySeoDescription? 
-            seoDescription, CategoryCreatedAt createdAt, CategoryDeactivatedAt? deactivatedAt)
+            seoDescription, CategoryCreatedAt createdAt, CategoryUnpublishedAt? unpublishedAt)
     {
         SetState(id, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
         _createdAt = createdAt;
-        _deactivatedAt = deactivatedAt;
+        _unpublishedAt = unpublishedAt;
     }
 
     private void SetState(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug,
@@ -78,7 +78,7 @@ public class Category : AggregateRoot<CategoryId>
     {
         if (_slug == slug)
         {
-            throw new CategorySlugAlreadyInUseException();
+            throw new CategorySlugNotChangedException();
         }
         
         _slug = slug;
@@ -127,34 +127,34 @@ public class Category : AggregateRoot<CategoryId>
         AddEvent(new CategorySeoDescriptionChangedEvent(Id, _seoDescription));
     }
     
-    public void Deactivate()
+    public void Unpublish()
     {
-        if (_deactivatedAt != null)
+        if (_unpublishedAt != null)
         {
-            throw new CategoryAlreadyDeactivatedException();
+            throw new CategoryAlreadyUnpublishedException();
         }
         
-        var deactivatedAt = DateTime.UtcNow;
-        _deactivatedAt = deactivatedAt;
-        AddEvent(new CategoryDeactivatedEvent(Id, deactivatedAt));
+        var unpublishedAt = DateTime.UtcNow;
+        _unpublishedAt = unpublishedAt;
+        AddEvent(new CategoryUnpublishedEvent(Id, unpublishedAt));
     }
 
-    public void Activate()
+    public void Publish()
     {
-        if (_deactivatedAt == null)
+        if (_unpublishedAt == null)
         {
-            throw new CategoryAlreadyActiveException();
+            throw new CategoryAlreadyPublishedException();
         }
 
-        _deactivatedAt = null;
-        AddEvent(new CategoryActivatedEvent(Id));
+        _unpublishedAt = null;
+        AddEvent(new CategoryPublishedEvent(Id));
     }
 
     public void Delete()
     {
-        if (_deactivatedAt == null)
+        if (_unpublishedAt == null)
         {
-            throw new CannotDeleteActiveCategoryException();
+            throw new CannotDeletePublishedCategoryException();
         }
         
         AddEvent(new CategoryDeletedEvent(Id));
