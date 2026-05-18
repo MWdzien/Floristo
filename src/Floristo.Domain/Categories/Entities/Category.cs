@@ -150,13 +150,4 @@ public class Category : AggregateRoot<CategoryId>
         AddEvent(new CategoryPublishedEvent(Id));
     }
 
-    public void Delete()
-    {
-        if (_unpublishedAt == null)
-        {
-            throw new CannotDeletePublishedCategoryException();
-        }
-        
-        AddEvent(new CategoryDeletedEvent(Id));
-    }
 }

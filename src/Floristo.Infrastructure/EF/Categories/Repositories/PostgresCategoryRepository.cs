@@ -31,10 +31,4 @@ internal sealed class PostgresCategoryRepository : ICategoryRepository
         _categories.Update(category);
         await _dbContext.SaveChangesAsync();
     }
-
-    public async Task DeleteAsync(Category category)
-    {
-        _categories.Remove(category);
-        await _dbContext.SaveChangesAsync();
-    }
 }

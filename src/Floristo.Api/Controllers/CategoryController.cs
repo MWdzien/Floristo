@@ -106,12 +106,5 @@ public class CategoryController : BaseController
         return NoContent();
     }
     
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteCategory([FromRoute] DeleteCategory command)
-    {
-        await CommandDispatcher.DispatchAsync(command);
-        return NoContent();
-    }
-    
     
 }
