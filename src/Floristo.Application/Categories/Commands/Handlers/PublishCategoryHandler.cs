@@ -4,16 +4,16 @@ using Floristo.SharedAbstractions.Commands;
 
 namespace Floristo.Application.Categories.Commands.Handlers;
 
-internal sealed class ActivateCategoryHandler : ICommandHandler<ActivateCategory>
+internal sealed class PublishCategoryHandler : ICommandHandler<PublishCategory>
 {
     private readonly ICategoryRepository _categoryRepository;
 
-    public ActivateCategoryHandler(ICategoryRepository categoryRepository)
+    public PublishCategoryHandler(ICategoryRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }
 
-    public async Task HandleAsync(ActivateCategory command)
+    public async Task HandleAsync(PublishCategory command)
     {
         var category = await _categoryRepository.GetAsync(command.Id);
 
@@ -22,7 +22,7 @@ internal sealed class ActivateCategoryHandler : ICommandHandler<ActivateCategory
             throw new CategoryNotFoundException(command.Id);
         }
         
-        category.Activate();
+        category.Publish();
         
         await _categoryRepository.UpdateAsync(category);
     }
