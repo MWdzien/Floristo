@@ -37,8 +37,8 @@ internal sealed class CategoryWriteConfiguration : IEntityTypeConfiguration<Cate
         var categoryCreatedAtConverter = new ValueConverter<CategoryCreatedAt, DateTime>(cca => cca.Value,
             cca => new CategoryCreatedAt(cca));
         
-        var categoryDeactivatedAtConverter = new ValueConverter<CategoryDeactivatedAt, DateTime>(cda => cda.Value,
-            cda => new CategoryDeactivatedAt(cda));
+        var categoryUnpublishedAtConverter = new ValueConverter<CategoryUnpublishedAt, DateTime>(cda => cda.Value,
+            cda => new CategoryUnpublishedAt(cda));
         
         builder
             .Property(c => c.Id)
@@ -95,9 +95,9 @@ internal sealed class CategoryWriteConfiguration : IEntityTypeConfiguration<Cate
             .HasColumnName("created_at");
         
         builder
-            .Property(typeof(CategoryDeactivatedAt), "_deactivatedAt")
-            .HasConversion(categoryDeactivatedAtConverter)
-            .HasColumnName("deactivated_at")
+            .Property(typeof(CategoryUnpublishedAt), "_unpublishedAt")
+            .HasConversion(categoryUnpublishedAtConverter)
+            .HasColumnName("unpublished_at")
             .IsRequired(false);
         
         builder.HasIndex("_slug").IsUnique();
