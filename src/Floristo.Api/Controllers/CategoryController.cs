@@ -26,7 +26,7 @@ public class CategoryController : BaseController
     public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories([FromQuery] GetCategories query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
-        return OkOrNotFound(result);
+        return Ok(result);
     }
 
     [HttpPost]
@@ -64,15 +64,15 @@ public class CategoryController : BaseController
         return NoContent();
     }
     
-    [HttpPut("{id:guid}/activate")]
-    public async Task<IActionResult> PutActivate([FromRoute] ActivateCategory command)
+    [HttpPut("{id:guid}/publish")]
+    public async Task<IActionResult> PutPublish([FromRoute] PublishCategory command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
-    [HttpPut("{id:guid}/deactivate")]
-    public async Task<IActionResult> PutDeactivate([FromRoute] DeactivateCategory command)
+    [HttpPut("{id:guid}/unpublish")]
+    public async Task<IActionResult> PutUnpublish([FromRoute] UnpublishCategory command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
