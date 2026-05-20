@@ -3,4 +3,4 @@ using Floristo.SharedAbstractions.Queries;
 
 namespace Floristo.Application.Categories.Queries;
 
-public record GetCategory(Guid Id) : IQuery<CategoryDto?>;
+public record GetCategoriesForBackoffice(string? SearchPhrase, bool? IsPublished) : IQuery<IEnumerable<BackofficeCategoryDto>>;
