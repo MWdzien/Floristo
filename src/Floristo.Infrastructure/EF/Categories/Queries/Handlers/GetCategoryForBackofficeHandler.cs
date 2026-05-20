@@ -7,19 +7,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Floristo.Infrastructure.EF.Categories.Queries.Handlers;
 
-internal sealed class GetCategoryHandler : IQueryHandler<GetCategory, CategoryDto?>
+internal sealed class GetCategoryForBackofficeHandler : IQueryHandler<GetCategoryForBackoffice, BackofficeCategoryDetailsDto?>
 {
     private readonly DbSet<CategoryReadModel> _categories;
 
-    public GetCategoryHandler(ReadDbContext dbContext)
+    public GetCategoryForBackofficeHandler(ReadDbContext dbContext)
     {
         _categories = dbContext.Categories;
     }
 
-    public Task<CategoryDto?> HandleAsync(GetCategory query)
-        => _categories
+    public async Task<BackofficeCategoryDetailsDto?> HandleAsync(GetCategoryForBackoffice query)
+        => await _categories
             .Where(c => c.Id == query.Id)
             .AsNoTracking()
-            .Select(c => c.AsDto())
+            .Select(c =>
+                new BackofficeCategoryDetailsDto(c.Id, c.Name, c.Description, c.Slug, c.SortOrder, c.ImageUrl,
+                    c.SeoTitle, c.SeoDescription, c.CreatedAt, c.UnpublishedAt)
+            )
             .SingleOrDefaultAsync();
 }
