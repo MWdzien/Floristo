@@ -3,7 +3,7 @@ namespace Floristo.Application.Categories.DTOs;
 public record BackofficeCategoryDto(
     Guid Id,
     string Name,
-    string ImageUrl,
+    string? ImageUrl,
     bool IsPublished,
     int SortOrder
     );
