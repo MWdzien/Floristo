@@ -26,7 +26,7 @@ public class CustomerController : BaseController
     public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomers([FromQuery] GetCustomers query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
-        return OkOrNotFound(result);
+        return Ok(result);
     }
 
     [HttpPost]

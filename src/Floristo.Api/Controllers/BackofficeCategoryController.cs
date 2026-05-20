@@ -7,28 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Floristo.Api.Controllers;
 
-[Route("api/categories")]
-public class CategoryController : BaseController
+[Route("api/backoffice/categories")]
+public class BackofficeCategoryController : BaseController
 {
-    public CategoryController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher) 
+    public BackofficeCategoryController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
         : base(queryDispatcher, commandDispatcher)
     {
     }
-
+    
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<CategoryDto>> GetCategory([FromRoute] GetCategory query)
+    public async Task<ActionResult<BackofficeCategoryDetailsDto?>> GetCategory([FromRoute] GetCategoryForBackoffice query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return OkOrNotFound(result);
     }
-
+    
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories([FromQuery] GetCategories query)
+    public async Task<ActionResult<IEnumerable<BackofficeCategoryDto>>> GetCategories([FromQuery] GetCategoriesForBackoffice query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return Ok(result);
     }
-
+    
     [HttpPost]
     public async Task<IActionResult> PostCategory([FromBody] CreateCategory command)
     {
@@ -105,6 +105,4 @@ public class CategoryController : BaseController
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
-    
-    
 }

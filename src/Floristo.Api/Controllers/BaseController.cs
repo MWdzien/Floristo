@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Floristo.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
 public abstract class BaseController : ControllerBase
 {
     protected readonly IQueryDispatcher QueryDispatcher;
