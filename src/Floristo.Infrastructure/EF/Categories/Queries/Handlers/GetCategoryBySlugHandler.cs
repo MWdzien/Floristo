@@ -18,7 +18,7 @@ internal sealed class GetCategoryBySlugHandler : IQueryHandler<GetCategoryBySlug
 
     public async Task<StorefrontCategoryDetailsDto?> HandleAsync(GetCategoryBySlug query)
         => await _categories
-            .Where(c => c.Slug == query.Slug && c.IsPublished)
+            .Where(c => c.Slug == query.Slug && c.UnpublishedAt == null)
             .AsNoTracking()
             .Select(c =>
                 new StorefrontCategoryDetailsDto(c.Name, c.Slug, c.Description, c.ImageUrl, c.SeoTitle, c.SeoDescription)

@@ -22,6 +22,5 @@ internal sealed class CategoryReadConfiguration : IEntityTypeConfiguration<Categ
         builder.Property(c => c.SeoDescription).HasColumnName("seo_description");
         builder.Property(c => c.CreatedAt).HasColumnName("created_at");
         builder.Property(c => c.UnpublishedAt).HasColumnName("unpublished_at");
-        builder.Ignore(c => c.IsPublished);
     }
 }

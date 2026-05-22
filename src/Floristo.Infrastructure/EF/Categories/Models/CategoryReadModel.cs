@@ -13,5 +13,4 @@ public class CategoryReadModel
     public string? SeoDescription { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UnpublishedAt { get; set; }
-    public bool IsPublished => UnpublishedAt == null;
 }

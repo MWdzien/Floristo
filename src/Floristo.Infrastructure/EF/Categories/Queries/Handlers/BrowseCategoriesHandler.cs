@@ -18,7 +18,7 @@ internal sealed class BrowseCategoriesHandler : IQueryHandler<BrowseCategories, 
 
     public async Task<IEnumerable<StorefrontCategoryDto>> HandleAsync(BrowseCategories query)
         => await _categories
-            .Where(c => c.IsPublished)
+            .Where(c => c.UnpublishedAt == null)
             .OrderBy(c => c.SortOrder)
             .AsNoTracking()
             .Select(c => new StorefrontCategoryDto(c.Name, c.Slug, c.ImageUrl))
