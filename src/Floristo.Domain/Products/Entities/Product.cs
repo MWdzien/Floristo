@@ -231,4 +231,14 @@ public class Product : AggregateRoot<ProductId>
         _unpublishedAt = null;
         AddEvent(new ProductPublishedEvent(Id));
     }
+
+    public void Delete()
+    {
+        if (_unpublishedAt == null)
+        {
+            throw new CannotDeletePublishedProductException();
+        }
+        
+        AddEvent(new ProductDeletedEvent(Id));
+    }
 }
