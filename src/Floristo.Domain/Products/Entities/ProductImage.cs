@@ -11,7 +11,7 @@ public class ProductImage
 
     internal ProductImageSortOrder SortOrder => _sortOrder;
     
-    public ProductImage()
+    private ProductImage()
     {
     }
 
@@ -22,17 +22,7 @@ public class ProductImage
         _sortOrder = sortOrder;
     }
 
-    public void ChangeUrl(ProductImageUrl url)
-    {
-        if (_url == url)
-        {
-            throw new ProductImageUrlNotChangedException();
-        }
-
-        _url = url;
-    }
-
-    public void ChangeSortOrder(ProductImageSortOrder sortOrder)
+    internal void ChangeSortOrder(ProductImageSortOrder sortOrder)
     {
         if (_sortOrder == sortOrder)
         {

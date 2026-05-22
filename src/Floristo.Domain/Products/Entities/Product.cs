@@ -2,7 +2,9 @@ using Floristo.Domain.Categories.ValueObjects;
 using Floristo.Domain.Products.Events;
 using Floristo.Domain.Products.Exceptions;
 using Floristo.Domain.Products.Exceptions.StateChanged;
+using Floristo.Domain.Products.Exceptions.Validation.Image;
 using Floristo.Domain.Products.ValueObjects;
+using Floristo.Domain.Products.ValueObjects.ProductImage;
 using Floristo.SharedAbstractions.Domain;
 
 namespace Floristo.Domain.Products.Entities;
@@ -23,11 +25,16 @@ public class Product : AggregateRoot<ProductId>
     private ProductCreatedAt _createdAt;
     private ProductUnpublishedAt? _unpublishedAt;
 
+    private readonly List<ProductImage> _images = new();
+    public IReadOnlyCollection<ProductImage> Images => _images.AsReadOnly();
+
+    public const int MaxImages = 10;
+
     private Product()
     {
     }
 
-    public Product(
+    internal Product(
         ProductId id,
         ProductName name, 
         ProductSlug slug, 
@@ -46,7 +53,7 @@ public class Product : AggregateRoot<ProductId>
         AddEvent(new ProductCreatedEvent(id, name, slug, price, categoryId, _allowEngraving, _allowGiftTag, sortOrder, _createdAt, _unpublishedAt));
     }
 
-    public Product(
+    internal Product(
         ProductId id,
         ProductName name, 
         ProductSlug slug, 
@@ -60,7 +67,8 @@ public class Product : AggregateRoot<ProductId>
         bool allowGiftTag, 
         ProductSortOrder sortOrder, 
         ProductCreatedAt createdAt, 
-        ProductUnpublishedAt? unpublishedAt
+        ProductUnpublishedAt? unpublishedAt,
+        IEnumerable<ProductImage> images
         )
     {
         SetState(id, name, slug, price, categoryId, sortOrder);
@@ -74,6 +82,8 @@ public class Product : AggregateRoot<ProductId>
         
         _createdAt = createdAt;
         _unpublishedAt = unpublishedAt;
+
+        _images = images.ToList();
     }
 
     private void SetState(ProductId id, ProductName name, ProductSlug slug, ProductPrice price, 
@@ -293,8 +303,50 @@ public class Product : AggregateRoot<ProductId>
             throw new ProductAlreadyPublishedException();
         }
 
+        if (_images.Count == 0)
+            throw new CannotPublishProductWithoutImagesException();
+
         _unpublishedAt = null;
         AddEvent(new ProductPublishedEvent(Id));
+    }
+
+    public void AddImage(ProductImageId imageId, ProductImageUrl url, ProductImageSortOrder sortOrder)
+    {
+        if (_images.Count >= MaxImages)
+            throw new ProductImageLimitExceededException();
+
+        if (_images.Any(i => i.Id == imageId))
+            throw new ProductImageAlreadyExistsException();
+
+        if (_images.Any(i => i.SortOrder == sortOrder))
+            throw new ProductImageSortOrderAlreadyTakenException();
+        
+        _images.Add(new ProductImage(imageId, url, sortOrder));
+        AddEvent(new ProductImageAddedEvent(Id, imageId, url, sortOrder));
+    }
+
+    public void RemoveImage(ProductImageId imageId)
+    {
+        var image = _images.FirstOrDefault(i => i.Id == imageId) 
+                    ?? throw new ProductImageNotFoundException();
+
+        if (_unpublishedAt is null && _images.Count == 1)
+            throw new CannotRemoveLastImageOfPublishedProductException();
+
+        _images.Remove(image);
+        AddEvent(new ProductImageRemovedEvent(Id, imageId));
+    }
+
+    public void ChangeImageSortOrder(ProductImageId imageId, ProductImageSortOrder sortOrder)
+    {
+        var image = _images.FirstOrDefault(i => i.Id == imageId) 
+                    ?? throw new ProductImageNotFoundException();
+
+        if (_images.Any(i => i.Id != imageId && i.SortOrder == sortOrder))
+            throw new ProductImageSortOrderAlreadyTakenException();
+        
+        image.ChangeSortOrder(sortOrder);
+        AddEvent(new ProductImageSortOrderChangedEvent(Id, imageId, sortOrder));
     }
 
     public void Delete()
