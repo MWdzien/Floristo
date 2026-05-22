@@ -19,7 +19,6 @@ public class Product : AggregateRoot<ProductId>
     private ProductSeoDescription? _seoDescription;
     private bool _allowEngraving;
     private bool _allowGiftTag;
-    private bool _isFeatured;
     private ProductSortOrder _sortOrder;
     private ProductCreatedAt _createdAt;
     private ProductUnpublishedAt? _unpublishedAt;
@@ -41,11 +40,10 @@ public class Product : AggregateRoot<ProductId>
 
         _allowEngraving = false;
         _allowGiftTag = false;
-        _isFeatured = false;
         _createdAt = DateTime.UtcNow;
         _unpublishedAt = DateTime.UtcNow;
         
-        AddEvent(new ProductCreatedEvent(id, name, slug, price, categoryId, _allowEngraving, _allowGiftTag, _isFeatured, sortOrder, _createdAt, _unpublishedAt));
+        AddEvent(new ProductCreatedEvent(id, name, slug, price, categoryId, _allowEngraving, _allowGiftTag, sortOrder, _createdAt, _unpublishedAt));
     }
 
     public Product(
@@ -60,7 +58,6 @@ public class Product : AggregateRoot<ProductId>
         ProductSeoDescription? seoDescription, 
         bool allowEngraving, 
         bool allowGiftTag, 
-        bool isFeatured, 
         ProductSortOrder sortOrder, 
         ProductCreatedAt createdAt, 
         ProductUnpublishedAt? unpublishedAt
@@ -74,7 +71,6 @@ public class Product : AggregateRoot<ProductId>
         _seoDescription = seoDescription;
         _allowEngraving = allowEngraving;
         _allowGiftTag = allowGiftTag;
-        _isFeatured = isFeatured;
         
         _createdAt = createdAt;
         _unpublishedAt = unpublishedAt;
@@ -265,18 +261,6 @@ public class Product : AggregateRoot<ProductId>
         
         _allowGiftTag = false;
         AddEvent(new ProductGiftTagDisallowedEvent(Id));
-    }
-
-    public void AddToFeatured()
-    {
-        _isFeatured = true;
-        AddEvent(new ProductAddedToFeaturedEvent(Id));
-    }
-    
-    public void RemoveFromFeatured()
-    {
-        _isFeatured = false;
-        AddEvent(new ProductRemovedFromFeaturedEvent(Id));
     }
 
     public void ChangeSortOrder(ProductSortOrder sortOrder)

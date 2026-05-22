@@ -1,6 +1,0 @@
-using Floristo.Domain.Products.ValueObjects;
-using Floristo.SharedAbstractions.Domain;
-
-namespace Floristo.Domain.Products.Events;
-
-public record ProductAddedToFeaturedEvent(ProductId Id) : IDomainEvent;

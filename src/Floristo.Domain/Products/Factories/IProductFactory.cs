@@ -11,6 +11,6 @@ public interface IProductFactory
 
     Product Restore(ProductId id, ProductName name, ProductSlug slug, ProductDescription? description,
         ProductPrice price, CategoryId categoryId, ProductDimensions? productDimensions, ProductSeoTitle? seoTitle,
-        ProductSeoDescription? seoDescription, bool allowEngraving, bool allowGiftTag, bool isFeatured,
+        ProductSeoDescription? seoDescription, bool allowEngraving, bool allowGiftTag,
         ProductSortOrder sortOrder, ProductCreatedAt createdAt, ProductUnpublishedAt? unpublishedAt);
 }

@@ -5,5 +5,5 @@ using Floristo.SharedAbstractions.Domain;
 namespace Floristo.Domain.Products.Events;
 
 public record ProductCreatedEvent(ProductId Id, ProductName Name, ProductSlug Slug, ProductPrice Price, 
-    CategoryId CategoryId, bool AllowEngraving, bool  AllowGiftTag, bool IsFeatured, ProductSortOrder SortOrder, 
+    CategoryId CategoryId, bool AllowEngraving, bool  AllowGiftTag, ProductSortOrder SortOrder, 
     ProductCreatedAt CreatedAt, ProductUnpublishedAt UnpublishedAt) : IDomainEvent;

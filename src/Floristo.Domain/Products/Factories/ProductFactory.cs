@@ -13,8 +13,8 @@ public sealed class ProductFactory : IProductFactory
     public Product Restore(ProductId id, ProductName name, ProductSlug slug, ProductDescription? description,
         ProductPrice price,
         CategoryId categoryId, ProductDimensions? productDimensions, ProductSeoTitle? seoTitle,
-        ProductSeoDescription? seoDescription, bool allowEngraving, bool allowGiftTag, bool isFeatured,
+        ProductSeoDescription? seoDescription, bool allowEngraving, bool allowGiftTag,
         ProductSortOrder sortOrder, ProductCreatedAt createdAt, ProductUnpublishedAt? unpublishedAt)
         => new(id, name, slug, description, price, categoryId, productDimensions, seoTitle, seoDescription,
-            allowEngraving, allowGiftTag, isFeatured, sortOrder, createdAt, unpublishedAt);
+            allowEngraving, allowGiftTag, sortOrder, createdAt, unpublishedAt);
 }
