@@ -11,14 +11,14 @@ namespace Floristo.Unit.Tests.Domain.CategoryTests;
 public class CategoryTests
 {
     [Fact]
-    public void ChangeSlug_Throws_CategorySlugAlreadyInUseException_When_Slug_Is_Already_In_Use()
+    public void ChangeSlug_Throws_CategorySlugNotChangedException_When_Slug_Is_Not_Changed()
     {
         var category = GetCategory();
         
         var exception = Record.Exception(() => category.ChangeSlug("test-flowers"));
 
         exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<CategorySlugAlreadyInUseException>();
+        exception.ShouldBeOfType<CategorySlugNotChangedException>();
     }
 
     [Fact]
@@ -36,79 +36,54 @@ public class CategoryTests
     }
     
     [Fact]
-    public void Activate_Throws_CategoryAlreadyActiveException_When_Category_Is_Already_Active()
+    public void Activate_Throws_CategoryAlreadyPublishedException_When_Category_Is_Already_Published()
     {
         var category = GetCategory();
-        category.Activate();
+        category.Publish();
         
         
-        var exception = Record.Exception(() => category.Activate());
+        var exception = Record.Exception(() => category.Publish());
         
         exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<CategoryAlreadyActiveException>();
+        exception.ShouldBeOfType<CategoryAlreadyPublishedException>();
     }
     
     [Fact]
-    public void Activate_Adds_CategoryActivatedEvent_Domain_Event_On_Success()
+    public void Publish_Adds_CategoryPublishedEvent_Domain_Event_On_Success()
     {
         var category = GetCategory();
         
-        var exception = Record.Exception(() => category.Activate());
+        var exception = Record.Exception(() => category.Publish());
         
         exception.ShouldBeNull();
         category.Events.Count().ShouldBe(1);
-        var @event = category.Events.FirstOrDefault() as CategoryActivatedEvent;
+        var @event = category.Events.FirstOrDefault() as CategoryPublishedEvent;
         @event.ShouldNotBeNull();
     }
 
     [Fact]
-    public void Deactivate_Throws_CategoryAlreadyDeactivatedException_When_Category_Is_Already_Deactivated()
+    public void Unpublish_Throws_CategoryAlreadyUnpublishedException_When_Category_Is_Already_Unpublished()
     {
         var category = GetCategory();
         
-        var exception = Record.Exception(() => category.Deactivate());
+        var exception = Record.Exception(() => category.Unpublish());
         
         exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<CategoryAlreadyDeactivatedException>();
+        exception.ShouldBeOfType<CategoryAlreadyUnpublishedException>();
     }
     
     [Fact]
-    public void Deactivate_Adds_CategoryDeactivatedEvent_Domain_Event_On_Success()
+    public void Deactivate_Adds_CategoryUnpublishedEvent_Domain_Event_On_Success()
     {
         var category = GetCategory();
-        category.Activate();
+        category.Publish();
         category.ClearEvents();
         
-        var exception = Record.Exception(() => category.Deactivate());
+        var exception = Record.Exception(() => category.Unpublish());
         
         exception.ShouldBeNull();
         category.Events.Count().ShouldBe(1);
-        var @event = category.Events.FirstOrDefault() as CategoryDeactivatedEvent;
-        @event.ShouldNotBeNull();
-    }
-    
-    [Fact]
-    public void Delete_Throws_CannotDeleteActiveCategoryException_When_Category_Is_Active()
-    {
-        var category = GetCategory();
-        category.Activate();
-        
-        var exception = Record.Exception(() => category.Delete());
-        
-        exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<CannotDeleteActiveCategoryException>();
-    }
-
-    [Fact]
-    public void Delete_Throws_CategoryDeletedEvent_Domain_Event_On_Success()
-    {
-        var category = GetCategory();
-        
-        var exception = Record.Exception(() => category.Delete());
-        
-        exception.ShouldBeNull();
-        category.Events.Count().ShouldBe(1);
-        var @event = category.Events.FirstOrDefault() as CategoryDeletedEvent;
+        var @event = category.Events.FirstOrDefault() as CategoryUnpublishedEvent;
         @event.ShouldNotBeNull();
     }
     
