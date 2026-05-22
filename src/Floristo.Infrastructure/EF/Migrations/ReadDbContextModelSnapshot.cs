@@ -34,10 +34,6 @@ namespace Floristo.Infrastructure.EF.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<DateTime?>("DeactivatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deactivated_at");
-
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");
@@ -67,6 +63,10 @@ namespace Floristo.Infrastructure.EF.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer")
                         .HasColumnName("sort_order");
+
+                    b.Property<DateTime?>("UnpublishedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("unpublished_at");
 
                     b.Property<int>("Version")
                         .HasColumnType("integer")
