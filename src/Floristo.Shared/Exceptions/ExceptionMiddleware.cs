@@ -17,7 +17,7 @@ internal sealed class ExceptionMiddleware : IMiddleware
             context.Response.StatusCode = e.StatusCode;
             context.Response.ContentType = "application/json";
              
-            var errorCode = ToUnderscoreCase(e.GetType().Name).Replace("Exception", string.Empty);
+            var errorCode = ToUnderscoreCase(e.GetType().Name.Replace("Exception", string.Empty));
             var json = JsonSerializer.Serialize(new {ErrorCode = errorCode, e.Message});
             
             await context.Response.WriteAsync(json);
