@@ -7,10 +7,10 @@ namespace Floristo.Domain.Products.Factories;
 public interface IProductFactory
 {
     Product Create(ProductId id, ProductName name, ProductSlug slug, ProductPrice price, CategoryId categoryId, 
-        bool allowEngraving, bool allowGiftTag, bool isFeatured, ProductSortOrder sortOrder);
+        ProductSortOrder sortOrder);
 
     Product Restore(ProductId id, ProductName name, ProductSlug slug, ProductDescription? description,
         ProductPrice price, CategoryId categoryId, ProductDimensions? productDimensions, ProductSeoTitle? seoTitle,
         ProductSeoDescription? seoDescription, bool allowEngraving, bool allowGiftTag, bool isFeatured,
-        ProductSortOrder sortOrder, ProductCreatedAt createdAt, ProductDeactivatedAt? deactivatedAt);
+        ProductSortOrder sortOrder, ProductCreatedAt createdAt, ProductUnpublishedAt? unpublishedAt);
 }

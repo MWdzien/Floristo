@@ -2,7 +2,7 @@ using Floristo.SharedAbstractions.Exceptions;
 
 namespace Floristo.Domain.Products.Exceptions;
 
-public class ProductSlugAlreadyInUseException() : FloristoException("product slug is already in use")
+public class ProductSlugNotChangedException() : FloristoException("product slug is the same as previous")
 {
     public override int StatusCode => 422;
 }

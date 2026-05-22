@@ -21,7 +21,7 @@ public class Product : AggregateRoot<ProductId>
     private bool _isFeatured;
     private ProductSortOrder _sortOrder;
     private ProductCreatedAt _createdAt;
-    private ProductDeactivatedAt? _deactivatedAt;
+    private ProductUnpublishedAt? _unpublishedAt;
 
     private Product()
     {
@@ -32,19 +32,19 @@ public class Product : AggregateRoot<ProductId>
         ProductName name, 
         ProductSlug slug, 
         ProductPrice price, 
-        CategoryId categoryId, 
-        bool allowEngraving, 
-        bool allowGiftTag, 
-        bool isFeatured, 
+        CategoryId categoryId,
         ProductSortOrder sortOrder
         )
     {
-        SetState(id, name, slug, price, categoryId, allowEngraving, allowGiftTag, isFeatured, sortOrder);
-        
+        SetState(id, name, slug, price, categoryId, sortOrder);
+
+        _allowEngraving = false;
+        _allowGiftTag = false;
+        _isFeatured = false;
         _createdAt = DateTime.UtcNow;
-        _deactivatedAt = DateTime.UtcNow;
+        _unpublishedAt = DateTime.UtcNow;
         
-        AddEvent(new ProductCreatedEvent(id, name, slug, price, categoryId, allowEngraving, allowGiftTag, isFeatured, sortOrder, _createdAt, _deactivatedAt));
+        AddEvent(new ProductCreatedEvent(id, name, slug, price, categoryId, _allowEngraving, _allowGiftTag, _isFeatured, sortOrder, _createdAt, _unpublishedAt));
     }
 
     public Product(
@@ -62,31 +62,31 @@ public class Product : AggregateRoot<ProductId>
         bool isFeatured, 
         ProductSortOrder sortOrder, 
         ProductCreatedAt createdAt, 
-        ProductDeactivatedAt? deactivatedAt
+        ProductUnpublishedAt? unpublishedAt
         )
     {
-        SetState(id, name, slug, price, categoryId, allowEngraving, allowGiftTag, isFeatured, sortOrder);
+        SetState(id, name, slug, price, categoryId, sortOrder);
         
         _description = description;
         _productDimensions = productDimensions;
         _seoTitle = seoTitle;
         _seoDescription = seoDescription;
+        _allowEngraving = allowEngraving;
+        _allowGiftTag = allowGiftTag;
+        _isFeatured = isFeatured;
         
         _createdAt = createdAt;
-        _deactivatedAt = deactivatedAt;
+        _unpublishedAt = unpublishedAt;
     }
 
-    private void SetState(ProductId id, ProductName name, ProductSlug slug, ProductPrice price, CategoryId categoryId, 
-        bool allowEngraving, bool allowGiftTag, bool isFeatured, ProductSortOrder sortOrder)
+    private void SetState(ProductId id, ProductName name, ProductSlug slug, ProductPrice price, 
+        CategoryId categoryId, ProductSortOrder sortOrder)
     {
         Id = id;
         _name = name;
         _slug = slug;
         _price = price;
         _categoryId = categoryId;
-        _allowEngraving = allowEngraving;
-        _allowGiftTag = allowGiftTag;
-        _isFeatured = isFeatured;
         _sortOrder = sortOrder;
     }
 
@@ -100,7 +100,7 @@ public class Product : AggregateRoot<ProductId>
     {
         if (_slug == slug)
         {
-            throw new ProductSlugAlreadyInUseException();
+            throw new ProductSlugNotChangedException();
         }
         
         _slug = slug;
@@ -209,36 +209,26 @@ public class Product : AggregateRoot<ProductId>
         AddEvent(new ProductSortOrderChangedEvent(Id, sortOrder));
     }
 
-    public void Deactivate()
+    public void Unpublish()
     {
-        if (_deactivatedAt is not null)
+        if (_unpublishedAt is not null)
         {
-            throw new ProductAlreadyDeactivatedException();
+            throw new ProductAlreadyUnpublishedException();
         }
         
-        var deactivatedAt = DateTime.UtcNow;
-        _deactivatedAt = deactivatedAt;
-        AddEvent(new ProductDeactivatedEvent(Id, deactivatedAt));
+        var unpublishedAt = DateTime.UtcNow;
+        _unpublishedAt = unpublishedAt;
+        AddEvent(new ProductUnpublishedEvent(Id, unpublishedAt));
     }
 
-    public void Activate()
+    public void Publish()
     {
-        if (_deactivatedAt == null)
+        if (_unpublishedAt == null)
         {
-            throw new ProductAlreadyActiveException();
+            throw new ProductAlreadyPublishedException();
         }
 
-        _deactivatedAt = null;
-        AddEvent(new ProductActivatedEvent(Id));
-    }
-    
-    public void Delete()
-    {
-        if (_deactivatedAt == null)
-        {
-            throw new CannotDeleteActiveProductException();
-        }
-        
-        AddEvent(new ProductDeletedEvent(Id));
+        _unpublishedAt = null;
+        AddEvent(new ProductPublishedEvent(Id));
     }
 }

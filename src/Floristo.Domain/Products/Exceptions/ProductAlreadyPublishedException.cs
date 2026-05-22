@@ -3,7 +3,7 @@ using Floristo.SharedAbstractions.Exceptions;
 
 namespace Floristo.Domain.Products.Exceptions;
 
-public class ProductAlreadyActiveException() : FloristoException("product is already active")
+public class ProductAlreadyPublishedException() : FloristoException("product is already published")
 {
     public override int StatusCode => 409;
 }
