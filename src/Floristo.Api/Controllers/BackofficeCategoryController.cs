@@ -36,20 +36,6 @@ public class BackofficeCategoryController : BaseController
         return CreatedAtAction(nameof(GetCategory), new { id = command.Id }, null);
     }
 
-    [HttpPut("{id:guid}/name")]
-    public async Task<IActionResult> PutName([FromBody] ChangeCategoryName command)
-    {
-        await CommandDispatcher.DispatchAsync(command);
-        return NoContent();
-    }
-    
-    [HttpPut("{id:guid}/slug")]
-    public async Task<IActionResult> PutSlug([FromBody] ChangeCategorySlug command)
-    {
-        await CommandDispatcher.DispatchAsync(command);
-        return NoContent();
-    }
-    
     [HttpPut("{id:guid}/sort-order")]
     public async Task<IActionResult> PutSortOrder([FromBody] ChangeCategorySortOrder command)
     {
@@ -73,34 +59,6 @@ public class BackofficeCategoryController : BaseController
     
     [HttpPut("{id:guid}/unpublish")]
     public async Task<IActionResult> PutUnpublish([FromRoute] UnpublishCategory command)
-    {
-        await CommandDispatcher.DispatchAsync(command);
-        return NoContent();
-    }
-    
-    [HttpDelete("{id:guid}/description")]
-    public async Task<IActionResult> DeleteDescription([FromRoute] DeleteCategoryDescription command)
-    {
-        await CommandDispatcher.DispatchAsync(command);
-        return NoContent();
-    }
-    
-    [HttpDelete("{id:guid}/image-url")]
-    public async Task<IActionResult> DeleteImageUrl([FromRoute] DeleteCategoryImageUrl command)
-    {
-        await CommandDispatcher.DispatchAsync(command);
-        return NoContent();
-    }
-    
-    [HttpDelete("{id:guid}/seo-title")]
-    public async Task<IActionResult> DeleteSeoTitle([FromRoute] DeleteCategorySeoTitle command)
-    {
-        await CommandDispatcher.DispatchAsync(command);
-        return NoContent();
-    }
-    
-    [HttpDelete("{id:guid}/seo-description")]
-    public async Task<IActionResult> DeleteSeoDescription([FromRoute] DeleteCategorySeoDescription command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
