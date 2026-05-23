@@ -25,8 +25,8 @@ internal sealed class DeleteCategoryHandler : ICommandHandler<DeleteCategory>
         if (category is null)
             throw new CategoryNotFoundException(command.Id);
 
-        if (await _productReadService.HasProductsInCategoryAsync(command.Id))
-            throw new CategoryHasProductsException();
+        if (await _productReadService.ExistsByCategoryAsync(command.Id))
+            throw new CategoryHasProductsException(command.Id);
         
         category.Delete();
         
