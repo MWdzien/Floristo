@@ -16,4 +16,7 @@ internal sealed class PostgresCategoryReadService : ICategoryReadService
 
     public Task<bool> ExistsBySlugAsync(string slug, Guid? excludeId = null)
         => _categories.AnyAsync(c => c.Slug == slug && (excludeId == null || c.Id != excludeId));
+
+    public Task<bool> ExistsAsync(Guid id)
+        => _categories.AnyAsync(c => c.Id == id);
 }
