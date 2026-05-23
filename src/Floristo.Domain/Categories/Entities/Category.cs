@@ -58,28 +58,31 @@ public class Category : AggregateRoot<CategoryId>
 
     public void ChangeName(CategoryName name)
     {
+        if (_name == name) return;
+        
         _name = name;
         AddEvent(new CategoryNameChangedEvent(Id, name));
     }
 
     public void ChangeDescription(CategoryDescription description)
     {
+        if (_description == description) return;
+        
         _description = description;
         AddEvent(new CategoryDescriptionChangedEvent(Id, description));
     }
 
     public void DeleteDescription()
     {
+        if (_description is null) return;
+        
         _description = null;
         AddEvent(new CategoryDescriptionChangedEvent(Id, _description));
     }
     
     public void ChangeSlug(CategorySlug slug)
     {
-        if (_slug == slug)
-        {
-            throw new CategorySlugNotChangedException();
-        }
+        if (_slug == slug) return;
         
         _slug = slug;
         AddEvent(new CategorySlugChangedEvent(Id, slug));
@@ -87,42 +90,56 @@ public class Category : AggregateRoot<CategoryId>
     
     public void ChangeSortOrder(CategorySortOrder sortOrder)
     {
+        if (_sortOrder == sortOrder) return;
+        
         _sortOrder = sortOrder;
         AddEvent(new CategorySortOrderChangedEvent(Id, sortOrder));
     }
     
     public void ChangeImageUrl(CategoryImageUrl imageUrl)
     {
+        if (_imageUrl == imageUrl) return;
+        
         _imageUrl = imageUrl;
         AddEvent(new CategoryImageUrlChangedEvent(Id, imageUrl));
     }
 
     public void DeleteImageUrl()
     {
+        if (_imageUrl is null) return;
+        
         _imageUrl = null;
         AddEvent(new CategoryImageUrlChangedEvent(Id, _imageUrl));
     }
     
     public void ChangeSeoTitle(CategorySeoTitle seoTitle)
     {
+        if (_seoTitle == seoTitle) return;
+        
         _seoTitle = seoTitle;
         AddEvent(new CategorySeoTitleChangedEvent(Id, seoTitle));
     }
 
     public void DeleteSeoTitle()
     {
+        if (_seoTitle is null) return;
+        
         _seoTitle = null;
         AddEvent(new CategorySeoTitleChangedEvent(Id, _seoTitle));
     }
     
     public void ChangeSeoDescription(CategorySeoDescription seoDescription)
     {
+        if (_seoDescription == seoDescription) return;
+        
         _seoDescription = seoDescription;
         AddEvent(new CategorySeoDescriptionChangedEvent(Id, seoDescription));
     }
 
     public void DeleteSeoDescription()
     {
+        if (_seoDescription is null) return;
+        
         _seoDescription = null;
         AddEvent(new CategorySeoDescriptionChangedEvent(Id, _seoDescription));
     }
