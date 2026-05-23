@@ -1,6 +1,6 @@
 using Floristo.SharedAbstractions.Exceptions;
 
-namespace Floristo.Domain.Products.Exceptions.StateChanged;
+namespace Floristo.Domain.Products.Exceptions.Lifecycle;
 
 public class ProductGiftTagAlreadyAllowedException() : FloristoException("This product already has Gift Tag allowed")
 {

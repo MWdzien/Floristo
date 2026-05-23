@@ -1,7 +1,7 @@
 using Floristo.Domain.Categories.ValueObjects;
 using Floristo.Domain.Products.Events;
 using Floristo.Domain.Products.Exceptions;
-using Floristo.Domain.Products.Exceptions.StateChanged;
+using Floristo.Domain.Products.Exceptions.Lifecycle;
 using Floristo.Domain.Products.Exceptions.Validation.Image;
 using Floristo.Domain.Products.ValueObjects;
 using Floristo.Domain.Products.ValueObjects.ProductImage;
