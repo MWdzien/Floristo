@@ -24,8 +24,6 @@ public class ProductImage
 
     internal void ChangeSortOrder(ProductImageSortOrder sortOrder)
     {
-        if (_sortOrder == sortOrder) return;
-
         _sortOrder = sortOrder;
     }
 }

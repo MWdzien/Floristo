@@ -303,6 +303,8 @@ public class Product : AggregateRoot<ProductId>
         var image = _images.FirstOrDefault(i => i.Id == imageId) 
                     ?? throw new ProductImageNotFoundException();
 
+        if (image.SortOrder == sortOrder) return;
+
         if (_images.Any(i => i.Id != imageId && i.SortOrder == sortOrder))
             throw new ProductImageSortOrderAlreadyTakenException();
         
