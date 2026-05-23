@@ -99,10 +99,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void ChangeName(ProductName name)
     {
-        if (_name == name)
-        {
-            throw new ProductNameNotChangedException();
-        }
+        if (_name == name) return;
         
         _name = name;
         AddEvent(new ProductNameChangedEvent(Id, name));
@@ -110,10 +107,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void ChangeSlug(ProductSlug slug)
     {
-        if (_slug == slug)
-        {
-            throw new ProductSlugNotChangedException();
-        }
+        if (_slug == slug) return;
         
         _slug = slug;
         AddEvent(new ProductSlugChangedEvent(Id, slug));
@@ -121,10 +115,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void ChangeDescription(ProductDescription description)
     {
-        if (_description == description)
-        {
-            throw new ProductDescriptionNotChangedException();
-        }
+        if (_description == description) return;
         
         _description = description;
         AddEvent(new ProductDescriptionChangedEvent(Id, description));
@@ -132,10 +123,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void DeleteDescription()
     {
-        if (_description is null)
-        {
-            throw new ProductDescriptionNotChangedException();
-        }
+        if (_description is null) return;
         
         _description = null;
         AddEvent(new ProductDescriptionChangedEvent(Id, null));
@@ -143,10 +131,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void ChangePrice(ProductPrice price)
     {
-        if (_price == price)
-        {
-            throw new ProductPriceNotChangedException();
-        }
+        if (_price == price) return;
         
         _price = price;
         AddEvent(new ProductPriceChangedEvent(Id, price));
@@ -154,10 +139,7 @@ public class Product : AggregateRoot<ProductId>
     
     public void ChangeCategory(CategoryId categoryId)
     {
-        if (_categoryId == categoryId)
-        {
-            throw new ProductCategoryNotChangedException();
-        }
+        if (_categoryId == categoryId) return;
         
         _categoryId = categoryId;
         AddEvent(new ProductCategoryChangedEvent(Id, categoryId));
@@ -165,10 +147,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void ChangeDimensions(ProductDimensions dimensions)
     {
-        if (_productDimensions == dimensions)
-        {
-            throw new ProductDimensionsNotChangedException();
-        }
+        if (_productDimensions == dimensions) return;
         
         _productDimensions = dimensions;
         AddEvent(new ProductDimensionsChangedEvent(Id, dimensions));
@@ -176,10 +155,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void DeleteDimensions()
     {
-        if (_productDimensions is null)
-        {
-            throw new ProductDimensionsNotChangedException();
-        }
+        if (_productDimensions is null) return;
         
         _productDimensions = null;
         AddEvent(new ProductDimensionsChangedEvent(Id, null));
@@ -187,10 +163,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void ChangeSeoTitle(ProductSeoTitle seoTitle)
     {
-        if (_seoTitle == seoTitle)
-        {
-            throw new ProductSeoTitleNotChangedException();
-        }
+        if (_seoTitle == seoTitle) return;
         
         _seoTitle = seoTitle;
         AddEvent(new ProductSeoTitleChangedEvent(Id, seoTitle));
@@ -198,10 +171,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void DeleteSeoTitle()
     {
-        if (_seoTitle is null)
-        {
-            throw new ProductSeoTitleNotChangedException();
-        }
+        if (_seoTitle is null) return;
         
         _seoTitle = null;
         AddEvent(new ProductSeoTitleChangedEvent(Id, null));
@@ -209,10 +179,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void ChangeSeoDescription(ProductSeoDescription seoDescription)
     {
-        if (_seoDescription == seoDescription)
-        {
-            throw new ProductSeoDescriptionNotChangedException();
-        }
+        if (_seoDescription == seoDescription) return;
         
         _seoDescription = seoDescription;
         AddEvent(new ProductSeoDescriptionChangedEvent(Id, seoDescription));
@@ -220,10 +187,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void DeleteSeoDescription()
     {
-        if (_seoDescription is null)
-        {
-            throw new ProductSeoDescriptionNotChangedException();
-        }
+        if (_seoDescription is null) return;
         
         _seoDescription = null;
         AddEvent(new ProductSeoDescriptionChangedEvent(Id, null));
@@ -275,10 +239,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void ChangeSortOrder(ProductSortOrder sortOrder)
     {
-        if (_sortOrder == sortOrder)
-        {
-            throw new ProductSortOrderNotChangedException();
-        }
+        if (_sortOrder == sortOrder) return;
         
         _sortOrder = sortOrder;
         AddEvent(new ProductSortOrderChangedEvent(Id, sortOrder));
