@@ -105,4 +105,13 @@ public class BackofficeCategoryController : BaseController
         await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
+    
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteCategory([FromRoute] DeleteCategory command)
+    {
+        await CommandDispatcher.DispatchAsync(command);
+        return NoContent();
+    }
+    
+    
 }
