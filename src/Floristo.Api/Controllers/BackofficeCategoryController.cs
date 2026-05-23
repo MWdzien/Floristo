@@ -37,39 +37,38 @@ public class BackofficeCategoryController : BaseController
     }
 
     [HttpPut("{id:guid}/sort-order")]
-    public async Task<IActionResult> PutSortOrder([FromBody] ChangeCategorySortOrder command)
+    public async Task<IActionResult> PutSortOrder(Guid id, [FromBody] ChangeCategorySortOrder command)
     {
-        await CommandDispatcher.DispatchAsync(command);
+        await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
     
     [HttpPut("{id:guid}/details")]
-    public async Task<IActionResult> PutDetails([FromBody] UpdateCategoryDetails command)
+    public async Task<IActionResult> PutDetails(Guid id, [FromBody] UpdateCategoryDetails command)
     {
-        await CommandDispatcher.DispatchAsync(command);
+        await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
     
     [HttpPut("{id:guid}/publish")]
-    public async Task<IActionResult> PutPublish([FromRoute] PublishCategory command)
+    public async Task<IActionResult> PutPublish(Guid id, [FromBody] PublishCategory command)
     {
-        await CommandDispatcher.DispatchAsync(command);
+        await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
     
     [HttpPut("{id:guid}/unpublish")]
-    public async Task<IActionResult> PutUnpublish([FromRoute] UnpublishCategory command)
+    public async Task<IActionResult> PutUnpublish(Guid id, [FromRoute] UnpublishCategory command)
     {
-        await CommandDispatcher.DispatchAsync(command);
+        await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
     
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteCategory([FromRoute] DeleteCategory command)
+    public async Task<IActionResult> DeleteCategory(Guid id, [FromRoute] DeleteCategory command)
     {
-        await CommandDispatcher.DispatchAsync(command);
+        await CommandDispatcher.DispatchAsync(command with { Id = id});
         return NoContent();
     }
-    
     
 }
