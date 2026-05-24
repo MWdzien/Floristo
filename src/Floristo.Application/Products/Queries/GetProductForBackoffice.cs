@@ -3,4 +3,4 @@ using Floristo.SharedAbstractions.Queries;
 
 namespace Floristo.Application.Products.Queries;
 
-public record GetProductForBackoffice(Guid Id) : IQuery<BackofficeProductDetailsDto?>;
+public record GetProductForBackoffice(Guid Id) : IQuery<BackofficeProductDetailsDto>;
