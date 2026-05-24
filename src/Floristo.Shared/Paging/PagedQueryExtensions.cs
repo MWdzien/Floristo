@@ -15,4 +15,8 @@ public static class PagedQueryExtensions
             .ToListAsync(cancellationToken);
         return new PagedResult<T>(items, totalCount, page, pageSize);
     }
+
+    public static Task<PagedResult<T>> ToPagedResultAsync<T>(this IQueryable<T> query, PagedQuery pagedQuery,
+        CancellationToken cancellationToken = default)
+        => query.ToPagedResultAsync(pagedQuery.Page, pagedQuery.PageSize, cancellationToken);
 }
