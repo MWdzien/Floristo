@@ -7,5 +7,5 @@ public record BackofficeProductDto(
     decimal Price,
     string CategoryName,
     bool IsPublished,
-    string MainImageUrl
+    string? MainImageUrl
     );
