@@ -3,4 +3,4 @@ using Floristo.SharedAbstractions.Queries;
 
 namespace Floristo.Application.Products.Queries;
 
-public record GetProductBySlug(string Slug) : IQuery<StorefrontProductDetailsDto?>;
+public record GetProductBySlug(string Slug) : IQuery<StorefrontProductDetailsDto>;
