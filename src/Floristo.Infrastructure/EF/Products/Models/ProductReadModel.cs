@@ -1,3 +1,5 @@
+using NpgsqlTypes;
+
 namespace Floristo.Infrastructure.EF.Products.Models;
 
 public class ProductReadModel
@@ -23,4 +25,6 @@ public class ProductReadModel
     public DateTime? UnpublishedAt { get; set; }
     
     public ICollection<ProductImageReadModel> Images { get; set; }
+    
+    public NpgsqlTsVector SearchVector { get; set; }
 }

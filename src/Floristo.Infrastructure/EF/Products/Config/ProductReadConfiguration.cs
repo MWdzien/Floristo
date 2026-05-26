@@ -35,6 +35,10 @@ internal sealed class ProductReadConfiguration : IEntityTypeConfiguration<Produc
         builder.Property(p => p.SortOrder).HasColumnName("sort_order");
         builder.Property(p => p.CreatedAt).HasColumnName("created_at");
         builder.Property(p => p.UnpublishedAt).HasColumnName("unpublished_at");
+        builder.Property(p => p.SearchVector).HasColumnName("search_vector").HasColumnType("tsvector")
+            .ValueGeneratedOnAddOrUpdate();
+        
+        builder.HasIndex(p => p.SearchVector).HasMethod("GIN");
     }
 
     public void Configure(EntityTypeBuilder<ProductImageReadModel> builder)
