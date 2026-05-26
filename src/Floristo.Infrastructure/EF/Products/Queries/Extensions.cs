@@ -1,4 +1,5 @@
 using Floristo.Application.Products.Consts;
+using Floristo.Application.Products.DTOs;
 using Floristo.Infrastructure.EF.Products.Models;
 
 namespace Floristo.Infrastructure.EF.Products.Queries;
@@ -17,4 +18,8 @@ internal static class Extensions
             ProductSortOption.NameAsc => query.OrderBy(p => p.Name).ThenBy(p => p.Id),
             _ => throw new ArgumentOutOfRangeException(nameof(sort))
         };
+    
+    internal static StorefrontProductDto AsDto(this ProductReadModel product)                                                                                                                                             
+        => new(product.Name, product.Slug, product.Price, 
+            product.Images.OrderBy(i => i.SortOrder).Select(i => i.Url).First());
 }
