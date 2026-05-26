@@ -23,13 +23,6 @@ internal sealed class GetNewArrivalsHandler : IQueryHandler<GetNewArrivals, IRea
             .OrderByDescending(p => p.CreatedAt)
             .ThenBy(p => p.Id)
             .Take(query.Limit)
-            .Select(p => new StorefrontProductDto(
-                p.Name,
-                p.Slug,
-                p.Price,
-                p.Images
-                    .OrderBy(i => i.SortOrder)
-                    .Select(i => i.Url)
-                    .First()))
+            .Select(p => p.AsDto())
             .ToListAsync();
 }
