@@ -5,4 +5,7 @@ public record PagedResult<T>(IReadOnlyList<T> Items, int TotalCount, int Page, i
     public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);
     public bool HasNext => Page < TotalPages;
     public bool HasPrevious => Page > 1;
+
+    public static PagedResult<T> Empty(PagedQuery query)
+        => new(Array.Empty<T>(), 0, query.Page, query.PageSize);
 }
