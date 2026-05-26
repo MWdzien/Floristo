@@ -39,7 +39,7 @@ internal sealed class BrowseProductsByCategoryHandler : IQueryHandler<BrowseProd
         var sorted = products.ApplySort(query.Sort);
 
         var result = sorted
-            .Select(p => p.AsDto());
+            .AsDto();
 
         return await result.ToPagedResultAsync(query);
     }

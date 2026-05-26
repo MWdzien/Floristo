@@ -19,7 +19,7 @@ internal static class Extensions
             _ => throw new ArgumentOutOfRangeException(nameof(sort))
         };
     
-    internal static StorefrontProductDto AsDto(this ProductReadModel product)                                                                                                                                             
-        => new(product.Name, product.Slug, product.Price, 
-            product.Images.OrderBy(i => i.SortOrder).Select(i => i.Url).First());
+    internal static IQueryable<StorefrontProductDto> AsDto(this IQueryable<ProductReadModel> query)                                                                                                                                            
+        => query.Select(p => new StorefrontProductDto(p.Name, p.Slug, p.Price, 
+            p.Images.OrderBy(i => i.SortOrder).Select(i => i.Url).First()));
 }

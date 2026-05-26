@@ -37,7 +37,7 @@ internal sealed class GetRelatedProductsHandler : IQueryHandler<GetRelatedProduc
             )
             .OrderBy(_ => Guid.NewGuid())
             .Take(query.Limit)
-            .Select(p => p.AsDto())
+            .AsDto()
             .ToListAsync();
 
         if (sameCategory.Count >= query.Limit)
@@ -54,7 +54,7 @@ internal sealed class GetRelatedProductsHandler : IQueryHandler<GetRelatedProduc
             )
             .OrderBy(_ => Guid.NewGuid())
             .Take(remaining)
-            .Select(p => p.AsDto())
+            .AsDto()
             .ToListAsync();
 
         return sameCategory.Concat(fallback).ToList();
