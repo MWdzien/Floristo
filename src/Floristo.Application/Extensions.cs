@@ -1,5 +1,6 @@
 using Floristo.Domain.Categories.Factories;
 using Floristo.Domain.Customers.Factories;
+using Floristo.Domain.Products.Factories;
 using Floristo.Shared.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,7 @@ public static class Extensions
         services.AddCommands();
         services.AddSingleton<ICustomerFactory, CustomerFactory>();
         services.AddSingleton<ICategoryFactory, CategoryFactory>();
+        services.AddSingleton<IProductFactory, ProductFactory>();
         
         return services;
     }

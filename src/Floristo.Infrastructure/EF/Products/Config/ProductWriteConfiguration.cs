@@ -119,14 +119,18 @@ internal sealed class ProductWriteConfiguration : IEntityTypeConfiguration<Produ
             .HasColumnName("unpublished_at")
             .IsRequired(false);
 
-        builder.HasMany<ProductImage>("_images")
+        builder.HasMany<ProductImage>(p => p.Images)
             .WithOne()
             .HasForeignKey("ProductId")
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
         
         builder.Metadata
             .FindNavigation(nameof(Product.Images))
             !.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.HasOne<Floristo.Domain.Categories.Entities.Category>().WithMany().HasForeignKey("_categoryId")
+            .OnDelete(DeleteBehavior.Restrict);
     }
 
     public void Configure(EntityTypeBuilder<ProductImage> builder)
@@ -154,7 +158,10 @@ internal sealed class ProductWriteConfiguration : IEntityTypeConfiguration<Produ
             .HasConversion(productImageSortOrderConverter)
             .HasColumnName("sort_order");
 
-        builder.Property<Guid>("ProductId")
+        builder.Property<ProductId>("ProductId")
+            .HasConversion(id => id.Value, id => new ProductId(id))
             .HasColumnName("product_id");
+        
+        builder.HasIndex("ProductId", "_sortOrder");
     }
 }
