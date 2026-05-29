@@ -21,18 +21,18 @@ internal sealed class GetRelatedProductsHandler : IQueryHandler<GetRelatedProduc
     {
         var product = await _products
             .AsNoTracking()
-            .Where(p => p.Id == query.ProductId && p.UnpublishedAt == null)
+            .Where(p => p.Slug == query.Slug && p.UnpublishedAt == null)
             .Select(p => new { p.CategoryId })
             .SingleOrDefaultAsync();
 
         if (product is null)
-            throw new ProductNotFoundException(query.ProductId);
+            throw new ProductNotFoundException(query.Slug);
 
         // take related products from the same category
         var sameCategory = await _products
             .AsNoTracking()
             .Where(p => p.CategoryId == product.CategoryId
-                        && p.Id != query.ProductId
+                        && p.Slug != query.Slug
                         && p.UnpublishedAt == null
             )
             .OrderBy(_ => Guid.NewGuid())
@@ -48,7 +48,7 @@ internal sealed class GetRelatedProductsHandler : IQueryHandler<GetRelatedProduc
 
         var fallback = await _products
             .AsNoTracking()
-            .Where(p => p.Id != query.ProductId
+            .Where(p => p.Slug != query.Slug
                         && p.CategoryId != product.CategoryId
                         && p.UnpublishedAt == null
             )

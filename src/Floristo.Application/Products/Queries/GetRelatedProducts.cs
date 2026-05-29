@@ -3,4 +3,4 @@ using Floristo.SharedAbstractions.Queries;
 
 namespace Floristo.Application.Products.Queries;
 
-public record GetRelatedProducts(Guid ProductId, int Limit = 4) : IQuery<IReadOnlyList<StorefrontProductDto>>;
+public record GetRelatedProducts(string Slug, int Limit = 4) : IQuery<IReadOnlyList<StorefrontProductDto>>;
