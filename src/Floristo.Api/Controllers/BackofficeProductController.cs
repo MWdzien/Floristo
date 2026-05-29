@@ -34,6 +34,7 @@ public class BackofficeProductController : BaseController
     [HttpPost]
     public async Task<IActionResult> PostProduct([FromBody] CreateProduct command)
     {
+        command = command with { Id = Guid.NewGuid() };
         await CommandDispatcher.DispatchAsync(command);
         return CreatedAtAction(nameof(GetProductForBackoffice), new { id = command.Id }, null);
     }
@@ -111,7 +112,7 @@ public class BackofficeProductController : BaseController
     [HttpPost("{id:guid}/images")]
     public async Task<IActionResult> PostImage(Guid id, [FromBody] AddProductImage command)
     {
-        await CommandDispatcher.DispatchAsync(command with { Id = id });
+        await CommandDispatcher.DispatchAsync(command with { Id = id, ImageId = Guid.NewGuid() });
         return Created();
     }
     

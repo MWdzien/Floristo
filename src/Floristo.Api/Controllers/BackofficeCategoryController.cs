@@ -32,6 +32,7 @@ public class BackofficeCategoryController : BaseController
     [HttpPost]
     public async Task<IActionResult> PostCategory([FromBody] CreateCategory command)
     {
+        command = command with { Id = Guid.NewGuid() };
         await CommandDispatcher.DispatchAsync(command);
         return CreatedAtAction(nameof(GetCategory), new { id = command.Id }, null);
     }
