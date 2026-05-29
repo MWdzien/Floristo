@@ -51,6 +51,10 @@ namespace Floristo.Infrastructure.EF.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<DateTime?>("_publishedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("published_at");
+
                     b.Property<string>("_seoDescription")
                         .HasColumnType("text")
                         .HasColumnName("seo_description");
@@ -67,10 +71,6 @@ namespace Floristo.Infrastructure.EF.Migrations
                     b.Property<int>("_sortOrder")
                         .HasColumnType("integer")
                         .HasColumnName("sort_order");
-
-                    b.Property<DateTime?>("_unpublishedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("unpublished_at");
 
                     b.HasKey("Id");
 
@@ -162,6 +162,10 @@ namespace Floristo.Infrastructure.EF.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("price");
 
+                    b.Property<DateTime?>("_publishedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("published_at");
+
                     b.Property<string>("_seoDescription")
                         .HasColumnType("text")
                         .HasColumnName("seo_description");
@@ -178,10 +182,6 @@ namespace Floristo.Infrastructure.EF.Migrations
                     b.Property<int>("_sortOrder")
                         .HasColumnType("integer")
                         .HasColumnName("sort_order");
-
-                    b.Property<DateTime?>("_unpublishedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("unpublished_at");
 
                     b.HasKey("Id");
 
