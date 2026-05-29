@@ -1,3 +1,4 @@
+using Floristo.Application.Products.Consts;
 using Floristo.Application.Products.DTOs;
 using Floristo.Application.Products.Queries;
 using Floristo.SharedAbstractions.Commands;
@@ -15,11 +16,9 @@ public class StorefrontProductController : BaseController
     }
     
     [HttpGet("search")]
-    public async Task<ActionResult<PagedResult<StorefrontProductDto>>> SearchProducts(SearchProducts query)
-    {
-        Console.WriteLine($">>> SEARCH HIT phrase=[{query.Query}] sort={query.Sort} page={query.Page} pageSize={query.PageSize}");
-        
-        var result = await QueryDispatcher.DispatchAsync(query);
+    public async Task<ActionResult<PagedResult<StorefrontProductDto>>> SearchProducts([FromQuery] SearchProducts query)
+    {                                                                                                                                                     
+        var result = await QueryDispatcher.DispatchAsync(query);                                                                                                                                                           
         return Ok(result);
     }
     

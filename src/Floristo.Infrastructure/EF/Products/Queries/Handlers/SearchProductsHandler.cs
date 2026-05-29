@@ -23,12 +23,10 @@ internal sealed class SearchProductsHandler : IQueryHandler<SearchProducts, Page
 
     public async Task<PagedResult<StorefrontProductDto>> HandleAsync(SearchProducts query)
     {
-        var phrase = query.Query?.Trim();
+        var phrase = query.SearchPhrase?.Trim();
         
         if (string.IsNullOrWhiteSpace(phrase))
             return PagedResult<StorefrontProductDto>.Empty(query);
-
-        var tsQuery = Microsoft.EntityFrameworkCore.EF.Functions.PlainToTsQuery("simple", phrase);
 
         var matchingCategoryIds = _categories
             .Where(c => Microsoft.EntityFrameworkCore.EF.Functions.ILike(c.Name, $"%{phrase}%"))
@@ -37,7 +35,9 @@ internal sealed class SearchProductsHandler : IQueryHandler<SearchProducts, Page
         var products = _products
             .AsNoTracking()
             .Where(p => p.UnpublishedAt == null
-                        && (p.SearchVector.Matches(tsQuery) || matchingCategoryIds.Contains(p.CategoryId)));
+                        && (p.SearchVector.Matches(
+                            Microsoft.EntityFrameworkCore.EF.Functions.PlainToTsQuery("simple", phrase))
+                            || matchingCategoryIds.Contains(p.CategoryId)));
 
         var sorted = products.ApplySort(query.Sort);
 

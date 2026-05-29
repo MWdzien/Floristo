@@ -18,7 +18,7 @@ internal sealed class PostgresProductRepository : IProductRepository
     }
 
     public Task<Product?> GetAsync(ProductId id)
-        => _products.SingleOrDefaultAsync(p => p.Id == id);
+        => _products.Include(p => p.Images).SingleOrDefaultAsync(p => p.Id == id);
 
     public async Task AddAsync(Product product)
     {

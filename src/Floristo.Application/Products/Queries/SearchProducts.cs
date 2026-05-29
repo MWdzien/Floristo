@@ -5,5 +5,5 @@ using Floristo.SharedAbstractions.Queries;
 
 namespace Floristo.Application.Products.Queries;
 
-public record SearchProducts(string Query, ProductSortOption Sort = ProductSortOption.NewestFirst)
+public record SearchProducts(string SearchPhrase, ProductSortOption Sort = ProductSortOption.NewestFirst)
     : PagedQuery, IQuery<PagedResult<StorefrontProductDto>>;
