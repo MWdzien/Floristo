@@ -23,7 +23,7 @@ internal sealed class GetProductBySlugHandler : IQueryHandler<GetProductBySlug, 
     public async Task<StorefrontProductDetailsDto> HandleAsync(GetProductBySlug query)
     {
         var result = await (from p in _products.AsNoTracking()
-                where p.Slug == query.Slug && p.UnpublishedAt == null
+                where p.Slug == query.Slug && p.PublishedAt != null
                 join c in _categories on p.CategoryId equals c.Id
                 select new
                 {

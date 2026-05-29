@@ -33,8 +33,8 @@ internal sealed class ProductWriteConfiguration : IEntityTypeConfiguration<Produ
             pso => new (pso));
         var productCreatedAtConverter = new ValueConverter<ProductCreatedAt, DateTime>(pca => pca.Value,
             pca => new (pca));
-        var productUnpublishedAtConverter = new ValueConverter<ProductPublishedAt, DateTime>(pua => pua.Value,
-            pua => new (pua));
+        var productPublishedAtConverter = new ValueConverter<ProductPublishedAt, DateTime>(ppa => ppa.Value,
+            ppa => new (ppa));
 
         builder
             .Property(p => p.Id)
@@ -114,9 +114,9 @@ internal sealed class ProductWriteConfiguration : IEntityTypeConfiguration<Produ
             .HasColumnName("created_at");
         
         builder
-            .Property(typeof(ProductPublishedAt), "_unpublishedAt")
-            .HasConversion(productUnpublishedAtConverter)
-            .HasColumnName("unpublished_at")
+            .Property(typeof(ProductPublishedAt), "_publishedAt")
+            .HasConversion(productPublishedAtConverter)
+            .HasColumnName("published_at")
             .IsRequired(false);
 
         builder.HasMany<ProductImage>(p => p.Images)

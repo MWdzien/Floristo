@@ -34,8 +34,8 @@ internal sealed class BrowseProductsForBackofficeHandler : IQueryHandler<BrowseP
 
         if (query.IsPublished.HasValue)
             products = query.IsPublished.Value
-                ? products.Where(p => p.UnpublishedAt == null)
-                : products.Where(p => p.UnpublishedAt != null);
+                ? products.Where(p => p.PublishedAt != null)
+                : products.Where(p => p.PublishedAt == null);
 
         var sorted = products.ApplySort(query.Sort);
         
@@ -47,7 +47,7 @@ internal sealed class BrowseProductsForBackofficeHandler : IQueryHandler<BrowseP
                 p.Slug,
                 p.Price,
                 c.Name,
-                p.UnpublishedAt == null,
+                p.PublishedAt != null,
                 p.Images
                     .OrderBy(i => i.SortOrder)
                     .Select(i => i.Url)

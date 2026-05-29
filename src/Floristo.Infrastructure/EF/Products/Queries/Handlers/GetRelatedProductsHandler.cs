@@ -21,7 +21,7 @@ internal sealed class GetRelatedProductsHandler : IQueryHandler<GetRelatedProduc
     {
         var product = await _products
             .AsNoTracking()
-            .Where(p => p.Slug == query.Slug && p.UnpublishedAt == null)
+            .Where(p => p.Slug == query.Slug && p.PublishedAt != null)
             .Select(p => new { p.CategoryId })
             .SingleOrDefaultAsync();
 
@@ -33,7 +33,7 @@ internal sealed class GetRelatedProductsHandler : IQueryHandler<GetRelatedProduc
             .AsNoTracking()
             .Where(p => p.CategoryId == product.CategoryId
                         && p.Slug != query.Slug
-                        && p.UnpublishedAt == null
+                        && p.PublishedAt != null
             )
             .OrderBy(_ => Guid.NewGuid())
             .Take(query.Limit)
@@ -50,7 +50,7 @@ internal sealed class GetRelatedProductsHandler : IQueryHandler<GetRelatedProduc
             .AsNoTracking()
             .Where(p => p.Slug != query.Slug
                         && p.CategoryId != product.CategoryId
-                        && p.UnpublishedAt == null
+                        && p.PublishedAt != null
             )
             .OrderBy(_ => Guid.NewGuid())
             .Take(remaining)

@@ -34,7 +34,7 @@ internal sealed class SearchProductsHandler : IQueryHandler<SearchProducts, Page
 
         var products = _products
             .AsNoTracking()
-            .Where(p => p.UnpublishedAt == null
+            .Where(p => p.PublishedAt != null
                         && (p.SearchVector.Matches(
                             Microsoft.EntityFrameworkCore.EF.Functions.PlainToTsQuery("simple", phrase))
                             || matchingCategoryIds.Contains(p.CategoryId)));

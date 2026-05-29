@@ -22,7 +22,7 @@ public class ProductReadModel
     public bool AllowGiftTag { get; set; }
     public int SortOrder { get; set; }
     public DateTime CreatedAt { get; set; }
-    public DateTime? UnpublishedAt { get; set; }
+    public DateTime? PublishedAt { get; set; }
     
     public ICollection<ProductImageReadModel> Images { get; set; }
     

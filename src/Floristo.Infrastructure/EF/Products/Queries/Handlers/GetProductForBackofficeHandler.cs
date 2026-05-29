@@ -45,7 +45,7 @@ internal sealed class GetProductForBackofficeHandler : IQueryHandler<GetProductF
                     p.AllowGiftTag,
                     p.SortOrder,
                     p.CreatedAt,
-                    p.UnpublishedAt,
+                    p.PublishedAt,
                     Images = p.Images
                         .OrderBy(i => i.SortOrder)
                         .Select(i => new ProductImageDto(i.Id, i.Url, i.SortOrder))
@@ -77,7 +77,7 @@ internal sealed class GetProductForBackofficeHandler : IQueryHandler<GetProductF
             result.AllowGiftTag,
             result.SortOrder,
             result.CreatedAt,
-            result.UnpublishedAt,
+            result.PublishedAt,
             result.Images,
             result.Version
         );

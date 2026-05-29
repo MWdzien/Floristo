@@ -19,7 +19,7 @@ internal sealed class GetNewArrivalsHandler : IQueryHandler<GetNewArrivals, IRea
     public async Task<IReadOnlyList<StorefrontProductDto>> HandleAsync(GetNewArrivals query)
         => await _products
             .AsNoTracking()
-            .Where(p => p.UnpublishedAt == null)
+            .Where(p => p.PublishedAt != null)
             .OrderByDescending(p => p.CreatedAt)
             .ThenBy(p => p.Id)
             .Take(query.Limit)

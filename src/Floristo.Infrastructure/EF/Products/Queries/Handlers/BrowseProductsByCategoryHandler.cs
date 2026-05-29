@@ -25,7 +25,7 @@ internal sealed class BrowseProductsByCategoryHandler : IQueryHandler<BrowseProd
     public async Task<PagedResult<StorefrontProductDto>> HandleAsync(BrowseProductsByCategory query)
     {
         var category = await _categories
-            .Where(c => c.Slug == query.CategorySlug && c.UnpublishedAt == null)
+            .Where(c => c.Slug == query.CategorySlug && c.PublishedAt != null)
             .Select(c => new {c.Id})
             .SingleOrDefaultAsync();
 
@@ -34,7 +34,7 @@ internal sealed class BrowseProductsByCategoryHandler : IQueryHandler<BrowseProd
         
         var products = _products
             .AsNoTracking()
-            .Where(p => p.CategoryId == category.Id && p.UnpublishedAt == null);
+            .Where(p => p.CategoryId == category.Id && p.PublishedAt != null);
 
         var sorted = products.ApplySort(query.Sort);
 
