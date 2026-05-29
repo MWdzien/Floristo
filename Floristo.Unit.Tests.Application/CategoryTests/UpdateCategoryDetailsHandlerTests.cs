@@ -11,60 +11,71 @@ using Xunit;
 
 namespace Floristo.Unit.Tests.Application.CategoryTests;
 
-public class ChangeCategorySlugHandlerTests
+public class UpdateCategoryDetailsHandlerTests
 {
-    Task Act(ChangeCategorySlug command)
+    Task Act(UpdateCategoryDetails command)
         => _commandHandler.HandleAsync(command);
-    
+
     [Fact]
     public async Task HandleAsync_Throws_CategoryNotFoundException_When_Category_Does_Not_Exist()
     {
-        var command = new ChangeCategorySlug(Guid.NewGuid(), "new-slug"); 
-        
+        var command = GetCommand();
+
         var exception = await Record.ExceptionAsync(async () => await Act(command));
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<CategoryNotFoundException>();
     }
-    
+
     [Fact]
     public async Task HandleAsync_Throws_CategorySlugNotUniqueException_When_Slug_Is_Not_Unique()
     {
-        var command = new ChangeCategorySlug(Guid.NewGuid(), "new-slug");
-        var category = new CategoryFactory().Create(command.Id, "Test Flowers", "test-slug", 1);
+        var command = GetCommand();
+        var category = new CategoryFactory().Create(command.Id, "Old name", "old-slug", 1);
         _repository.GetAsync(command.Id).Returns(category);
         _readService.ExistsBySlugAsync(command.Slug, command.Id).Returns(true);
-        
-        
+
         var exception = await Record.ExceptionAsync(async () => await Act(command));
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<CategorySlugNotUniqueException>();
     }
-    
+
     [Fact]
     public async Task HandleAsync_Calls_Repository_On_Success()
     {
-        var command = new ChangeCategorySlug(Guid.NewGuid(), "new-slug");
-        var category = new CategoryFactory().Create(command.Id, "Test Flowers", "test-slug", 1);
+        var command = GetCommand();
+        var category = new CategoryFactory().Create(command.Id, "Old name", "old-slug", 1);
         _repository.GetAsync(command.Id).Returns(category);
-        _readService.ExistsBySlugAsync(command.Slug).Returns(false);
-        
+        _readService.ExistsBySlugAsync(command.Slug, command.Id).Returns(false);
+
         var exception = await Record.ExceptionAsync(async () => await Act(command));
         exception.ShouldBeNull();
         await _repository.Received(1).UpdateAsync(category);
     }
-    
+
     #region ARRANGE
-    
-    private readonly ICommandHandler<ChangeCategorySlug> _commandHandler;
+
+    private UpdateCategoryDetails GetCommand()
+    {
+        return new UpdateCategoryDetails(
+            Guid.NewGuid(),
+            "New name",
+            "new-slug",
+            null,
+            null,
+            null,
+            null);
+    }
+
+    private readonly ICommandHandler<UpdateCategoryDetails> _commandHandler;
     private readonly ICategoryRepository _repository;
     private readonly ICategoryReadService _readService;
 
-    public ChangeCategorySlugHandlerTests()
+    public UpdateCategoryDetailsHandlerTests()
     {
         _repository = Substitute.For<ICategoryRepository>();
         _readService = Substitute.For<ICategoryReadService>();
-        
-        _commandHandler = new ChangeCategorySlugHandler(_repository, _readService);
+
+        _commandHandler = new UpdateCategoryDetailsHandler(_repository, _readService);
     }
 
     #endregion
