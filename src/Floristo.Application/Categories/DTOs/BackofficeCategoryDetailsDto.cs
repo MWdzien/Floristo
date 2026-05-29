@@ -11,5 +11,5 @@ public record BackofficeCategoryDetailsDto
     string? SeoTitle,
     string? SeoDescription,
     DateTime CreatedAt,
-    DateTime? UnpublishedAt
+    DateTime? PublishedAt
 );
