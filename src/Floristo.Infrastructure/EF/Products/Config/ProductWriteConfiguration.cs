@@ -33,7 +33,7 @@ internal sealed class ProductWriteConfiguration : IEntityTypeConfiguration<Produ
             pso => new (pso));
         var productCreatedAtConverter = new ValueConverter<ProductCreatedAt, DateTime>(pca => pca.Value,
             pca => new (pca));
-        var productUnpublishedAtConverter = new ValueConverter<ProductUnpublishedAt, DateTime>(pua => pua.Value,
+        var productUnpublishedAtConverter = new ValueConverter<ProductPublishedAt, DateTime>(pua => pua.Value,
             pua => new (pua));
 
         builder
@@ -114,7 +114,7 @@ internal sealed class ProductWriteConfiguration : IEntityTypeConfiguration<Produ
             .HasColumnName("created_at");
         
         builder
-            .Property(typeof(ProductUnpublishedAt), "_unpublishedAt")
+            .Property(typeof(ProductPublishedAt), "_unpublishedAt")
             .HasConversion(productUnpublishedAtConverter)
             .HasColumnName("unpublished_at")
             .IsRequired(false);

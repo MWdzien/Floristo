@@ -3,4 +3,4 @@ using Floristo.SharedAbstractions.Domain;
 
 namespace Floristo.Domain.Products.Events;
 
-public record ProductUnpublishedEvent(ProductId Id, ProductUnpublishedAt UnpublishedAt) : IDomainEvent;
+public record ProductUnpublishedEvent(ProductId Id) : IDomainEvent;

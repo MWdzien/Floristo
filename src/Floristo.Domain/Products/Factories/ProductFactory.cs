@@ -14,7 +14,7 @@ public sealed class ProductFactory : IProductFactory
         ProductPrice price,
         CategoryId categoryId, ProductDimensions? productDimensions, ProductSeoTitle? seoTitle,
         ProductSeoDescription? seoDescription, bool allowEngraving, bool allowGiftTag,
-        ProductSortOrder sortOrder, ProductCreatedAt createdAt, ProductUnpublishedAt? unpublishedAt, IEnumerable<ProductImage> images)
+        ProductSortOrder sortOrder, ProductCreatedAt createdAt, ProductPublishedAt? publishedAt, IEnumerable<ProductImage> images)
         => new(id, name, slug, description, price, categoryId, productDimensions, seoTitle, seoDescription,
-            allowEngraving, allowGiftTag, sortOrder, createdAt, unpublishedAt, images);
+            allowEngraving, allowGiftTag, sortOrder, createdAt, publishedAt, images);
 }

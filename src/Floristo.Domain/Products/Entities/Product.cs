@@ -23,7 +23,7 @@ public class Product : AggregateRoot<ProductId>
     private bool _allowGiftTag;
     private ProductSortOrder _sortOrder;
     private ProductCreatedAt _createdAt;
-    private ProductUnpublishedAt? _unpublishedAt;
+    private ProductPublishedAt? _publishedAt;
 
     private readonly List<ProductImage> _images = new();
     public IReadOnlyCollection<ProductImage> Images => _images.AsReadOnly();
@@ -48,9 +48,8 @@ public class Product : AggregateRoot<ProductId>
         _allowEngraving = false;
         _allowGiftTag = false;
         _createdAt = DateTime.UtcNow;
-        _unpublishedAt = DateTime.UtcNow;
         
-        AddEvent(new ProductCreatedEvent(id, name, slug, price, categoryId, _allowEngraving, _allowGiftTag, sortOrder, _createdAt, _unpublishedAt));
+        AddEvent(new ProductCreatedEvent(id, name, slug, price, categoryId, _allowEngraving, _allowGiftTag, sortOrder, _createdAt));
     }
 
     internal Product(
@@ -67,7 +66,7 @@ public class Product : AggregateRoot<ProductId>
         bool allowGiftTag, 
         ProductSortOrder sortOrder, 
         ProductCreatedAt createdAt, 
-        ProductUnpublishedAt? unpublishedAt,
+        ProductPublishedAt? publishedAt,
         IEnumerable<ProductImage> images
         )
     {
@@ -81,7 +80,7 @@ public class Product : AggregateRoot<ProductId>
         _allowGiftTag = allowGiftTag;
         
         _createdAt = createdAt;
-        _unpublishedAt = unpublishedAt;
+        _publishedAt = publishedAt;
 
         _images = images.ToList();
     }
@@ -247,19 +246,18 @@ public class Product : AggregateRoot<ProductId>
 
     public void Unpublish()
     {
-        if (_unpublishedAt is not null)
+        if (_publishedAt == null)
         {
             throw new ProductAlreadyUnpublishedException();
         }
         
-        var unpublishedAt = DateTime.UtcNow;
-        _unpublishedAt = unpublishedAt;
-        AddEvent(new ProductUnpublishedEvent(Id, unpublishedAt));
+        _publishedAt = null;
+        AddEvent(new ProductUnpublishedEvent(Id));
     }
 
     public void Publish()
     {
-        if (_unpublishedAt == null)
+        if (_publishedAt != null)
         {
             throw new ProductAlreadyPublishedException();
         }
@@ -267,8 +265,9 @@ public class Product : AggregateRoot<ProductId>
         if (_images.Count == 0)
             throw new CannotPublishProductWithoutImagesException();
 
-        _unpublishedAt = null;
-        AddEvent(new ProductPublishedEvent(Id));
+        var publishedAt = DateTime.UtcNow;
+        _publishedAt = publishedAt;
+        AddEvent(new ProductPublishedEvent(Id, publishedAt));
     }
 
     public void AddImage(ProductImageId imageId, ProductImageUrl url, ProductImageSortOrder sortOrder)
@@ -291,7 +290,7 @@ public class Product : AggregateRoot<ProductId>
         var image = _images.FirstOrDefault(i => i.Id == imageId) 
                     ?? throw new ProductImageNotFoundException();
 
-        if (_unpublishedAt is null && _images.Count == 1)
+        if (_publishedAt != null && _images.Count == 1)
             throw new CannotRemoveLastImageOfPublishedProductException();
 
         _images.Remove(image);
@@ -314,7 +313,7 @@ public class Product : AggregateRoot<ProductId>
 
     public void Delete()
     {
-        if (_unpublishedAt == null)
+        if (_publishedAt != null)
         {
             throw new CannotDeletePublishedProductException();
         }
