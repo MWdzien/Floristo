@@ -29,15 +29,15 @@ internal sealed class GetCategoriesForBackofficeHandler : IQueryHandler<GetCateg
         if (query.IsPublished.HasValue)
         {
             categories = query.IsPublished.Value
-                ? categories.Where(c => c.UnpublishedAt != null)
-                : categories.Where(c => c.UnpublishedAt == null);
+                ? categories.Where(c => c.PublishedAt != null)
+                : categories.Where(c => c.PublishedAt == null);
         }
         
         return await categories
             .AsNoTracking()
             .OrderBy(c => c.SortOrder)
             .Select(c => 
-                new BackofficeCategoryDto(c.Id, c.Name, c.ImageUrl, c.UnpublishedAt == null, c.SortOrder)
+                new BackofficeCategoryDto(c.Id, c.Name, c.ImageUrl, c.PublishedAt != null, c.SortOrder)
             )
             .ToListAsync();
     }

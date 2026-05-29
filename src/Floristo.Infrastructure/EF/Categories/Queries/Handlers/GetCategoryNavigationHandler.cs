@@ -18,7 +18,7 @@ internal sealed class GetCategoryNavigationHandler : IQueryHandler<GetCategoryNa
 
     public async Task<IEnumerable<CategoryNavigationItemDto>> HandleAsync(GetCategoryNavigation query)
         => await _categories
-            .Where(c => c.UnpublishedAt == null)
+            .Where(c => c.PublishedAt != null)
             .OrderBy(c => c.SortOrder)
             .AsNoTracking()
             .Select(c => new CategoryNavigationItemDto(c.Name, c.Slug))

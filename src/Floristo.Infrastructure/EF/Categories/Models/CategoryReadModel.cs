@@ -12,5 +12,5 @@ public class CategoryReadModel
     public string? SeoTitle { get; set; }
     public string? SeoDescription { get; set; }
     public DateTime CreatedAt { get; set; }
-    public DateTime? UnpublishedAt { get; set; }
+    public DateTime? PublishedAt { get; set; }
 }
