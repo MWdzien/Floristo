@@ -3,4 +3,4 @@ using Floristo.SharedAbstractions.Domain;
 
 namespace Floristo.Domain.Categories.Events;
 
-public record CategoryPublishedEvent(CategoryId Id) : IDomainEvent;
+public record CategoryPublishedEvent(CategoryId Id, CategoryPublishedAt PublishedAt) : IDomainEvent;

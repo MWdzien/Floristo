@@ -16,7 +16,7 @@ public class Category : AggregateRoot<CategoryId>
     private CategorySeoDescription? _seoDescription;
     
     private CategoryCreatedAt _createdAt;
-    private CategoryUnpublishedAt? _unpublishedAt;
+    private CategoryPublishedAt? _publishedAt;
 
     private Category()
     {
@@ -29,17 +29,16 @@ public class Category : AggregateRoot<CategoryId>
         _slug = slug;
         _sortOrder = sortOrder;
         _createdAt = DateTime.UtcNow;
-        _unpublishedAt = DateTime.UtcNow;
-        AddEvent(new CategoryCreatedEvent(id, name, slug, sortOrder, _createdAt, _unpublishedAt));
+        AddEvent(new CategoryCreatedEvent(id, name, slug, sortOrder, _createdAt));
     }
     
     internal Category(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug, 
         CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle, CategorySeoDescription? 
-            seoDescription, CategoryCreatedAt createdAt, CategoryUnpublishedAt? unpublishedAt)
+            seoDescription, CategoryCreatedAt createdAt, CategoryPublishedAt? publishedAt)
     {
         SetState(id, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
         _createdAt = createdAt;
-        _unpublishedAt = unpublishedAt;
+        _publishedAt = publishedAt;
     }
 
     private void SetState(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug,
@@ -146,30 +145,30 @@ public class Category : AggregateRoot<CategoryId>
     
     public void Unpublish()
     {
-        if (_unpublishedAt != null)
+        if (_publishedAt == null)
         {
             throw new CategoryAlreadyUnpublishedException();
         }
         
-        var unpublishedAt = DateTime.UtcNow;
-        _unpublishedAt = unpublishedAt;
-        AddEvent(new CategoryUnpublishedEvent(Id, unpublishedAt));
+        _publishedAt = null;
+        AddEvent(new CategoryUnpublishedEvent(Id));
     }
 
     public void Publish()
     {
-        if (_unpublishedAt == null)
+        if (_publishedAt != null)
         {
             throw new CategoryAlreadyPublishedException();
         }
 
-        _unpublishedAt = null;
-        AddEvent(new CategoryPublishedEvent(Id));
+        var publishedAt = DateTime.UtcNow;
+        _publishedAt = publishedAt;
+        AddEvent(new CategoryPublishedEvent(Id, publishedAt));
     }
 
     public void Delete()
     {
-        if (_unpublishedAt == null)
+        if (_publishedAt != null)
         {
             throw new CannotDeletePublishedCategoryException();
         }

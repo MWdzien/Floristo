@@ -8,5 +8,5 @@ public interface ICategoryFactory
     Category Create(CategoryId id, CategoryName name, CategorySlug slug, CategorySortOrder sortOrder);
     Category Restore(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug, 
         CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle, CategorySeoDescription? 
-            seoDescription, CategoryCreatedAt createdAt, CategoryUnpublishedAt? unpublishedAt);
+            seoDescription, CategoryCreatedAt createdAt, CategoryPublishedAt? publishedAt);
 }

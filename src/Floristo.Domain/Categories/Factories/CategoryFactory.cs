@@ -11,6 +11,6 @@ public sealed class CategoryFactory : ICategoryFactory
 
     public Category Restore(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug,
         CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle,
-        CategorySeoDescription? seoDescription, CategoryCreatedAt createdAt, CategoryUnpublishedAt? unpublishedAt)
-            => new(id, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription, createdAt, unpublishedAt);
+        CategorySeoDescription? seoDescription, CategoryCreatedAt createdAt, CategoryPublishedAt? publishedAt)
+            => new(id, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription, createdAt, publishedAt);
 }
