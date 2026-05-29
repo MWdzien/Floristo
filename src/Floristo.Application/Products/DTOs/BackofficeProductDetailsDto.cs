@@ -16,7 +16,7 @@ public record BackofficeProductDetailsDto
     bool AllowGiftTag,
     int SortOrder,
     DateTime CreatedAt,
-    DateTime? UnpublishedAt,
+    DateTime? PublishedAt,
     IReadOnlyList<ProductImageDto> Images,
     int Version
 );
