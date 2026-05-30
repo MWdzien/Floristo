@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Floristo.Infrastructure.EF.Customers.Queries.Handlers;
 
-internal sealed class GetCustomersHandler : IQueryHandler<GetCustomers, IEnumerable<CustomerDto>>
+internal sealed class GetCustomersForBackofficeHandler : IQueryHandler<GetCustomersForBackoffice, IEnumerable<BackofficeCustomerDto>>
 {
     private readonly DbSet<CustomerReadModel> _customers;
 
-    public GetCustomersHandler(ReadDbContext dbContext)
+    public GetCustomersForBackofficeHandler(ReadDbContext dbContext)
         => _customers = dbContext.Customers;
     
-    public async Task<IEnumerable<CustomerDto>> HandleAsync(GetCustomers query)
+    public async Task<IEnumerable<BackofficeCustomerDto>> HandleAsync(GetCustomersForBackoffice query)
     {
         var customers = _customers.AsQueryable();
 
@@ -35,6 +35,6 @@ internal sealed class GetCustomersHandler : IQueryHandler<GetCustomers, IEnumera
                 : customers.Where(c => c.DeactivatedAt != null);
         }
         
-        return await customers.AsNoTracking().Select(c => c.AsDto()).ToListAsync();
+        return await customers.AsNoTracking().Select(c =>  new BackofficeCustomerDto(c.Id, c.FirstName + " " + c.LastName, c.Email, c.DeactivatedAt == null)).ToListAsync();
     }
 }

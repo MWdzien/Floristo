@@ -3,4 +3,4 @@ using Floristo.SharedAbstractions.Queries;
 
 namespace Floristo.Application.Customers.Queries;
 
-public record GetCustomers(string? SearchPhrase, bool? IsActive) : IQuery<IEnumerable<CustomerDto>>;
+public record GetCurrentCustomer(Guid CustomerId) : IQuery<StorefrontCustomerDto?>;
