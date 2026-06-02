@@ -3,10 +3,12 @@ using Floristo.Application.Customers.DTOs;
 using Floristo.Application.Customers.Queries;
 using Floristo.SharedAbstractions.Commands;
 using Floristo.SharedAbstractions.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Floristo.Api.Controllers;
 
+[Authorize]
 [Route("api/backoffice/customers")]
 public class BackofficeCustomerController : BaseController
 {

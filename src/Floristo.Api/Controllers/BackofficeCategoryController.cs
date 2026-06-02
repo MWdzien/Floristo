@@ -3,10 +3,12 @@ using Floristo.Application.Categories.DTOs;
 using Floristo.Application.Categories.Queries;
 using Floristo.SharedAbstractions.Commands;
 using Floristo.SharedAbstractions.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Floristo.Api.Controllers;
 
+[Authorize]
 [Route("api/backoffice/categories")]
 public class BackofficeCategoryController : BaseController
 {
