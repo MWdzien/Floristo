@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,6 +54,8 @@ public static class Extensions
         
         services.AddAuthorization();
         services.AddHttpContextAccessor();
+
+        services.AddTransient<IClaimsTransformation, SupabaseClaimsTransformation>();
 
         return services;
     }
