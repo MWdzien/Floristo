@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Floristo.Application.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -56,6 +57,7 @@ public static class Extensions
         services.AddHttpContextAccessor();
 
         services.AddTransient<IClaimsTransformation, SupabaseClaimsTransformation>();
+        services.AddScoped<ICurrentUser, CurrentUser>();
 
         return services;
     }
