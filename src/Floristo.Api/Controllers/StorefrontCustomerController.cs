@@ -24,9 +24,8 @@ public class StorefrontCustomerController : BaseController
     [HttpPost]
     public async Task<IActionResult> PostCustomer([FromBody] CreateCustomer command)
     {
-        command = command with { Id = Guid.NewGuid() };
         await CommandDispatcher.DispatchAsync(command);
-        return CreatedAtAction(nameof(GetCustomer), new { id = command.Id }, null);
+        return Created();
     }
     
     [HttpPut("first-name")]

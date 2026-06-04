@@ -2,4 +2,4 @@ using Floristo.SharedAbstractions.Commands;
 
 namespace Floristo.Application.Customers.Commands;
 
-public record CreateCustomer(Guid Id, string FirstName, string LastName, string Email) : ICommand;
+public record CreateCustomer(string FirstName, string LastName) : ICommand;
