@@ -56,19 +56,6 @@ public class Customer : AggregateRoot<CustomerId>
         AddEvent(new CustomerLastNameChangedEvent(this.Id, lastName));
     }
 
-    public void ChangeEmail(CustomerEmail email)
-    {
-        EnsureActive();
-
-        if (_email == email)
-        {
-            throw new CustomerEmailAlreadyInUseException();
-        }
-        
-        _email = email;
-        AddEvent(new CustomerEmailChangedEvent(this.Id, email));
-    }
-
     private void EnsureActive()
     {
         if (_deactivatedAt != null)

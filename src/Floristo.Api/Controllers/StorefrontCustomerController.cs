@@ -42,13 +42,6 @@ public class StorefrontCustomerController : BaseController
         return NoContent();
     }
     
-    [HttpPut("email")]
-    public async Task<IActionResult> PutEmail(Guid id, [FromBody] ChangeCustomerEmail command)
-    {
-        await CommandDispatcher.DispatchAsync(command with { Id = id });
-        return NoContent();
-    }
-    
     [HttpDelete]
     public async Task<IActionResult> DeleteCustomer([FromQuery] Guid id)
     {

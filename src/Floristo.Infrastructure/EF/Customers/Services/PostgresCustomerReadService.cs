@@ -14,9 +14,6 @@ internal sealed class PostgresCustomerReadService : ICustomerReadService
         _customers = dbContext.Customers;
     }
 
-    public Task<bool> ExistsByEmailAsync(string email, Guid? exceludeId = null)
-        => _customers.AnyAsync(x => x.Email == email && (exceludeId == null || x.Id == exceludeId));
-
     public Task<bool> ExistsByIdAsync(Guid id)
         => _customers.AnyAsync(c => c.Id == id);
 }

@@ -65,45 +65,6 @@ public class CustomerTests
     }
     
     [Fact]
-    public void ChangeEmail_Throws_CustomerNotActiveException_When_Customer_Is_Deactivated()
-    {
-        var customer = GetCustomer();
-        customer.Deactivate();
-        
-        var exception = Record.Exception(() => customer.ChangeEmail("test.testsson@mock.com"));
-        
-        exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<CustomerNotActiveException>();
-    }
-    
-    [Fact]
-    public void ChangeEmail_Throws_CustomerEmailAlreadyInUseException_When_New_Email_Is_Already_In_Use()
-    {
-        var customer = GetCustomer();
-        customer.ChangeEmail("test.testsson@mock.com");
-        customer.ClearEvents();
-        
-        var exception = Record.Exception(() => customer.ChangeEmail("test.testsson@mock.com"));
-        
-        exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<CustomerEmailAlreadyInUseException>();
-    }
-    
-    [Fact]
-    public void ChangeEmail_Adds_CustomerEmailChangedEvent_Domain_Event_On_Success()
-    {
-        var customer = GetCustomer();
-        
-        var exception = Record.Exception(() => customer.ChangeEmail("test.tesstson@mock.com"));
-        
-        exception.ShouldBeNull();
-        customer.Events.Count().ShouldBe(1);
-        var @event = customer.Events.FirstOrDefault() as CustomerEmailChangedEvent;
-        @event.ShouldNotBeNull();
-        @event.Email.Value.ShouldBe("test.tesstson@mock.com");
-    }
-    
-    [Fact]
     public void Deactivate_Throws_CustomerAlreadyDeactivatedException_When_Customer_Is_Deactivated()
     {
         var customer = GetCustomer();

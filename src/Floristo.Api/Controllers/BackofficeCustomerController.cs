@@ -34,7 +34,6 @@ public class BackofficeCustomerController : BaseController
     [HttpPost]
     public async Task<IActionResult> PostCustomer([FromBody] CreateCustomer command)
     {
-        command = command with { Id = Guid.NewGuid() };
         await CommandDispatcher.DispatchAsync(command);
         return CreatedAtAction(nameof(GetCustomer), null);
     }
@@ -48,13 +47,6 @@ public class BackofficeCustomerController : BaseController
     
     [HttpPut("{id:guid}/last-name")]
     public async Task<IActionResult> PutLastName(Guid id, [FromBody] ChangeCustomerLastName command)
-    {
-        await CommandDispatcher.DispatchAsync(command with { Id = id });
-        return NoContent();
-    }
-    
-    [HttpPut("{id:guid}/email")]
-    public async Task<IActionResult> PutEmail(Guid id, [FromBody] ChangeCustomerEmail command)
     {
         await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
