@@ -3,10 +3,12 @@ using Floristo.Application.Customers.DTOs;
 using Floristo.Application.Customers.Queries;
 using Floristo.SharedAbstractions.Commands;
 using Floristo.SharedAbstractions.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Floristo.Api.Controllers;
 
+[Authorize]
 [Route("api/storefront/account")]
 public class StorefrontCustomerController : BaseController
 {
@@ -29,23 +31,23 @@ public class StorefrontCustomerController : BaseController
     }
     
     [HttpPut("first-name")]
-    public async Task<IActionResult> PutFirstName(Guid id, [FromBody] ChangeCustomerFirstName command)
+    public async Task<IActionResult> PutFirstName([FromBody] ChangeCustomerFirstName command)
     {
-        await CommandDispatcher.DispatchAsync(command with { Id = id });
+        await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpPut("last-name")]
-    public async Task<IActionResult> PutLastName(Guid id, [FromBody] ChangeCustomerLastName command)
+    public async Task<IActionResult> PutLastName([FromBody] ChangeCustomerLastName command)
     {
-        await CommandDispatcher.DispatchAsync(command with { Id = id });
+        await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
     
     [HttpDelete]
-    public async Task<IActionResult> DeleteCustomer([FromQuery] Guid id)
+    public async Task<IActionResult> DeleteCustomer([FromQuery] DeactivateCustomer command)
     {
-        await CommandDispatcher.DispatchAsync(new DeactivateCustomer(id));
+        await CommandDispatcher.DispatchAsync(command);
         return NoContent();
     }
 }
