@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Floristo.Api.Controllers;
 
-[Authorize]
+[Authorize(Roles = "admin")]
 [Route("api/backoffice/products")]
 public class BackofficeProductController : BaseController
 {

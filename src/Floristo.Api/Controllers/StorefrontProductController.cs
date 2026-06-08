@@ -4,10 +4,12 @@ using Floristo.Application.Products.Queries;
 using Floristo.SharedAbstractions.Commands;
 using Floristo.SharedAbstractions.Paging;
 using Floristo.SharedAbstractions.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Floristo.Api.Controllers;
 
+[AllowAnonymous]
 [Route("api/storefront/products")]
 public class StorefrontProductController : BaseController
 {

@@ -2,10 +2,12 @@ using Floristo.Application.Categories.DTOs;
 using Floristo.Application.Categories.Queries;
 using Floristo.SharedAbstractions.Commands;
 using Floristo.SharedAbstractions.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Floristo.Api.Controllers;
 
+[AllowAnonymous]
 [Route("api/storefront/categories")]
 public class StorefrontCategoryController : BaseController
 {
