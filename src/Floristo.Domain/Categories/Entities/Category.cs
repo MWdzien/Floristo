@@ -7,6 +7,8 @@ namespace Floristo.Domain.Categories.Entities;
 
 public class Category : AggregateRoot<CategoryId>
 {
+    private CategoryId? _parentId;
+    
     private CategoryName _name;
     private CategoryDescription? _description;
     private CategorySlug _slug;
@@ -22,30 +24,32 @@ public class Category : AggregateRoot<CategoryId>
     {
     }
 
-    internal Category(CategoryId id, CategoryName name, CategorySlug slug, CategorySortOrder sortOrder)
+    internal Category(CategoryId id, CategoryId? parentId, CategoryName name, CategorySlug slug, CategorySortOrder sortOrder)
     {
         Id = id;
+        _parentId = parentId;
         _name = name;
         _slug = slug;
         _sortOrder = sortOrder;
         _createdAt = DateTime.UtcNow;
-        AddEvent(new CategoryCreatedEvent(id, name, slug, sortOrder, _createdAt));
+        AddEvent(new CategoryCreatedEvent(id, parentId, name, slug, sortOrder, _createdAt));
     }
     
-    internal Category(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug, 
+    internal Category(CategoryId id, CategoryId? parentId, CategoryName name, CategoryDescription? description, CategorySlug slug, 
         CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle, CategorySeoDescription? 
             seoDescription, CategoryCreatedAt createdAt, CategoryPublishedAt? publishedAt)
     {
-        SetState(id, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
+        SetState(id, parentId, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
         _createdAt = createdAt;
         _publishedAt = publishedAt;
     }
 
-    private void SetState(CategoryId id, CategoryName name, CategoryDescription? description, CategorySlug slug,
+    private void SetState(CategoryId id, CategoryId? parentId, CategoryName name, CategoryDescription? description, CategorySlug slug,
         CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle,
         CategorySeoDescription? seoDescription)
     {
         Id = id;
+        _parentId = parentId;
         _name = name;
         _description = description;
         _slug = slug;
