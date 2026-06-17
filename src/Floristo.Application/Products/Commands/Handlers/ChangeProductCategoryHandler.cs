@@ -27,6 +27,9 @@ internal sealed class ChangeProductCategoryHandler : ICommandHandler<ChangeProdu
         if (!await _categoryReadService.ExistsAsync(command.CategoryId))
             throw new CategoryNotFoundException(command.CategoryId);
         
+        if (await _categoryReadService.HasChildrenAsync(command.CategoryId))
+            throw new CategoryWithChildrenCannotHaveProductsException(command.CategoryId);
+        
         product.ChangeCategory(command.CategoryId);
 
         await _productRepository.UpdateAsync(product);

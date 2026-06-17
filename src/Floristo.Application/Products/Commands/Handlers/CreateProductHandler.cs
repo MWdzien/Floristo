@@ -34,6 +34,9 @@ internal sealed class CreateProductHandler : ICommandHandler<CreateProduct>
         
         if (!await _categoryReadService.ExistsAsync(categoryId))
             throw new CategoryNotFoundException(categoryId);
+        
+        if (await _categoryReadService.HasChildrenAsync(categoryId))
+            throw new CategoryWithChildrenCannotHaveProductsException(categoryId);
 
 
         var product = _productFactory.Create(
