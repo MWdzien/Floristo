@@ -1,4 +1,5 @@
 using Floristo.Application.Categories.Exceptions;
+using Floristo.Application.Categories.Services;
 using Floristo.Application.Products.Exceptions;
 using Floristo.Application.Products.Services;
 using Floristo.Domain.Categories.Repositories;
@@ -11,11 +12,13 @@ internal sealed class DeleteCategoryHandler : ICommandHandler<DeleteCategory>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IProductReadService _productReadService;
+    private readonly ICategoryReadService _categoryReadService;
 
-    public DeleteCategoryHandler(ICategoryRepository categoryRepository, IProductReadService productReadService)
+    public DeleteCategoryHandler(ICategoryRepository categoryRepository, IProductReadService productReadService, ICategoryReadService categoryReadService)
     {
         _categoryRepository = categoryRepository;
         _productReadService = productReadService;
+        _categoryReadService = categoryReadService;
     }
 
     public async Task HandleAsync(DeleteCategory command)
@@ -27,6 +30,9 @@ internal sealed class DeleteCategoryHandler : ICommandHandler<DeleteCategory>
 
         if (await _productReadService.ExistsByCategoryAsync(command.Id))
             throw new CategoryHasProductsException(command.Id);
+
+        if (await _categoryReadService.HasChildrenAsync(command.Id))
+            throw new CategoryHasChildrenException(command.Id);
         
         category.Delete();
         
