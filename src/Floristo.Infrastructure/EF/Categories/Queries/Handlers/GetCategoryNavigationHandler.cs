@@ -21,6 +21,6 @@ internal sealed class GetCategoryNavigationHandler : IQueryHandler<GetCategoryNa
             .Where(c => c.PublishedAt != null)
             .OrderBy(c => c.SortOrder)
             .AsNoTracking()
-            .Select(c => new CategoryNavigationItemDto(c.Name, c.Slug))
+            .Select(c => new CategoryNavigationItemDto(c.Name, c.Slug, c.ImageUrl, new List<CategoryNavigationItemDto>()))
             .ToListAsync();
 }

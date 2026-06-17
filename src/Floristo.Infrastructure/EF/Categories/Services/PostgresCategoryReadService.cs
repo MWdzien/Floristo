@@ -19,4 +19,10 @@ internal sealed class PostgresCategoryReadService : ICategoryReadService
 
     public Task<bool> ExistsAsync(Guid id)
         => _categories.AnyAsync(c => c.Id == id);
+
+    public Task<bool> IsRootAsync(Guid id)
+        => _categories.AnyAsync(c => c.Id == id && c.ParentId == null);
+
+    public Task<bool> HasChildrenAsync(Guid parentId)
+        => _categories.AnyAsync(c => c.ParentId == parentId);
 }

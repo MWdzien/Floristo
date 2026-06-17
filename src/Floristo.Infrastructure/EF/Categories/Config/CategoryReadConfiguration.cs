@@ -12,6 +12,7 @@ internal sealed class CategoryReadConfiguration : IEntityTypeConfiguration<Categ
         builder.HasKey(c => c.Id);
         
         builder.Property(c => c.Id).HasColumnName("id");
+        builder.Property(c => c.ParentId).HasColumnName("parent_id");
         builder.Property(c => c.Version).HasColumnName("version");
         builder.Property(c => c.Name).HasColumnName("name");
         builder.Property(c => c.Description).HasColumnName("description");

@@ -12,6 +12,9 @@ internal sealed class CategoryWriteConfiguration : IEntityTypeConfiguration<Cate
     {
         builder.ToTable("category");
         builder.HasKey(c => c.Id);
+
+        var categoryParentIdConverter =
+            new ValueConverter<CategoryId, Guid>(cid => cid.Value, cid => new CategoryId(cid));
         
         var categoryNameConverter = new ValueConverter<CategoryName, string>(cn => cn.Value,
             cn => new CategoryName(cn));
@@ -44,6 +47,12 @@ internal sealed class CategoryWriteConfiguration : IEntityTypeConfiguration<Cate
             .Property(c => c.Id)
             .HasConversion(id => id.Value, id => new CategoryId(id))
             .HasColumnName("id");
+
+        builder
+            .Property(typeof(CategoryId), "_parentId")
+            .HasConversion(categoryParentIdConverter)
+            .HasColumnName("parent_id")
+            .IsRequired(false);
         
         builder
             .Property(c => c.Version)

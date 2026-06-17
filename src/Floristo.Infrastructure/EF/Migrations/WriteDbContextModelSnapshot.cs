@@ -51,6 +51,10 @@ namespace Floristo.Infrastructure.EF.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<Guid?>("_parentId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("parent_id");
+
                     b.Property<DateTime?>("_publishedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("published_at");
