@@ -30,7 +30,7 @@ public class UpdateCategoryDetailsHandlerTests
     public async Task HandleAsync_Throws_CategorySlugNotUniqueException_When_Slug_Is_Not_Unique()
     {
         var command = GetCommand();
-        var category = new CategoryFactory().Create(command.Id, "Old name", "old-slug", 1);
+        var category = new CategoryFactory().Create(command.Id, null, "Old name", "old-slug", 1);
         _repository.GetAsync(command.Id).Returns(category);
         _readService.ExistsBySlugAsync(command.Slug, command.Id).Returns(true);
 
@@ -43,7 +43,7 @@ public class UpdateCategoryDetailsHandlerTests
     public async Task HandleAsync_Calls_Repository_On_Success()
     {
         var command = GetCommand();
-        var category = new CategoryFactory().Create(command.Id, "Old name", "old-slug", 1);
+        var category = new CategoryFactory().Create(command.Id, null, "Old name", "old-slug", 1);
         _repository.GetAsync(command.Id).Returns(category);
         _readService.ExistsBySlugAsync(command.Slug, command.Id).Returns(false);
 

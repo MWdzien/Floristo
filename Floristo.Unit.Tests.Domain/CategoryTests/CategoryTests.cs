@@ -92,7 +92,7 @@ public class CategoryTests
     private Category GetCategory()
     {
         var category = _categoryFactory
-            .Create(Guid.NewGuid(), "Test Flowers", "test-flowers", 1);
+            .Create(Guid.NewGuid(), null, "Test Flowers", "test-flowers", 1);
 
         category.ClearEvents();
         return category;
