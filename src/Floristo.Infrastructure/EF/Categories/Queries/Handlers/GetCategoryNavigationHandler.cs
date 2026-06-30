@@ -17,10 +17,28 @@ internal sealed class GetCategoryNavigationHandler : IQueryHandler<GetCategoryNa
     }
 
     public async Task<IEnumerable<CategoryNavigationItemDto>> HandleAsync(GetCategoryNavigation query)
-        => await _categories
+    {
+        var rows = await _categories
             .Where(c => c.PublishedAt != null)
             .OrderBy(c => c.SortOrder)
             .AsNoTracking()
-            .Select(c => new CategoryNavigationItemDto(c.Name, c.Slug, c.ImageUrl, new List<CategoryNavigationItemDto>()))
+            .Select(c => new { c.Id, c.ParentId, c.Name, c.Slug, c.ImageUrl })
             .ToListAsync();
+
+        var byParent = rows
+            .Where(r => r.ParentId != null)
+            .GroupBy(r => r.ParentId!.Value)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        return rows
+            .Where(r => r.ParentId == null)
+            .Select(root => new CategoryNavigationItemDto(
+                root.Name,
+                root.Slug,
+                root.ImageUrl,
+                byParent.TryGetValue(root.Id, out var kids)
+                    ? kids.Select(k => new CategoryNavigationItemDto(k.Name, k.Slug, k.ImageUrl, [])).ToList()
+                    : []))
+            .ToList();
+    }
 }
