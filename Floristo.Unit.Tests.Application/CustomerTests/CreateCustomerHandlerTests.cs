@@ -7,6 +7,7 @@ using Floristo.Domain.Customers.Entities;
 using Floristo.Domain.Customers.Exceptions;
 using Floristo.Domain.Customers.Factories;
 using Floristo.Domain.Customers.Repositories;
+using Floristo.Domain.Customers.ValueObjects;
 using Floristo.SharedAbstractions.Commands;
 using NSubstitute;
 using Shouldly;
@@ -49,7 +50,7 @@ public class CreateCustomerHandlerTests
     {
         var command = GetCreateCustomer();
         _readService.ExistsByIdAsync(_currentUser.Id).Returns(false);
-        _factory.Create(Arg.Any<Guid>(), command.FirstName, command.LastName, Arg.Any<string>()).Returns(default(Customer));
+        _factory.Create(Arg.Any<CustomerId>(), Arg.Any<CustomerFirstName>(), Arg.Any<CustomerLastName>(), Arg.Any<CustomerEmail>()).Returns(default(Customer));
         
         var exception = await Record.ExceptionAsync(() => Act(command));
         
