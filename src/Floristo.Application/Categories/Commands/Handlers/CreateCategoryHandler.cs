@@ -24,7 +24,7 @@ internal sealed class CreateCategoryHandler : ICommandHandler<CreateCategory>
 
     public async Task HandleAsync(CreateCategory command)
     {
-        var (id, parentId, name, slug, sortOrder) = command;
+        var (id, parentId, name, slug) = command;
 
         if (await _categoryReadService.ExistsBySlugAsync(slug))
         {
@@ -42,6 +42,8 @@ internal sealed class CreateCategoryHandler : ICommandHandler<CreateCategory>
             if (await _productReadService.ExistsByCategoryAsync(pid))
                 throw new CategoryWithProductsCannotBecomeParentException(pid);
         }
+        
+        var sortOrder = await _categoryReadService.GetNextSortOrderAsync(parentId);
         
         var category = _categoryFactory.Create(id, parentId, name, slug, sortOrder);
         

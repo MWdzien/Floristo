@@ -25,4 +25,13 @@ internal sealed class PostgresCategoryReadService : ICategoryReadService
 
     public Task<bool> HasChildrenAsync(Guid parentId)
         => _categories.AnyAsync(c => c.ParentId == parentId);
+
+    public async Task<int> GetNextSortOrderAsync(Guid? parentId)
+    {
+        var max = await _categories
+            .Where(c => c.ParentId == parentId)
+            .MaxAsync(c => (int?)c.SortOrder) ?? -1;
+
+        return max + 1;
+    }
 }

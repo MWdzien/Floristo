@@ -6,4 +6,5 @@ public interface ICategoryReadService
     Task<bool> ExistsAsync(Guid id);
     Task<bool> IsRootAsync(Guid id);
     Task<bool> HasChildrenAsync(Guid parentId);
+    Task<int> GetNextSortOrderAsync(Guid? parentId);
 }
