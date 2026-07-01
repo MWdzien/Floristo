@@ -25,12 +25,7 @@
         ],
         "styles": [
           "floristo-web/src/styles.scss"
-        ],
-        "server": "floristo-web/src/main.server.ts",
-        "ssr": {
-          "entry": "floristo-web/src/server.ts"
-        },
-        "outputMode": "server"
+        ]
       },
       "configurations": {
         "production": {
