@@ -22,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Floristo.Application\Floristo.Application.csproj" />
-      <ProjectReference Include="..\src\Floristo.SharedAbstractions\Floristo.SharedAbstractions.csproj" />
+      <ProjectReference Include="..\..\src\Floristo.Application\Floristo.Application.csproj" />
+      <ProjectReference Include="..\..\src\Floristo.SharedAbstractions\Floristo.SharedAbstractions.csproj" />
     </ItemGroup>
 
 </Project>

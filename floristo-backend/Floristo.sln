@@ -18,9 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Api", "src\Florist
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D80EED3B-CD97-4099-A12B-216080F4CB14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Unit.Tests.Domain", "Floristo.Unit.Tests.Domain\Floristo.Unit.Tests.Domain.csproj", "{5A520A5B-C304-4BE7-B45B-4BBBFA7AC441}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Unit.Tests.Domain", "tests\Floristo.Unit.Tests.Domain\Floristo.Unit.Tests.Domain.csproj", "{5A520A5B-C304-4BE7-B45B-4BBBFA7AC441}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Unit.Tests.Application", "Floristo.Unit.Tests.Application\Floristo.Unit.Tests.Application.csproj", "{B83FC448-44DB-4EB6-B8CE-3C70F5F2BC52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floristo.Unit.Tests.Application", "tests\Floristo.Unit.Tests.Application\Floristo.Unit.Tests.Application.csproj", "{B83FC448-44DB-4EB6-B8CE-3C70F5F2BC52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
