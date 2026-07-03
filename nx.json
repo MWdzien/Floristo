@@ -8,13 +8,9 @@
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "analytics": false,
-  "plugins": [
-    "@nx/dotnet"
-  ],
+  "plugins": ["@nx/dotnet"],
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*"
-    ],
+    "default": ["{projectRoot}/**/*"],
     "production": [
       "default",
       "!{projectRoot}/**/*.Tests/**/*",
@@ -27,13 +23,8 @@
   "targetDefaults": {
     "@angular/build:application": {
       "cache": true,
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "@nx/eslint:lint": {
       "cache": true,
@@ -53,6 +44,9 @@
       "linter": "eslint",
       "style": "scss",
       "unitTestRunner": "none"
+    },
+    "@nx/angular:component": {
+      "style": "scss"
     }
   }
 }
