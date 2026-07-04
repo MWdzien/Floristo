@@ -1,12 +1,45 @@
-<div class="p-16 max-w-4xl mx-auto space-y-8">
-    <app-placeholder-image label="Bukiety i Kompozycje" aspect="portrait" />
-    <app-placeholder-image label="Wianki" aspect="square" />
-    <app-placeholder-image label="Aranżacje żałobne" aspect="landscape" />
-</div>
-<section class="py-16 px-6 max-w-7xl mx-auto">
-    <header class="mb-10">
-        <p class="text-eyebrow uppercase text-bottle-green/60 mb-2">
+<section class="relative bg-cream h-[75vh] min-h-[600px] flex flex-col">
+    <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 px-6 lg:px-16 py-16 lg:py20 max-w-[1600px] mx-auto w-full">
+        <div class="lg:col-span-5 flex flex-col justify-between">
+            <div>
+                <p class="text-eyebrow uppercase text-bottle-green/60 mb-16 lg:mb24">
+                    - Studio florystyczne
+                </p>
 
+                <h1 class="font-display text-bottle-green text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
+                    Florystyka<br>
+                    inspirowana naturą.<br>
+                    Zaprojektowana na lata.
+                </h1>
+            </div>
+
+            <div class="mt-12 lg:mt-0 max-w-md">
+                <p class="font-body text-bottle-green/80 text-base lg:text-lg leading-relaxed mb-10">
+                    Naturalna estetyka zamknięta w trwałych kompozycjach kwiatowych.
+                    Subtelne formy, wyważone proporcje i materiały, które pozwalają
+                    cieszyć się ich pięknem przez długi czas.
+                </p>
+                <a
+                    href="#kolekcje"
+                    class="inline-block border border-bottle-green text-bottle-green px-8 py-4 text-eyebrow uppercase transition-colors duration-300 hover:bg-bottle-green hover:text-cream"
+                >
+                    Zobacz kolekcje
+                </a>
+            </div>
+        </div>
+        <div class="lg:col-span-7 lg:col-start-6 relative">
+            <div class="h-full min-h-[400px] lg:min-h-0">
+                <app-placeholder-image label="Floristo" aspect="fill"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-6 lg:px-16 pb-8 max-w-[1600px] mx-auto w-full flex items-end justify-between">
+        <p class="text-eyebrow uppercase text-bottle-green/40">
+            - 01 / hero
         </p>
-    </header>
+        <p class="text-eyebrow uppercase text-bottle-green/40 hidden md:block">
+            Przewiń niżej
+        </p>
+    </div>
 </section>

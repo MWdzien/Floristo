@@ -10,9 +10,4 @@ import { PlaceholderImage} from "../../shared/ui/placeholder-image/placeholder-i
   styleUrl: './home.scss',
 })
 export class Home {
-  private readonly productApi = inject(ProductApi);
-
-  readonly newArrivals = toSignal(this.productApi.getNewArrivals(8), {
-    initialValue: [],
-  })
 }

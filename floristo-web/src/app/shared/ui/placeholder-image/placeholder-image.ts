@@ -8,7 +8,7 @@ import { Component, input, computed } from '@angular/core';
 
 export class PlaceholderImage {
     readonly label = input.required<string>();
-    readonly aspect = input<'square' | 'portrait' | 'landscape'>('portrait');
+    readonly aspect = input<'square' | 'portrait' | 'landscape' | 'fill'>('portrait');
 
     readonly initials = computed(() => {
         const label = this.label();
@@ -23,6 +23,7 @@ export class PlaceholderImage {
             case 'square': return 'aspect-square';
             case 'portrait': return 'aspect-[3/4]';
             case 'landscape': return 'aspect-[4/3]';
+            case 'fill': return 'h-full';
         }
     })
 }
