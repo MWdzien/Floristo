@@ -7,34 +7,39 @@ namespace Floristo.Domain.Customers.Entities;
 
 public class Customer : AggregateRoot<CustomerId>
 {
+    private CustomerIdentityId _identityId;
     private CustomerFirstName _firstName;
     private CustomerLastName _lastName;
     private CustomerEmail _email;
     private CustomerCreatedAt _createdAt;
     private CustomerDeactivatedAt? _deactivatedAt;
 
-    internal Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email)
+    internal Customer(CustomerId id, CustomerIdentityId identityId, CustomerFirstName firstName, CustomerLastName lastName, 
+        CustomerEmail email)
     {
-        SetState(id, firstName, lastName, email);
+        SetState(id, identityId, firstName, lastName, email);
         _createdAt = DateTime.UtcNow;
-        AddEvent(new CustomerCreatedEvent(Id, firstName, lastName, email, _createdAt));
+        AddEvent(new CustomerCreatedEvent(Id, identityId, firstName, lastName, email, _createdAt));
     }
 
     private Customer()
     {
     }
 
-    internal Customer(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email,
-        CustomerCreatedAt createdAt, CustomerDeactivatedAt? deactivatedAt)
+    internal Customer(CustomerId id, CustomerIdentityId identityId, CustomerFirstName firstName, 
+        CustomerLastName lastName, CustomerEmail email, CustomerCreatedAt createdAt, CustomerDeactivatedAt? deactivatedAt)
     {
-        SetState(id, firstName, lastName, email);
+        SetState(id, identityId, firstName, lastName, email);
         _createdAt = createdAt;
         _deactivatedAt = deactivatedAt;
+        
     }
 
-    private void SetState(CustomerId id, CustomerFirstName firstName, CustomerLastName lastName, CustomerEmail email)
+    private void SetState(CustomerId id, CustomerIdentityId identityId, CustomerFirstName firstName, 
+        CustomerLastName lastName, CustomerEmail email)
     {
         Id = id;
+        _identityId = identityId;
         _firstName = firstName;
         _lastName = lastName;
         _email = email;
