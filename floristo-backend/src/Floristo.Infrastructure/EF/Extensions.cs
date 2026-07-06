@@ -13,9 +13,11 @@ using Floristo.Infrastructure.EF.Options;
 using Floristo.Infrastructure.EF.Products.Repositories;
 using Floristo.Infrastructure.EF.Products.Services;
 using Floristo.Shared.Options;
+using Floristo.SharedAbstractions.Secrets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace Floristo.Infrastructure.EF;
 
@@ -30,10 +32,36 @@ internal static class Extensions
         services.AddScoped<IProductRepository, PostgresProductRepository>();
         services.AddScoped<IProductReadService, PostgresProductReadService>();
         
-        var options = configuration.GetOptions<PostgresOptions>("Postgres");
-        services.AddDbContext<ReadDbContext>(ctx => ctx.UseNpgsql(options.ConnectionString));
-        services.AddDbContext<WriteDbContext>(ctx => ctx.UseNpgsql(options.ConnectionString));
+        var options = configuration.GetOptions<PostgresOptions>(PostgresOptions.SectionName);
+
+        using var tmpProvider = services.BuildServiceProvider();
+        var secrets = tmpProvider.GetRequiredService<ISecretsProvider>();
+        var password = secrets.GetSecretAsync(options.PasswordSecretName).GetAwaiter().GetResult();
+        
+        var connectionString = BuildConnectionString(options, password);
+        
+        services.AddDbContext<ReadDbContext>(ctx => ctx.UseNpgsql(connectionString));
+        services.AddDbContext<WriteDbContext>(ctx => ctx.UseNpgsql(connectionString));
         
         return services;
+    }
+
+    private static string BuildConnectionString(PostgresOptions options, string password)
+    {
+        var builder = new NpgsqlConnectionStringBuilder
+        {
+            Host = options.Host,
+            Database = options.Database,
+            Username = options.Username,
+            Password = password,
+            SslMode = Enum.Parse<SslMode>(options.SslMode)
+        };
+
+        if (!options.Host.StartsWith('/'))                                                                                                                                                                                 
+        {                                                                                                                                                                                                                  
+            builder.Port = options.Port;
+        }
+        
+        return builder.ConnectionString;
     }
 }
