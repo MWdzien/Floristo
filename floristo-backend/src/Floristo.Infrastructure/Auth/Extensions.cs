@@ -1,5 +1,8 @@
 using System.Security.Claims;
+using FirebaseAdmin;
+using FirebaseAdmin.Auth;
 using Floristo.Application.Auth;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -12,10 +15,10 @@ namespace Floristo.Infrastructure.Auth;
 
 public static class Extensions
 {
-    public static IServiceCollection AddSupabaseAuth(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddFirebaseAuth(this IServiceCollection services, IConfiguration configuration)
     {
-        var options = configuration.GetSection(SupabaseAuthOptions.SectionName).Get<SupabaseAuthOptions>()
-                      ?? throw new InvalidOperationException("Supabase auth configuration is missing");
+        var options = configuration.GetSection(FirebaseAuthOptions.SectionName).Get<FirebaseAuthOptions>()
+                      ?? throw new InvalidOperationException("Firebase auth configuration is missing");
 
         services.AddSingleton(options);
 
@@ -56,8 +59,17 @@ public static class Extensions
         services.AddAuthorization();
         services.AddHttpContextAccessor();
 
-        services.AddTransient<IClaimsTransformation, SupabaseClaimsTransformation>();
+        services.AddTransient<IClaimsTransformation, FirebaseClaimsTransformation>();
         services.AddScoped<ICurrentUser, CurrentUser>();
+
+        services.AddSingleton(FirebaseApp.Create(new AppOptions
+        {
+            ProjectId = options.ProjectId,
+            Credential = GoogleCredential.GetApplicationDefault()
+        }));
+        
+        services.AddSingleton(FirebaseAuth.DefaultInstance);
+        services.AddScoped<IIdentityCustomerLinker, FirebaseIdentityCustomerLinker>();
 
         return services;
     }

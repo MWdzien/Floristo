@@ -17,7 +17,7 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
-builder.Services.AddSupabaseAuth(builder.Configuration);
+builder.Services.AddFirebaseAuth(builder.Configuration);
 
 var corsOptions = builder.Configuration.GetOptions<CorsOptions>(CorsOptions.SectionName);
 
