@@ -15,9 +15,9 @@ using Xunit;
 
 namespace Floristo.Unit.Tests.Application.CustomerTests;
 
-public class CreateCustomerHandlerTests
+public class ProvisionCurrentCustomerHandlerTests
 {
-    Task Act(CreateCustomer command)
+    Task Act(ProvisionCurrentCustomer command)
         => _commandHandler.HandleAsync(command);
 
     [Fact]
@@ -60,16 +60,16 @@ public class CreateCustomerHandlerTests
     
     #region ARRANGE
 
-    public CreateCustomer GetCreateCustomer()
+    public ProvisionCurrentCustomer GetCreateCustomer()
         => new("John", "Doe");
     
-    private readonly ICommandHandler<CreateCustomer> _commandHandler;
+    private readonly ICommandHandler<ProvisionCurrentCustomer> _commandHandler;
     private readonly ICustomerRepository _repository;
     private readonly ICustomerReadService _readService;
     private readonly ICustomerFactory _factory;
     private readonly ICurrentUser _currentUser;
 
-    public CreateCustomerHandlerTests()
+    public ProvisionCurrentCustomerHandlerTests()
     {
         _repository = Substitute.For<ICustomerRepository>();
         _factory = Substitute.For<ICustomerFactory>();
@@ -79,7 +79,7 @@ public class CreateCustomerHandlerTests
         _currentUser.Id.Returns(Guid.NewGuid());
         _currentUser.Email.Returns("john.doe@mock.com");
         
-        _commandHandler = new CreateCustomerHandler(_repository, _factory, _readService, _currentUser);
+        _commandHandler = new ProvisionCurrentCustomerHandler(_repository, _factory, _readService, _currentUser);
     }
 
     #endregion

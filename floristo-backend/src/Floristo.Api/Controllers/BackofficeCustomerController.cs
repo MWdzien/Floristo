@@ -30,13 +30,6 @@ public class BackofficeCustomerController : BaseController
         var result = await QueryDispatcher.DispatchAsync(query);
         return Ok(result);
     }
-
-    [HttpPost]
-    public async Task<IActionResult> PostCustomer([FromBody] CreateCustomer command)
-    {
-        await CommandDispatcher.DispatchAsync(command);
-        return CreatedAtAction(nameof(GetCustomer), null);
-    }
     
     [HttpPut("{id:guid}/first-name")]
     public async Task<IActionResult> PutFirstName(Guid id, [FromBody] ChangeCustomerFirstName command)

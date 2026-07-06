@@ -12,6 +12,7 @@ internal sealed class CustomerReadConfiguration : IEntityTypeConfiguration<Custo
         builder.HasKey(c => c.Id);
         
         builder.Property(c => c.Id).HasColumnName("id");
+        builder.Property(c => c.IdentityId).HasColumnName("identity_id");
         builder.Property(c => c.Version).HasColumnName("version");
         builder.Property(c => c.FirstName).HasColumnName("first_name");
         builder.Property(c => c.LastName).HasColumnName("last_name");

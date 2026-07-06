@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Floristo.Api.Controllers;
 
 [Authorize]
-[Route("api/storefront/account")]
+[Route("api/storefront/customers")]
 public class StorefrontCustomerController : BaseController
 {
     public StorefrontCustomerController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher) : base(queryDispatcher, commandDispatcher)
@@ -23,8 +23,8 @@ public class StorefrontCustomerController : BaseController
         return OkOrNotFound(result);
     } 
     
-    [HttpPost]
-    public async Task<IActionResult> PostCustomer([FromBody] CreateCustomer command)
+    [HttpPost("me/provision")]
+    public async Task<IActionResult> PostCustomer([FromBody] ProvisionCurrentCustomer command)
     {
         await CommandDispatcher.DispatchAsync(command);
         return Created();

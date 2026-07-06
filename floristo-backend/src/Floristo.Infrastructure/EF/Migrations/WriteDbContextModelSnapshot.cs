@@ -113,6 +113,11 @@ namespace Floristo.Infrastructure.EF.Migrations
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
+                    b.Property<string>("_identityId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("identity_id");
+
                     b.Property<string>("_lastName")
                         .IsRequired()
                         .HasColumnType("text")
@@ -121,6 +126,9 @@ namespace Floristo.Infrastructure.EF.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("_email")
+                        .IsUnique();
+
+                    b.HasIndex("_identityId")
                         .IsUnique();
 
                     b.ToTable("customer", "floristo");

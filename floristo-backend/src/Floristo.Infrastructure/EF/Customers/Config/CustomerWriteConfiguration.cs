@@ -12,6 +12,9 @@ internal sealed class CustomerWriteConfiguration : IEntityTypeConfiguration<Cust
     {
         builder.ToTable("customer");
         builder.HasKey(x => x.Id);
+        
+        var customerIdentityIdConverter = new ValueConverter<CustomerIdentityId, string>(cii => cii.Value,
+            cii => new CustomerIdentityId(cii));
 
         var customerFirstNameConverter = new ValueConverter<CustomerFirstName, string>(cfn => cfn.Value,
             cfn => new CustomerFirstName(cfn));
@@ -32,6 +35,11 @@ internal sealed class CustomerWriteConfiguration : IEntityTypeConfiguration<Cust
             .Property(c => c.Id)
             .HasConversion(id => id.Value, id => new CustomerId(id))
             .HasColumnName("id");
+        
+        builder
+            .Property(typeof(CustomerIdentityId), "_identityId")
+            .HasConversion(customerIdentityIdConverter)
+            .HasColumnName("identity_id");
 
         builder
             .Property(c => c.Version)
@@ -65,5 +73,6 @@ internal sealed class CustomerWriteConfiguration : IEntityTypeConfiguration<Cust
             .IsRequired(false);
         
         builder.HasIndex("_email").IsUnique();
+        builder.HasIndex("_identityId").IsUnique();
     }
 }

@@ -16,4 +16,10 @@ internal sealed class PostgresCustomerReadService : ICustomerReadService
 
     public Task<bool> ExistsByIdAsync(Guid id)
         => _customers.AnyAsync(c => c.Id == id);
+
+    public Task<Guid?> GetIdByIdentityIdAsync(string identityId)
+        => _customers
+            .Where(c => c.IdentityId == identityId)
+            .Select(c => c.Id as Guid?)
+            .SingleOrDefaultAsync();
 }
