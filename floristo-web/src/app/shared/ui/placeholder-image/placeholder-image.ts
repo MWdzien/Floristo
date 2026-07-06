@@ -2,6 +2,7 @@ import { Component, input, computed } from '@angular/core';
 
 @Component({
     selector: 'app-placeholder-image',
+    standalone: true,
     templateUrl: './placeholder-image.html',
     styleUrl: './placeholder-image.scss'
 })
