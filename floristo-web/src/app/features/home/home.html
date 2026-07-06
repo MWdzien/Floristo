@@ -43,3 +43,49 @@
         </p>
     </div>
 </section>
+
+<section class="bg-cream py-24 lg:py-32">
+    <header class="mb-12 lg:mb-16 px-6 lg:px-16 max-w-[1600px] mx-auto flex items-end justify-between">
+        <div>
+            <p class="text-eyebrow uppercase text-bottle-green/60 mb-6">
+                — 02 / nowości
+            </p>
+            <h2 class="font-display text-bottle-green text-4xl md:text-5xl leading-[1.1] tracking-tight">
+                W tym miesiącu.
+            </h2>
+        </div>
+        <a
+                href="/kategoria/nowosci"
+                class="group hidden md:inline-flex items-center gap-3 text-eyebrow uppercase text-bottle-green border-b border-bottle-green pb-1 shrink-0"
+        >
+            Zobacz wszystkie
+            <span class="transition-transform duration-300 group-hover:translate-x-1">></span>
+        </a>
+    </header>
+
+    <div class="flex gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide pl-6 lg:pl-16 [scroll-padding-left:1.5rem] lg:[scroll-padding-left:4rem]">
+        @for (product of newArrivals(); track product.slug) {
+            <article class="snap-start shrink-0 w-[260px] lg:w-[300px] cursor-pointer group">
+                <div class="mb-4">
+                    <app-placeholder-image [label]="product.name" aspect="square"/>
+                </div>
+                <p class="font-display text-bottle-green text-lg leading-snug mb-1 group-hover:underline decoration-1 underline-offset-2">
+                    {{ product.name }}
+                </p>
+                <p class="font-body text-bottle-green/60 text-sm">
+                    {{ product.price | currency:'PLN':'symbol':'1.2-2':'pl-PL' }}
+                </p>
+            </article>
+        }
+    </div>
+
+    <div class="mt-8 px-6 lg:px-16 md:hidden">
+        <a
+                href="/kategoria/nowosci"
+                class="group inline-flex items-center gap-3 text-eyebrow uppercase text-bottle-green border-b border-bottle-green pb-1"
+        >
+            Zobacz wszystkie
+            <span class="transition-transform duration-300 group-hover:translate-x-1">></span>
+        </a>
+    </div>
+</section>
