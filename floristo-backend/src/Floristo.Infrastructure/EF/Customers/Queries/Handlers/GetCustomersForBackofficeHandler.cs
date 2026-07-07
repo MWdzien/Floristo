@@ -23,7 +23,7 @@ internal sealed class GetCustomersForBackofficeHandler : IQueryHandler<GetCustom
             var searchPhrase = query.SearchPhrase;
             customers = customers.Where(c =>
                 Microsoft.EntityFrameworkCore.EF.Functions.ILike(c.FirstName, $"%{searchPhrase}%") ||
-                Microsoft.EntityFrameworkCore.EF.Functions.ILike(c.LastName, $"%{searchPhrase}%") ||
+                Microsoft.EntityFrameworkCore.EF.Functions.ILike(c.LastName ?? "", $"%{searchPhrase}%") ||
                 Microsoft.EntityFrameworkCore.EF.Functions.ILike(c.Email, $"%{searchPhrase}%")
             );
         }
@@ -35,6 +35,6 @@ internal sealed class GetCustomersForBackofficeHandler : IQueryHandler<GetCustom
                 : customers.Where(c => c.DeactivatedAt != null);
         }
         
-        return await customers.AsNoTracking().Select(c =>  new BackofficeCustomerDto(c.Id, c.FirstName + " " + c.LastName, c.Email, c.DeactivatedAt == null)).ToListAsync();
+        return await customers.AsNoTracking().Select(c =>  new BackofficeCustomerDto(c.Id, (c.FirstName + " " + (c.LastName ?? "")).TrimEnd(), c.Email, c.DeactivatedAt == null)).ToListAsync();
     }
 }

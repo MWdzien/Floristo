@@ -54,7 +54,8 @@ internal sealed class CustomerWriteConfiguration : IEntityTypeConfiguration<Cust
         builder
             .Property(typeof(CustomerLastName), "_lastName")
             .HasConversion(customerLastNameConverter)
-            .HasColumnName("last_name");
+            .HasColumnName("last_name")
+            .IsRequired(false);
         
         builder
             .Property(typeof(CustomerEmail), "_email")

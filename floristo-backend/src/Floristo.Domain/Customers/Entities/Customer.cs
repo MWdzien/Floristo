@@ -9,12 +9,12 @@ public class Customer : AggregateRoot<CustomerId>
 {
     private CustomerIdentityId _identityId;
     private CustomerFirstName _firstName;
-    private CustomerLastName _lastName;
+    private CustomerLastName? _lastName;
     private CustomerEmail _email;
     private CustomerCreatedAt _createdAt;
     private CustomerDeactivatedAt? _deactivatedAt;
 
-    internal Customer(CustomerId id, CustomerIdentityId identityId, CustomerFirstName firstName, CustomerLastName lastName, 
+    internal Customer(CustomerId id, CustomerIdentityId identityId, CustomerFirstName firstName, CustomerLastName? lastName, 
         CustomerEmail email)
     {
         SetState(id, identityId, firstName, lastName, email);
@@ -27,7 +27,7 @@ public class Customer : AggregateRoot<CustomerId>
     }
 
     internal Customer(CustomerId id, CustomerIdentityId identityId, CustomerFirstName firstName, 
-        CustomerLastName lastName, CustomerEmail email, CustomerCreatedAt createdAt, CustomerDeactivatedAt? deactivatedAt)
+        CustomerLastName? lastName, CustomerEmail email, CustomerCreatedAt createdAt, CustomerDeactivatedAt? deactivatedAt)
     {
         SetState(id, identityId, firstName, lastName, email);
         _createdAt = createdAt;
@@ -36,7 +36,7 @@ public class Customer : AggregateRoot<CustomerId>
     }
 
     private void SetState(CustomerId id, CustomerIdentityId identityId, CustomerFirstName firstName, 
-        CustomerLastName lastName, CustomerEmail email)
+        CustomerLastName? lastName, CustomerEmail email)
     {
         Id = id;
         _identityId = identityId;

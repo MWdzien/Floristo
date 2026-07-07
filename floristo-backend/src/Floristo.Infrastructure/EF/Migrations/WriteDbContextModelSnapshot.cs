@@ -119,7 +119,6 @@ namespace Floristo.Infrastructure.EF.Migrations
                         .HasColumnName("identity_id");
 
                     b.Property<string>("_lastName")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 

@@ -4,6 +4,7 @@ using Floristo.Application.Customers.Services;
 using Floristo.Domain.Customers.Exceptions;
 using Floristo.Domain.Customers.Factories;
 using Floristo.Domain.Customers.Repositories;
+using Floristo.Domain.Customers.ValueObjects;
 using Floristo.SharedAbstractions.Commands;
 using Microsoft.Extensions.Logging;
 
@@ -41,7 +42,9 @@ internal sealed class ProvisionCurrentCustomerHandler : ICommandHandler<Provisio
             throw new CustomerAlreadyExistsException(identityId);
         }
         
-        var customer = _customerFactory.Create(Guid.NewGuid(), identityId, command.FirstName, command.LastName, email);
+        CustomerLastName? lastName = command.LastName is not null ? new CustomerLastName(command.LastName) : null;
+        
+        var customer = _customerFactory.Create(Guid.NewGuid(), identityId, command.FirstName, lastName, email);
         
         await _customerRepository.AddAsync(customer);
 
