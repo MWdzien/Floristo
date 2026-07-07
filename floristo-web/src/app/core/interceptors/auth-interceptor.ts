@@ -7,7 +7,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const auth = inject(AuthService);
 
     const isApiRequest = req.url.startsWith(environment.apiUrl);
-    const token = auth.accessToken();
+    const token = auth.idToken();
 
     if (!isApiRequest || !token){
         return next(req);

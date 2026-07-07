@@ -1,37 +1,50 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Session, User } from '@supabase/supabase-js';
-import { SupabaseClientService} from "./subabase-client";
+import {
+    User,
+    onIdTokenChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    GoogleAuthProvider,
+    signInWithPopup,
+    updateProfile,
+} from 'firebase/auth';
+import { FirebaseClientService } from './firebase-client';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private readonly supabase = inject(SupabaseClientService).client;
-
-    private readonly _session = signal<Session | null>(null);
-
-    readonly session = this._session.asReadonly();
-    readonly currentUser = computed<User | null>(() => this._session()?.user ?? null);
-    readonly isAuthenticated = computed(() => this._session() !== null);
-    readonly accessToken = computed(() => this._session()?.access_token ?? null);
+    private readonly _auth = inject(FirebaseClientService).auth;
+    private readonly _user = signal<User | null>(null);
+    private readonly _idToken = signal<string | null>(null);
+    readonly currentUser = this._user.asReadonly();
+    readonly idToken = this._idToken.asReadonly();
+    readonly isAuthenticated = computed(() => this._user() !== null);
 
     constructor() {
-        this.supabase.auth.getSession().then(({ data }) => {
-            this._session.set(data.session);
-        })
-
-        this.supabase.auth.onAuthStateChange((_event, session) => {
-            this._session.set(session);
-        })
+        onIdTokenChanged(this._auth, async (user) => {
+            this._user.set(user);
+            this._idToken.set(user ? await user.getIdToken() : null);
+        });
     }
 
-    async signUp(email: string, password: string) {
-        return this.supabase.auth.signUp({ email, password });
+    async signInWithEmail(email: string, password: string): Promise<void> {
+        await signInWithEmailAndPassword(this._auth, email, password);
     }
 
-    async signIn(email: string, password: string) {
-        return this.supabase.auth.signInWithPassword({ email, password });
+    async signUpWithEmail(email: string, password: string, firstName: string, lastName: string): Promise<void> {
+        const cred = await createUserWithEmailAndPassword(this._auth, email, password);
+        await updateProfile(cred.user, { displayName: `${firstName} ${lastName}` });
     }
 
-    async signOut() {
-        return this.supabase.auth.signOut();
+    async signInWithGoogle(): Promise<void> {
+        await signInWithPopup(this._auth, new GoogleAuthProvider());
+    }
+
+    async signOut(): Promise<void> {
+        await signOut(this._auth);
+    }
+
+    async refreshIdToken(): Promise<void> {
+        await this._user()?.getIdToken(true);
     }
 }

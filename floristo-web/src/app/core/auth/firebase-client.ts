@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { initializeApp, FirebaseApp } from 'firebase/app';
+import { Auth, getAuth } from 'firebase/auth';
+import { Analytics, getAnalytics } from 'firebase/analytics'
 import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class SupabaseClientService {
-    readonly client: SupabaseClient = createClient(
-        environment.supabase.url,
-        environment.supabase.publishableKey,
-        {
-            auth: {
-                persistSession: true,
-                autoRefreshToken: true,
-                detectSessionInUrl: true
-            }
-        }
-    )
+export class FirebaseClientService {
+    readonly app: FirebaseApp = initializeApp(environment.firebase);
+    readonly auth: Auth = getAuth(this.app);
+    readonly analytics: Analytics = getAnalytics(this.app);
 }
