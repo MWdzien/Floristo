@@ -96,8 +96,8 @@ public class CustomerTests
     private Customer GetCustomer()
     {
         var customer = _customerFactory
-            .Create(Guid.NewGuid(), "John", "Doe", "john.doe@mock.com");
-        
+            .Create(Guid.NewGuid(), "firebase-uid-mock", "John", "Doe", "john.doe@mock.com");
+
         customer.ClearEvents();
         return customer;
     }
