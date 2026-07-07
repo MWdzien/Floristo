@@ -1,0 +1,36 @@
+<form [formGroup]="form" (ngSubmit)="onEmailSubmit()">
+    <h1>Zaloguj się</h1>
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email">
+    @if (form.controls.email.invalid && form.controls.email.touched){
+        @if (form.controls.email.hasError('required')) {
+            <span>Email jest wymagany</span>
+        } @else if (form.controls.email.hasError('email')) {
+            <span>Nieprawidłowy format email</span>
+        }
+    }
+    <label for="password">Hasło</label>
+    <input id="password" formControlName="password" type="password">
+    @if (form.controls.password.invalid && form.controls.password.touched){
+        @if (form.controls.password.hasError('required')) {
+            <span>Hasło jest wymagane</span>
+        } @else if (form.controls.password.hasError('minlength') ||
+        form.controls.password.hasError('maxlength')) {
+            <span>Hasło jest za krótkie (min. 6 liter)</span>
+        }
+
+    }
+    <button type="submit" [disabled]="form.invalid || isLoading()">
+        @if (isLoading()) { Loguję... } @else { Zaloguj }
+    </button>
+</form>
+
+<button (click)="onGoogleSubmit()" type="button">
+    Zaloguj przez google
+</button>
+
+@if (errorMessage()) {
+    <p role="alert"> {{ errorMessage() }}</p>
+}
+
+<a routerLink="/rejestracja">Nie masz konta? Zarejestruj się</a>
