@@ -6,14 +6,18 @@ import { StorefrontCustomer } from "../models/customer";
 
 export interface UpdateCustomerRequest {
     firstName: string,
-    lastName: string,
-    phone?: string
+    lastName: string
+}
+
+export interface ProvisionCustomerRequest {
+    firstName: string,
+    lastName?: string
 }
 
 @Injectable({ providedIn: 'root' })
 export class CustomerApi {
     private readonly http = inject(HttpClient);
-    private readonly baseUrl = `${environment.apiUrl}/api/storefront/customer`;
+    private readonly baseUrl = `${environment.apiUrl}/api/storefront/customers`;
 
     getMe(): Observable<StorefrontCustomer> {
         return this.http.get<StorefrontCustomer>(`${this.baseUrl}/me`);
@@ -21,5 +25,9 @@ export class CustomerApi {
 
     updateMe(request: UpdateCustomerRequest): Observable<StorefrontCustomer> {
         return this.http.put<StorefrontCustomer>(`${this.baseUrl}/me`, request);
+    }
+
+    provision(request: ProvisionCustomerRequest): Observable<void> {
+        return this.http.post<void>(`${this.baseUrl}/me/provision`, request);
     }
 }

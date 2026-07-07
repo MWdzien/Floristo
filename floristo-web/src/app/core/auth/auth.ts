@@ -47,4 +47,12 @@ export class AuthService {
     async refreshIdToken(): Promise<void> {
         await this._user()?.getIdToken(true);
     }
+
+    async getIdTokenClaims(): Promise<Record<string, unknown> | null> {
+        const user = this._user();
+        if (!user)
+            return null;
+        const result = await user.getIdTokenResult();
+        return result.claims;
+    }
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { inject, signal } from '@angular/core';
-import { AuthService } from "../../../core/auth/auth";
+import { AuthFlowService } from "../../../core/auth/auth-flow";
 import { FirebaseError } from "firebase/app";
 
 @Component({
@@ -13,7 +13,7 @@ import { FirebaseError } from "firebase/app";
   styleUrl: './login.scss',
 })
 export class Login {
-  private readonly auth = inject(AuthService);
+  private readonly authFlow = inject(AuthFlowService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/';
@@ -38,7 +38,7 @@ export class Login {
     this.errorMessage.set(null);
     try {
       const { email, password } = this.form.getRawValue();
-      await this.auth.signInWithEmail(email, password);
+      await this.authFlow.signInWithEmail(email, password);
       await this.router.navigateByUrl(this.returnUrl);
     } catch (e) {
       this.errorMessage.set(this.mapAuthError(e));
@@ -51,7 +51,7 @@ export class Login {
     this.isLoading.set(true);
     this.errorMessage.set(null);
     try {
-      await this.auth.signInWithGoogle();
+      await this.authFlow.signInWithGoogle();
       await this.router.navigateByUrl(this.returnUrl);
     } catch (e) {
       this.errorMessage.set(this.mapAuthError(e));
