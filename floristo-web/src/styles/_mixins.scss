@@ -1,0 +1,153 @@
+@use 'tokens' as *;
+
+// ============================================================
+// Mixins — reusable style patterns for Floristo frontend
+// ============================================================
+
+// -------- Media queries --------
+// Mobile-first: default styles apply, mixin adds breakpoint override.
+@mixin from($breakpoint) {
+    @media (min-width: $breakpoint) { @content; }
+}
+
+@mixin to($breakpoint) {
+    @media (max-width: ($breakpoint - 1px)) { @content; }
+}
+
+// Semantic aliases — prefer these over raw pixels
+@mixin desktop { @include from($bp-lg) { @content; } }
+@mixin tablet  { @include from($bp-md) { @content; } }
+@mixin mobile  { @include to($bp-md)   { @content; } }
+
+// -------- Container --------
+// Standard page container with responsive horizontal padding
+@mixin container {
+    max-width: $container-max;
+    margin-inline: auto;
+    padding-inline: $container-px-mobile;
+
+    @include desktop {
+        padding-inline: $container-px-desktop;
+    }
+}
+
+// -------- Typography --------
+@mixin eyebrow($color: $color-bottle-green, $opacity: 0.6) {
+    font-family: $font-body;
+    font-size: $fs-eyebrow;
+    line-height: $lh-tight;
+    letter-spacing: $ls-eyebrow;
+    text-transform: uppercase;
+    color: rgba($color, $opacity);
+}
+
+@mixin display-lg {
+    font-family: $font-display;
+    font-size: $fs-display-md;
+    line-height: $lh-snug;
+    letter-spacing: $ls-tight;
+
+    @include desktop {
+        font-size: $fs-display-lg;
+    }
+}
+
+@mixin display-md {
+    font-family: $font-display;
+    font-size: $fs-display-sm;
+    line-height: $lh-snug;
+    letter-spacing: $ls-tight;
+
+    @include desktop {
+        font-size: $fs-display-md;
+    }
+}
+
+@mixin body {
+    font-family: $font-body;
+    font-size: $fs-body;
+    line-height: $lh-loose;
+}
+
+@mixin body-lg {
+    font-family: $font-body;
+    font-size: $fs-body;
+    line-height: $lh-loose;
+
+    @include desktop {
+        font-size: $fs-body-lg;
+    }
+}
+
+// -------- Flex helpers --------
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+// -------- Underline link (editorial CTA) --------
+// Used for "Zobacz kolekcję", "Zobacz wszystkie" etc.
+@mixin link-underline($color: $color-bottle-green) {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-3;
+    padding-bottom: $space-1;
+    font-family: $font-body;
+    font-size: $fs-eyebrow;
+    letter-spacing: $ls-eyebrow;
+    text-transform: uppercase;
+    color: $color;
+    border-bottom: 1px solid $color;
+    transition: opacity $transition-base;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+// -------- Button (bordered CTA) --------
+// Used for hero "Zobacz kolekcje" and similar prominent CTAs.
+@mixin button-bordered($color: $color-bottle-green, $bg: $color-cream) {
+    display: inline-block;
+    padding: $space-4 $space-8;
+    font-family: $font-body;
+    font-size: $fs-eyebrow;
+    letter-spacing: $ls-eyebrow;
+    text-transform: uppercase;
+    color: $color;
+    background: transparent;
+    border: 1px solid $color;
+    transition: background-color $transition-base, color $transition-base;
+    cursor: pointer;
+
+    &:hover {
+        background: $color;
+        color: $bg;
+    }
+}
+
+// -------- Aspect ratio --------
+@mixin aspect($ratio) {
+    aspect-ratio: $ratio;
+}
+
+// -------- Visually hidden --------
+// For accessibility: hides visually but keeps in accessible tree
+@mixin sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
