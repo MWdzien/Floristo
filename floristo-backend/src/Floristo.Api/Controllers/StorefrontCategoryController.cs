@@ -23,6 +23,14 @@ public class StorefrontCategoryController : BaseController
         var result = await QueryDispatcher.DispatchAsync(query);
         return Ok(result);
     }
+    
+    [HttpGet("top-level")]
+    public async Task<ActionResult<IEnumerable<TopLevelCategoryDto>>> GetTopLevelCategories()
+    {
+        var query = new GetTopLevelCategories();
+        var result = await QueryDispatcher.DispatchAsync(query);
+        return Ok(result);
+    }
 
     [HttpGet("{slug}")]
     public async Task<ActionResult<StorefrontCategoryDetailsDto?>> GetCategory([FromRoute] GetCategoryBySlug query)

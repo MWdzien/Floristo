@@ -63,6 +63,7 @@ public class UpdateCategoryDetailsHandlerTests
             null,
             null,
             null,
+            null,
             null);
     }
 
