@@ -10,6 +10,7 @@ public class Category : AggregateRoot<CategoryId>
     private CategoryId? _parentId;
     
     private CategoryName _name;
+    private CategoryShortDescription? _shortDescription;
     private CategoryDescription? _description;
     private CategorySlug _slug;
     private CategorySortOrder _sortOrder;
@@ -35,22 +36,24 @@ public class Category : AggregateRoot<CategoryId>
         AddEvent(new CategoryCreatedEvent(id, parentId, name, slug, sortOrder, _createdAt));
     }
     
-    internal Category(CategoryId id, CategoryId? parentId, CategoryName name, CategoryDescription? description, CategorySlug slug, 
-        CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle, CategorySeoDescription? 
-            seoDescription, CategoryCreatedAt createdAt, CategoryPublishedAt? publishedAt)
+    internal Category(CategoryId id, CategoryId? parentId, CategoryName name, CategoryShortDescription? shortDescription, 
+        CategoryDescription? description, CategorySlug slug, CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, 
+        CategorySeoTitle? seoTitle, CategorySeoDescription? seoDescription, CategoryCreatedAt createdAt, 
+        CategoryPublishedAt? publishedAt)
     {
-        SetState(id, parentId, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
+        SetState(id, parentId, name, shortDescription, description, slug, sortOrder, imageUrl, seoTitle, seoDescription);
         _createdAt = createdAt;
         _publishedAt = publishedAt;
     }
 
-    private void SetState(CategoryId id, CategoryId? parentId, CategoryName name, CategoryDescription? description, CategorySlug slug,
-        CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle,
-        CategorySeoDescription? seoDescription)
+    private void SetState(CategoryId id, CategoryId? parentId, CategoryName name, CategoryShortDescription? shortDescription, 
+        CategoryDescription? description, CategorySlug slug, CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, 
+        CategorySeoTitle? seoTitle, CategorySeoDescription? seoDescription)
     {
         Id = id;
         _parentId = parentId;
         _name = name;
+        _shortDescription = shortDescription;
         _description = description;
         _slug = slug;
         _sortOrder = sortOrder;
@@ -65,6 +68,22 @@ public class Category : AggregateRoot<CategoryId>
         
         _name = name;
         AddEvent(new CategoryNameChangedEvent(Id, name));
+    }
+    
+    public void ChangeShortDescription(CategoryShortDescription shortDescription)
+    {
+        if (_shortDescription == shortDescription) return;
+        
+        _shortDescription = shortDescription;
+        AddEvent(new CategoryShortDescriptionChangedEvent(Id, shortDescription));
+    }
+
+    public void DeleteShortDescription()
+    {
+        if (_shortDescription is null) return;
+        
+        _shortDescription = null;
+        AddEvent(new CategoryShortDescriptionChangedEvent(Id, _shortDescription));
     }
 
     public void ChangeDescription(CategoryDescription description)

@@ -9,8 +9,10 @@ public sealed class CategoryFactory : ICategoryFactory
         CategorySortOrder sortOrder)
             => new(id, parentId, name, slug, sortOrder);
 
-    public Category Restore(CategoryId id, CategoryId? parentId, CategoryName name, CategoryDescription? description, CategorySlug slug,
-        CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, CategorySeoTitle? seoTitle,
-        CategorySeoDescription? seoDescription, CategoryCreatedAt createdAt, CategoryPublishedAt? publishedAt)
-            => new(id, parentId, name, description, slug, sortOrder, imageUrl, seoTitle, seoDescription, createdAt, publishedAt);
+    public Category Restore(CategoryId id, CategoryId? parentId, CategoryName name, CategoryShortDescription? shortDescription, 
+        CategoryDescription? description, CategorySlug slug, CategorySortOrder sortOrder, CategoryImageUrl? imageUrl, 
+        CategorySeoTitle? seoTitle, CategorySeoDescription? seoDescription, CategoryCreatedAt createdAt, 
+        CategoryPublishedAt? publishedAt)
+            => new(id, parentId, name, shortDescription, description, slug, sortOrder, imageUrl, seoTitle, 
+                seoDescription, createdAt, publishedAt);
 }
