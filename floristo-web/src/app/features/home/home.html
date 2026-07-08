@@ -1,4 +1,4 @@
-<section class="relative bg-cream h-[75vh] min-h-[600px] flex flex-col">
+<section class="relative bg-cream min-h-[600px] flex flex-col">
     <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 px-6 lg:px-16 py-16 lg:py20 max-w-[1600px] mx-auto w-full">
         <div class="lg:col-span-5 flex flex-col justify-between">
             <div>
@@ -6,7 +6,7 @@
                     - Studio florystyczne
                 </p>
 
-                <h1 class="font-display text-bottle-green text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
+                <h1 class="font-display text-bottle-green text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight mb-4">
                     Florystyka<br>
                     inspirowana naturą.<br>
                     Zaprojektowana na lata.
@@ -35,21 +35,15 @@
     </div>
 
     <div class="px-6 lg:px-16 pb-8 max-w-[1600px] mx-auto w-full flex items-end justify-between">
-        <p class="text-eyebrow uppercase text-bottle-green/40">
-            - 01 / hero
-        </p>
         <p class="text-eyebrow uppercase text-bottle-green/40 hidden md:block">
             Przewiń niżej
         </p>
     </div>
 </section>
 
-<section class="bg-cream py-24 lg:py-32">
+<section class="bg-cream py-8 lg:py-12">
     <header class="mb-12 lg:mb-16 px-6 lg:px-16 max-w-[1600px] mx-auto flex items-end justify-between">
         <div>
-            <p class="text-eyebrow uppercase text-bottle-green/60 mb-6">
-                — 02 / nowości
-            </p>
             <h2 class="font-display text-bottle-green text-4xl md:text-5xl leading-[1.1] tracking-tight">
                 W tym miesiącu.
             </h2>
@@ -63,7 +57,7 @@
         </a>
     </header>
 
-    <div class="flex gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide pl-6 lg:pl-16 [scroll-padding-left:1.5rem] lg:[scroll-padding-left:4rem]">
+    <div class="flex gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide pl-6 lg:pl-16 [scroll-padding-left:1.5rem] lg:[scroll-padding-left:4rem] pr-6 lg:pr-16">
         @for (product of newArrivals(); track product.slug) {
             <article class="snap-start shrink-0 w-[260px] lg:w-[300px] cursor-pointer group">
                 <div class="mb-4">
@@ -88,4 +82,62 @@
             <span class="transition-transform duration-300 group-hover:translate-x-1">></span>
         </a>
     </div>
+</section>
+
+<section class="bg-bottle-green py-8 lg:py-12">
+    <header class="mb-16 lg:mb-24 px-6 lg:px-16 max-w-[1600px] mx-auto flex items-end justify-between">
+        <div>
+            <h2 class="font-display text-cream text-4xl md:text-5xl leading-[1.1] tracking-tight">
+                Trzy odsłony<br>
+                tego samego rzemiosła.
+            </h2>
+        </div>
+        <a
+            [routerLink]="['/kategorie']"
+            class="group hidden md:inline-flex items-center gap-3 text-eyebrow uppercase text-cream border-b border-cream pb-1 shrink-0"
+        >
+            Przeglądaj kategorie
+            <span class="transition-transform duration-300 group-hover:translate-x-1">></span>
+        </a>
+    </header>
+
+    <div class="px-6 lg:px-16 max-w-[1600px] mx-auto">
+        @for (category of categories(); track category.slug; let i = $index; let isEven = $even) {
+            <article
+                [routerLink]="['/kategoria', category.slug]"
+                class="collection-row cursor-pointer group"
+                [class.collection-row--reversed]="!isEven"
+            >
+                <div class="collection-image">
+                    <app-placeholder-image [label]="category.name" aspect="landscape"/>
+                </div>
+                <div class="collection-text">
+                    <p class="text-eyebrow uppercase text-cream/40 mb-6">
+                        — 0{{ i + 1 }}
+                    </p>
+                    <h3 class="font-display text-cream text-3xl md:text-4xl leading-[1.15] mb-6">
+                        {{ category.name }}
+                    </h3>
+                    <p class="font-body text-cream/75 text-base lg:text-lg leading-relaxed mb-8 max-w-md">
+                        {{ category.shortDescription }}
+                    </p>
+                    <span class="inline-flex items-center gap-3 text-eyebrow uppercase text-cream border-b border-cream pb-1">
+                        Zobacz kolekcję
+                        <span class="transition-transform duration-300 group-hover:translate-x-1">></span>
+                    </span>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="manifest-section">
+    <blockquote class="manifest-blockquote">
+        <p class="manifest-text">
+            ‘Wierzymy, że piękno nie powinno przemijać zbyt szybko. Tworzymy z myślą o emocjach, harmonii i detalach, czerpiąc inspirację z natury, by towarzyszyła Ci każdego dnia.’
+        </p>
+        <cite class="manifest-cite">
+            — Studio Floristo
+        </cite>
+    </blockquote>
 </section>

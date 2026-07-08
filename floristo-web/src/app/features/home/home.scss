@@ -1,0 +1,88 @@
+@use '../../../styles/tokens' as *;
+@use '../../../styles/mixins' as *;
+
+.collection-row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 4rem;
+    align-items: center;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.collection-row + .collection-row {
+
+    @media (max-width: 1024px) {
+        margin-top: 5rem;
+    }
+}
+
+.collection-image {
+    grid-column: 1 / span 6;
+    max-width: 480px;
+    width: 100%;
+
+    @media (max-width: 1024px) {
+        grid-column: 1;
+        max-width: none;
+    }
+}
+
+.collection-text {
+    grid-column: 8 / span 5;
+
+    @media (max-width: 1024px) {
+        grid-column: 1;
+    }
+}
+
+.collection-row--reversed {
+    .collection-image {
+        grid-column: 7 / span 6;
+        grid-row: 1;
+        justify-self: end;
+
+        @media (max-width: 1024px) {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: stretch;
+        }
+    }
+
+    .collection-text {
+        grid-column: 1 / span 5;
+        grid-row: 1;
+
+        @media (max-width: 1024px) {
+            grid-column: 1;
+            grid-row: 2;
+        }
+    }
+}
+
+.manifest-section {
+    background-color: $color-cream;
+}
+
+.manifest-blockquote {
+    max-width: 1200px;
+    margin-inline: auto;
+    color: $color-bottle-green;
+    text-align: center;
+    padding: 10rem;
+}
+
+.manifest-text {
+    font-size: $fs-display-sm;
+    margin-bottom: 16px;
+    font-family: $font-display;
+    font-weight: $fw-medium;
+}
+
+.manifest-cite {
+    font-weight: $fw-bold;
+    font-family: $font-body;
+}
