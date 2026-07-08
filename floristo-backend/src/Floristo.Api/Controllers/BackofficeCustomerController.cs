@@ -12,7 +12,7 @@ namespace Floristo.Api.Controllers;
 [Route("api/backoffice/customers")]
 public class BackofficeCustomerController : BaseController
 {
-    public BackofficeCustomerController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher) 
+    public BackofficeCustomerController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
         : base(queryDispatcher, commandDispatcher)
     {
     }
@@ -23,18 +23,18 @@ public class BackofficeCustomerController : BaseController
         var result = await QueryDispatcher.DispatchAsync(query);
         return OkOrNotFound(result);
     }
-    
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BackofficeCustomerDto>>> GetCustomers([FromQuery] GetCustomersForBackoffice query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return Ok(result);
     }
-    
+
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteCustomer([FromRoute] Guid id)
+    public async Task<IActionResult> DeleteCustomer(Guid id, [FromBody] DeactivateCustomer command)
     {
-        await CommandDispatcher.DispatchAsync(new DeactivateCustomer(id));
+        await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
 }

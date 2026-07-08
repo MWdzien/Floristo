@@ -16,27 +16,26 @@ public class BackofficeCategoryController : BaseController
         : base(queryDispatcher, commandDispatcher)
     {
     }
-    
+
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<BackofficeCategoryDetailsDto?>> GetCategory([FromRoute] GetCategoryForBackoffice query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return OkOrNotFound(result);
     }
-    
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BackofficeCategoryDto>>> GetCategories([FromQuery] GetCategoriesForBackoffice query)
     {
         var result = await QueryDispatcher.DispatchAsync(query);
         return Ok(result);
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> PostCategory([FromBody] CreateCategory command)
     {
-        command = command with { Id = Guid.NewGuid() };
         await CommandDispatcher.DispatchAsync(command);
-        return CreatedAtAction(nameof(GetCategory), new { id = command.Id }, null);
+        return Created();
     }
 
     [HttpPut("{id:guid}/sort-order")]
@@ -45,33 +44,32 @@ public class BackofficeCategoryController : BaseController
         await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
-    
+
     [HttpPut("{id:guid}/details")]
     public async Task<IActionResult> PutDetails(Guid id, [FromBody] UpdateCategoryDetails command)
     {
         await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
-    
+
     [HttpPut("{id:guid}/publish")]
     public async Task<IActionResult> PutPublish(Guid id, [FromBody] PublishCategory command)
     {
         await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
-    
+
     [HttpPut("{id:guid}/unpublish")]
-    public async Task<IActionResult> PutUnpublish(Guid id, [FromRoute] UnpublishCategory command)
+    public async Task<IActionResult> PutUnpublish(Guid id, [FromBody] UnpublishCategory command)
     {
         await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
-    
+
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteCategory(Guid id, [FromRoute] DeleteCategory command)
+    public async Task<IActionResult> DeleteCategory(Guid id, [FromBody] DeleteCategory command)
     {
-        await CommandDispatcher.DispatchAsync(command with { Id = id});
+        await CommandDispatcher.DispatchAsync(command with { Id = id });
         return NoContent();
     }
-    
 }
