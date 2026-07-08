@@ -21,7 +21,7 @@ internal sealed class GetCategoryForBackofficeHandler : IQueryHandler<GetCategor
             .Where(c => c.Id == query.Id)
             .AsNoTracking()
             .Select(c =>
-                new BackofficeCategoryDetailsDto(c.Id, c.Name, c.Description, c.Slug, c.SortOrder, c.ImageUrl,
+                new BackofficeCategoryDetailsDto(c.Id, c.Name, c.ShortDescription, c.Description, c.Slug, c.SortOrder, c.ImageUrl,
                     c.SeoTitle, c.SeoDescription, c.CreatedAt, c.PublishedAt)
             )
             .SingleOrDefaultAsync();

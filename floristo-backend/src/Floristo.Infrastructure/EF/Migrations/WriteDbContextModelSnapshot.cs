@@ -67,6 +67,10 @@ namespace Floristo.Infrastructure.EF.Migrations
                         .HasColumnType("text")
                         .HasColumnName("seo_title");
 
+                    b.Property<string>("_shortDescription")
+                        .HasColumnType("text")
+                        .HasColumnName("short_description");
+
                     b.Property<string>("_slug")
                         .IsRequired()
                         .HasColumnType("text")

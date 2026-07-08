@@ -19,6 +19,9 @@ internal sealed class CategoryWriteConfiguration : IEntityTypeConfiguration<Cate
         var categoryNameConverter = new ValueConverter<CategoryName, string>(cn => cn.Value,
             cn => new CategoryName(cn));
         
+        var categoryShortDescriptionConverter = new ValueConverter<CategoryShortDescription, string>(csd => csd.Value,
+            csd => new CategoryShortDescription(csd));
+        
         var categoryDescriptionConverter = new ValueConverter<CategoryDescription, string>(cd => cd.Value,
             cd => new CategoryDescription(cd));
         
@@ -63,6 +66,12 @@ internal sealed class CategoryWriteConfiguration : IEntityTypeConfiguration<Cate
             .Property(typeof(CategoryName), "_name")
             .HasConversion(categoryNameConverter)
             .HasColumnName("name");
+        
+        builder
+            .Property(typeof(CategoryShortDescription), "_shortDescription")
+            .HasConversion(categoryShortDescriptionConverter)
+            .HasColumnName("short_description")
+            .IsRequired(false);
 
         builder
             .Property(typeof(CategoryDescription), "_description")
