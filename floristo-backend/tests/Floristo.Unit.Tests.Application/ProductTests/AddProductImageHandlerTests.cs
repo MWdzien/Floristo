@@ -22,7 +22,6 @@ public class AddProductImageHandlerTests
     {
         var command = new AddProductImage(
             Guid.NewGuid(),
-            Guid.NewGuid(),
             "https://cdn.test/a.jpg",
             1);
 
@@ -35,19 +34,20 @@ public class AddProductImageHandlerTests
     [Fact]
     public async Task HandleAsync_Calls_Repository_On_Success()
     {
+        var id = Guid.NewGuid();
         var command = new AddProductImage(
-            Guid.NewGuid(),
-            Guid.NewGuid(),
+            id,
             "https://cdn.test/a.jpg",
             1);
+        
         var product = new ProductFactory().Create(
-            new ProductId(command.Id),
+            new ProductId(id),
             new ProductName("Test"),
             new ProductSlug("test"),
             new ProductPrice(99.99m),
             new CategoryId(Guid.NewGuid()),
             new ProductSortOrder(1));
-        _repository.GetAsync(command.Id).Returns(product);
+        _repository.GetAsync(id).Returns(product);
 
         var exception = await Record.ExceptionAsync(() => Act(command));
 

@@ -27,7 +27,8 @@ internal sealed class CreateProductHandler : ICommandHandler<CreateProduct>
 
     public async Task HandleAsync(CreateProduct command)
     {
-        var (id, name, slug, price, categoryId, sortOrder) = command;
+        var id = Guid.NewGuid();
+        var (name, slug, price, categoryId, sortOrder) = command;
 
         if (await _productReadService.ExistsBySlugAsync(slug))
             throw new ProductSlugNotUniqueException(slug);
@@ -37,7 +38,7 @@ internal sealed class CreateProductHandler : ICommandHandler<CreateProduct>
         
         if (await _categoryReadService.HasChildrenAsync(categoryId))
             throw new CategoryWithChildrenCannotHaveProductsException(categoryId);
-
+        
 
         var product = _productFactory.Create(
             new ProductId(id),

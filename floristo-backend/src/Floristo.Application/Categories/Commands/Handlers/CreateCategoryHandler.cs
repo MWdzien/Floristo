@@ -24,7 +24,8 @@ internal sealed class CreateCategoryHandler : ICommandHandler<CreateCategory>
 
     public async Task HandleAsync(CreateCategory command)
     {
-        var (id, parentId, name, slug) = command;
+        var id = Guid.NewGuid();
+        var (parentId, name, slug) = command;
 
         if (await _categoryReadService.ExistsBySlugAsync(slug))
         {

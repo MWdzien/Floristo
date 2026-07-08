@@ -19,7 +19,7 @@ public class StorefrontCustomerController : BaseController
     [HttpGet]
     public async Task<ActionResult<StorefrontCustomerDto>> GetCustomer()
     {
-        var result = await QueryDispatcher.DispatchAsync(new GetCurrentCustomer(Guid.Empty));
+        var result = await QueryDispatcher.DispatchAsync(new GetCurrentCustomer());
         return OkOrNotFound(result);
     } 
     
@@ -47,7 +47,7 @@ public class StorefrontCustomerController : BaseController
     [HttpDelete]
     public async Task<IActionResult> DeleteCustomer()
     {
-        await CommandDispatcher.DispatchAsync(new DeactivateCustomer(Guid.Empty));
+        await CommandDispatcher.DispatchAsync(new DeactivateCurrentCustomer());
         return NoContent();
     }
 }

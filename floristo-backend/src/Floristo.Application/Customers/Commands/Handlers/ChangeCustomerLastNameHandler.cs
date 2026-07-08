@@ -18,13 +18,11 @@ internal sealed class ChangeCustomerLastNameHandler : ICommandHandler<ChangeCust
 
     public async Task HandleAsync(ChangeCustomerLastName command)
     {
-        command = command with { Id = _currentUser.Id };
-        
-        var customer = await _customerRepository.GetAsync(command.Id);
+        var customer = await _customerRepository.GetAsync(_currentUser.Id);
 
         if (customer is null)
         {
-            throw new CustomerNotFoundException(command.Id);
+            throw new CustomerNotFoundException(_currentUser.Id);
         }
         
         customer.ChangeLastName(command.LastName);

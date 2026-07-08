@@ -31,20 +31,6 @@ public class BackofficeCustomerController : BaseController
         return Ok(result);
     }
     
-    [HttpPut("{id:guid}/first-name")]
-    public async Task<IActionResult> PutFirstName(Guid id, [FromBody] ChangeCustomerFirstName command)
-    {
-        await CommandDispatcher.DispatchAsync(command with { Id = id });
-        return NoContent();
-    }
-    
-    [HttpPut("{id:guid}/last-name")]
-    public async Task<IActionResult> PutLastName(Guid id, [FromBody] ChangeCustomerLastName command)
-    {
-        await CommandDispatcher.DispatchAsync(command with { Id = id });
-        return NoContent();
-    }
-    
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteCustomer([FromRoute] Guid id)
     {

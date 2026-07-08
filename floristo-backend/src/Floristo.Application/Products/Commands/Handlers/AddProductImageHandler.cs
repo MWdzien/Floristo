@@ -19,8 +19,10 @@ internal sealed class AddProductImageHandler : ICommandHandler<AddProductImage>
 
         if (product is null)
             throw new ProductNotFoundException(command.Id);
+
+        var imageId = Guid.NewGuid(); 
         
-        product.AddImage(command.ImageId, command.Url, command.SortOrder);
+        product.AddImage(imageId, command.Url, command.SortOrder);
 
         await _productRepository.UpdateAsync(product);
     }

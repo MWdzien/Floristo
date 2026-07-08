@@ -21,11 +21,9 @@ internal sealed class GetCurrentCustomerHandler : IQueryHandler<GetCurrentCustom
 
     public async Task<StorefrontCustomerDto?> HandleAsync(GetCurrentCustomer query)
     {
-        query = query with { CustomerId = _currentUser.Id };
-        
         return await _customers
             .AsNoTracking()
-            .Where(c => c.Id == query.CustomerId)
+            .Where(c => c.Id == _currentUser.Id)
             .Select(c => new StorefrontCustomerDto(c.FirstName, c.LastName, c.Email))
             .SingleOrDefaultAsync();
     }

@@ -91,7 +91,7 @@ public class CreateCategoryHandlerTests
 
     public CreateCategory GetCommand(Guid? parentId = null)
     {
-        return new CreateCategory(Guid.NewGuid(), parentId, "Test Flowers", "test-flowers");
+        return new CreateCategory(parentId, "Test Flowers", "test-flowers");
     }
 
     private readonly ICommandHandler<CreateCategory> _commandHandler;

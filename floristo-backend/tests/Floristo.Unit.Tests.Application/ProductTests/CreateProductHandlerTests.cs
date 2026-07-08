@@ -63,7 +63,6 @@ public class CreateProductHandlerTests
     private CreateProduct GetCommand()
     {
         return new CreateProduct(
-            Guid.NewGuid(),
             "Test Product",
             "test-product",
             99.99m,
