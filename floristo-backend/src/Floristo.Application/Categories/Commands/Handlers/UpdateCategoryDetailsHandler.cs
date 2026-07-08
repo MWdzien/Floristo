@@ -18,7 +18,7 @@ internal sealed class UpdateCategoryDetailsHandler : ICommandHandler<UpdateCateg
 
     public async Task HandleAsync(UpdateCategoryDetails command)
     {
-        var (id, name, slug, description, imageUrl, seoTitle, seoDescription) = command;
+        var (id, name, slug, shortDescription, description, imageUrl, seoTitle, seoDescription) = command;
         var category = await _categoryRepository.GetAsync(id);
 
         if (category is null)
@@ -29,6 +29,10 @@ internal sealed class UpdateCategoryDetailsHandler : ICommandHandler<UpdateCateg
         
         category.ChangeName(name);
         category.ChangeSlug(slug);
+        
+        if (string.IsNullOrWhiteSpace(shortDescription))
+            category.DeleteShortDescription();
+        else category.ChangeShortDescription(shortDescription);
         
         if (string.IsNullOrWhiteSpace(description))
             category.DeleteDescription();

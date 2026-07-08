@@ -4,6 +4,7 @@ public record BackofficeCategoryDetailsDto
 (
     Guid Id,
     string Name,
+    string? ShortDescription,
     string? Description,
     string Slug,
     int SortOrder,
