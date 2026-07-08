@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api.floristo.pl',
+    apiUrl: 'https://floristo-backend-885941267244.europe-central2.run.app',
     firebase: {
         apiKey: 'AIzaSyA6VQxsWXsYNIZ0DzAZI-M64aSfcxMeXQ8',
         authDomain: 'floristo-501610.firebaseapp.com',
