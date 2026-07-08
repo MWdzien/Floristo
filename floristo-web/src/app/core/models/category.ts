@@ -20,3 +20,10 @@ export interface CategoryNavigationItem {
     imageUrl: string | null;
     children: CategoryNavigationItem[];
 }
+
+export interface TopLevelCategory {
+    name: string;
+    slug: string;
+    imageUrl: string | null;
+    shortDescription: string | null;
+}

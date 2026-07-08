@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import {CategoryNavigationItem, StorefrontCategoryDetails} from "../models/category";
+import {CategoryNavigationItem, StorefrontCategoryDetails, TopLevelCategory} from "../models/category";
 
 @Injectable({ providedIn: 'root'})
 export class CategoryApi {
@@ -11,6 +11,10 @@ export class CategoryApi {
 
     getNavigation(): Observable<CategoryNavigationItem[]> {
         return this.http.get<CategoryNavigationItem[]>(`${this.baseUrl}/navigation`);
+    }
+
+    getTopLevel(): Observable<TopLevelCategory[]> {
+        return this.http.get<TopLevelCategory[]>(`${this.baseUrl}/top-level`)
     }
 
     getBySlug(slug: string): Observable<StorefrontCategoryDetails> {
