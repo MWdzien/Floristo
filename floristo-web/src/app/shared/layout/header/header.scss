@@ -22,6 +22,10 @@
     align-items: center;
     gap: $space-8;
     justify-self: start;
+
+    @include mobile {
+        display: none;
+    }
 }
 
 .site-header__link {
@@ -64,4 +68,31 @@
     &:hover {
         opacity: 0.6;
     }
+}
+
+.hamburger {
+    display: none;
+
+    @include mobile {
+        display: inline-flex;
+    }
+}
+
+.menu {
+    position: fixed;
+    inset: 0;
+    background-color: $color-cream;
+    transform: translateX(100%);
+    transition: transform $transition-base;
+    z-index: 40;
+
+    &.open {
+        transform: translateX(0);
+    }
+}
+
+.menu-nav {
+
+
+
 }
