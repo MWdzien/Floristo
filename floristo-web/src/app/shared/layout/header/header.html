@@ -1,15 +1,21 @@
 <header class="site-header">
-    <nav class="site-header__nav">
-        @for (category of topLevelCategories(); track category.slug) {
-            <a [routerLink]="['/kategoria', category.slug]" class="site-header__link">
-                {{ category.name }}
-            </a>
-        }
-    </nav>
 
-    <a [routerLink]="['/']" class="site-header__logo">
-        <img src="/logo.png" alt="Floristo">
-    </a>
+    <div class="site-header__nav">
+        <nav >
+            @for (category of topLevelCategories(); track category.slug) {
+                <a [routerLink]="['/kategoria', category.slug]" class="site-header__link">
+                    {{ category.name }}
+                </a>
+            }
+        </nav>
+    </div>
+
+    <div class="site-header__logo">
+        <a [routerLink]="['/']">
+            <img src="/logo.png" alt="Floristo">
+        </a>
+    </div>
+
 
     <div class="site-header__actions">
         <button type="button" class="site-header__action" aria-label="Szukaj">
@@ -53,13 +59,40 @@
             }
         </button>
 
-        <div class="menu" [class.open]="menuOpen()">
-            <nav class="menu-nav">
-                @for (category of topLevelCategories(); track category.slug) {
-                    <a [routerLink]="['/kategoria', category.slug]" class="site-header__link" (click)="closeMenu()">
-                        {{ category.name }}
-                    </a>
-                }
+        <div class="menu" [class.menu--open]="menuOpen()">
+            <nav class="menu__nav">
+                <ul class="menu__list">
+                    <li class="menu__item">
+                        <a [routerLink]="['/produkty']" (click)="closeMenu()" class="menu__link">
+                            Przeglądaj wszystkie produkty
+                        </a>
+                    </li>
+
+                    @for (category of categories(); track category.slug) {
+                        <li class="menu__item" [class.menu__item--expanded]="expanded().has(category.slug)">
+                            @if (hasChildren(category)) {
+                                <button (click)="toggleCategory(category.slug)" class="menu__link" type="button">
+                                    {{ category.name }}
+                                    <span class="menu__arrow"></span>
+                                </button>
+
+                                <ul class="menu__sublist">
+                                    @for (child of category.children; track child.slug) {
+                                        <li>
+                                            <a [routerLink]="['/kategoria', child.slug]" (click)="closeMenu()" class="menu__sublink">
+                                                {{ child.name }}
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            } @else {
+                                <a [routerLink]="['/kategoria', category.slug]" (click)="closeMenu()" class="menu__link">
+                                    {{ category.name }}
+                                </a>
+                            }
+                        </li>
+                    }
+                </ul>
             </nav>
         </div>
     </div>
