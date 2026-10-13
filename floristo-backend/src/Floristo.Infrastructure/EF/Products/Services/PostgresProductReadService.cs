@@ -19,4 +19,8 @@ internal sealed class PostgresProductReadService : IProductReadService
 
     public Task<bool> ExistsByCategoryAsync(Guid categoryId)
         => _products.AnyAsync(p => p.CategoryId == categoryId);
+
+    public Task<Guid?> GetIdBySlugAsync(string slug)
+        => _products.Where(p => p.Slug == slug && p.PublishedAt != null).Select(p => (Guid?)p.Id)
+            .SingleOrDefaultAsync();
 }
